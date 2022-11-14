@@ -1,0 +1,78 @@
+<div class="auth-wrapper align-items-stretch aut-bg-img">
+  <div class="flex-grow-1">
+    <div class="h-100 d-md-flex align-items-center auth-side-img">
+      <div class="col-sm-10 auth-content w-auto">
+        <!-- <img src="assets/images/auth/auth-logo.png" alt="" class="img-fluid"> -->
+        <h1 class="text-white my-4">Hola, de nuevo!</h1>
+        <h4 class="text-white font-weight-normal">Ingresa tus credenciales.<br /></h4>
+      </div>
+    </div>
+    <div class="auth-side-form">
+      <div class=" auth-content">
+        <img src="assets/images/auth/auth-logo-dark.png" alt="" class="img-fluid mb-4 d-block d-xl-none d-lg-none">
+        <h3 class="mb-4 f-w-400">Ingreso</h3>
+        <form class="form-horizontal mb-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}
+          </ngb-alert>
+          <div class="form-group auth-form-group-custom mb-4">
+            <i class="ri-user-2-line auti-custom-input-icon"></i>
+            <label for="user">Usuario</label>
+            <input type="text" formControlName="user" class="form-control" id="user" placeholder="Ingrese email">
+            <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">El campo usuario es obligatorio
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group auth-form-group-custom mb-4">
+            <i class="ri-lock-2-line auti-custom-input-icon"></i>
+            <label for="password">Password</label>
+            <input type="password" formControlName="password" class="form-control" id="password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Ingrese Contraseña" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">El campo password es obligatorio
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" formControlName="remember" id="remember">
+            <label class="custom-control-label" for="remember">Recordarme</label>
+          </div>
+
+          <div class="mt-4 text-center">
+            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Iniciar Sesión</button>
+          </div>
+
+          <div class="mt-4 text-center">
+            <a routerLink="/account/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i>
+              Recuperar Contraseña</a>
+          </div>
+          <!-- <div class="mt-5 text-center">
+            <p>
+              © {{year}} ATENEO ERP
+            </p>
+          </div> -->
+        </form>
+        <!-- <div class="custom-control custom-checkbox text-left mb-4 mt-2">
+          <input type="checkbox" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">Guardar credenciales.</label>
+        </div> -->
+        <!-- <button class="btn btn-block btn-primary mb-0">Ingresar</button> -->
+        <div class="text-center">
+          <div class="saprator my-4"><span>Ó</span></div>
+          <!-- <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i
+              class="fab fa-facebook-f"></i></button>
+          <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i
+              class="fab fa-google-plus-g"></i></button>
+          <button class="btn text-white bg-twitter mb-2  wid-40 px-0 hei-40 rounded-circle"><i
+              class="fab fa-twitter"></i></button> -->
+          <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-password-v2']"
+              class="f-w-400">Reset</a></p>
+          <p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signup-v2']"
+              class="f-w-400">Signup</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Usuarios">
+      <div class="table-responsive">
+        <table class="table table-xs">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Referencía</th>
+              <!-- <th>Elementos</th> -->
+              <th>Acción</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of items; index as i;">
+              <td>{{i+1}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.reference}}</td>
+              <td>
+                <button type="button" class="btn btn-icon btn-info btn-sm" (click)="showQr(user)"> <i
+                    class="feather icon-eye"></i></button>
+                <button type="button" class="btn btn-icon btn-danger btn-sm" (click)="hideQr(user)"> <i
+                    class="feather icon-eye-off"></i></button>
+              </td>
+              <td>
+                <img *ngIf="user.show" src="{{img}}" alt="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
