@@ -105,6 +105,28 @@ const NavigationItems = [
             target: false
           }
         ]
+      },
+      {
+        id: 'Inventory',
+        title: 'Inventario',
+        type: 'collapse',
+        icon: 'feather icon-tag',
+        children: [
+          {
+            id: 'register',
+            title: 'Registro',
+            type: 'item',
+            url: '/dashboard/inventories/resource-inventory/register',
+            target: false
+          },
+          {
+            id: 'register',
+            title: 'Index',
+            type: 'item',
+            url: '/dashboard/inventories/resource-inventory/index',
+            target: false
+          }
+        ]
       }
     ]
   },

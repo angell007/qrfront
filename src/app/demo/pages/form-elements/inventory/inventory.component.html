@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Gestión de inventario" [options]="false">
+            <label>Seleccione Estante</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <ng-select [(ngModel)]="selectedItem">
+                            <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" (click)="getLast()">Inicio</button>
+                    </div>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12" *ngIf="show">
+        <app-card cardTitle="Información último inventario" [options]="false">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+
+                    <span> <b> Estante: </b> {{store.name}}</span>
+                    <br>
+                    <span> <b>Dirección:</b> {{store.address}}</span>
+
+
+                </div>
+                <div class="col-md-6">
+
+                    <span><b>Creado:</b> {{created_at |date:'medium'}}</span>
+                    <br>
+                    <span><b>Actualizado:</b> {{updated_at |date:'medium':'-5'}}</span>
+
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Referencia</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of elements">
+                                <td class="text"><label class="text">{{item.name}}</label></td>
+                                <td class="text"><label class="text">{{item.reference}}</label></td>
+                                <td class="text"><label
+                                        class="badge badge-light-primary">{{item.quantities.quantity}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </app-card>
+    </div>
+</div>
+
+
+<div class="row" *ngIf="showInv">
+    <div class="col-sm-12">
+        <app-card cardTitle="Gestión de inventario" [options]="false">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select class="form-control" #selectList (change)="selectCamera(selectList.value)">
+                            <option *ngFor="let camera of cameras" value={{camera.label}}>
+                                {{ camera.label }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+                            (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"
+                            [timeBetweenScans]="3000" [delayBetweenScanSuccess]="3000">
+
+                        </zxing-scanner>
+                        <!-- <p *ngFor="let result of results">{{result}}</p> -->
+                    </div>
+                </div>
+                <div class="col-md-6 justify-content-center text-center">
+
+
+
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <app-card cardTitle="Usuarios">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Elemento</th>
+                                                    <th>Referencia</th>
+                                                    <th>Img</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of inventario">
+                                                    <td class="text"><label class="text">{{item.name}}</label></td>
+                                                    <td class="text"><label class="text">{{item.reference}}</label></td>
+                                                    <td class="text"> <img width="50px" src="{{item.img}}" alt="img">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" lass="text"><label class="badge badge-light-primary"
+                                                            *ngIf="!reread"> Leyendo ...</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" lass="text"><label class="badge badge-light-primary"
+                                                            *ngIf="reread"> Ya leido ...</label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </app-card>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary btn-sm" [disabled]="this.submitted"
+                        (click)="sendInventory()">Enviar</button>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

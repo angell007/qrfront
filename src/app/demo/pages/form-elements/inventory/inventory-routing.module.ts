@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ElementComponent } from './element.component';
 import { IndexComponent } from './index/index.component';
+import { InventoryComponent } from './inventory.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: ElementComponent
+    component: InventoryComponent
   }
 ];
 
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ElementRoutingModule { }
+export class InventoryRoutingModule { }

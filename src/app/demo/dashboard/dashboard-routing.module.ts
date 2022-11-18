@@ -20,6 +20,10 @@ const routes: Routes = [
       {
         path: 'elements',
         loadChildren: () => import('../pages/form-elements/form-elements.module').then(module => module.FormElementsModule)
+      },
+      {
+        path: 'inventories',
+        loadChildren: () => import('../pages/form-elements/form-elements.module').then(module => module.FormElementsModule)
       }
     ]
   }

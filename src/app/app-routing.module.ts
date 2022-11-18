@@ -8,8 +8,8 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
-    canLoad: [AuthGuard],
+    // canActivate: [AuthGuard],
+    // canLoad: [AuthGuard],
     component: AdminComponent,
     children: [
       {

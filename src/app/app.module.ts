@@ -28,6 +28,25 @@ import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 
+
+// import {EchoConfig, NgxLaravelEchoModule} from 'ngx-laravel-echo';
+
+// export const echoConfig: EchoConfig = {
+//     userModel: 'users',
+//     notificationNamespace: 'App\\Notifications',
+//     options: {
+//         broadcaster: 'pusher',
+//         key: '124',
+//         wsHost: 'api.test',
+//         authEndpoint: 'http://api.test/broadcasting/auth',
+//         host: 'api.test',
+//         wsPort: 6001,
+//         disableStats: true,
+//         namespace: ''
+//     }
+// };
+
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://baseapi.test/api',
-  base_media: 'https://baseapi.test/',
+  base_url: 'https://6d22-2800-e2-2f7f-f459-c17a-4023-670b-a97c.ngrok.io/baseApi/public/api',
+  base_media: 'https://6d22-2800-e2-2f7f-f459-c17a-4023-670b-a97c.ngrok.io/baseApi/public/imgs/',
 };
 
 /*

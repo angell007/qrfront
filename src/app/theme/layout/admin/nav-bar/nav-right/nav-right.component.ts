@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { timer } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
+
 
 @Component({
   selector: 'app-nav-right',
@@ -9,7 +12,20 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class NavRightComponent implements OnInit {
 
+
+  currTime: number;
+
   constructor() { }
 
-  ngOnInit() { }
+  obsTimer: Observable<number> = timer(0, 30000);
+
+  ngOnInit() {
+
+    this.obsTimer.subscribe(currTime => console.log(currTime));
+
+    // ngOnChanges(changes: SimpleChanges) {
+    //   console.log('change detected');
+    // }
+
+  }
 }
