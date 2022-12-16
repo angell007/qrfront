@@ -17,8 +17,8 @@ export class inventoryService {
 
 
 
-    register(data, id): Observable<any> {
-        return this.client.post(this._rutaBase + '/inventory/register/' + id, data);
+    register(data, id, action): Observable<any> {
+        return this.client.post(this._rutaBase + '/inventory/' + action + '/' + id, data);
     }
 
     index(): Observable<any> {
@@ -33,8 +33,22 @@ export class inventoryService {
         return this.client.get(this._rutaBase + '/inventory/last/' + store);
     }
 
+    getunread(): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/unreaded');
+    }
+
     getElement(qr: String): Observable<any> {
         return this.client.get(this._rutaBase + '/inventory/get_element/' + qr);
+    }
+    owners(id: String): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/owners/' + id);
+    }
+
+    markAsRead(id: String): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/markasread/' + id);
+    }
+    alls(): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/alls');
     }
 
 }

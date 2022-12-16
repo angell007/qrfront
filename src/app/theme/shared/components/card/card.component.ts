@@ -103,7 +103,8 @@ export class CardComponent implements OnInit {
     // const duration = this.cardClass === 'full-card' ? 300 : 600;
     this.cardClass = this.cardClass === 'full-card' ? this.cardClass : 'full-card';
     if (status) {
-      this.animation = animation;
+      this.animation = 'zoomOut';
+      // this.animation = animation;
     }
     this.isAnimating = true;
 
@@ -137,7 +138,7 @@ export class CardComponent implements OnInit {
   cardRefresh() {
     this.loadCard = true;
     this.cardClass = 'card-load';
-    setTimeout( () => {
+    setTimeout(() => {
       this.loadCard = false;
       this.cardClass = 'expanded';
     }, 3000);

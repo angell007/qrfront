@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { elementService } from 'src/app/services/element.service';
+import { ObservablesService } from 'src/app/observables/observable.service';
+import { inventoryService } from 'src/app/services/inventory.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
-import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
 import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-element-index',
@@ -15,26 +19,38 @@ export class IndexComponent implements OnInit {
     loginForm: FormGroup;
     submitted = false;
     error = '';
-    items: any;
+    items: any = [];
     img: any;
     show: boolean = false;
     current: boolean = false;
-
-    constructor(private _element: elementService) { }
-
+    id: string = null;
+    public obsuser: Subscription
+    load = false;
+    constructor(private route: ActivatedRoute, private _inventory: inventoryService, private _obs: ObservablesService, private router: Router) { }
 
     ngOnInit() {
-        this.getData()
+        this.route.queryParams
+            .subscribe((params: any) => {
+                console.log(params.id);
+                document.cookie = "current=" + params.id
+                this.getData(params.id)
+            }
+            );
+
     }
 
-    getData() {
-        this._element.index()
-            .subscribe(resp => {
-                this.items = resp.data.data
-                this.items.forEach(element => {
-                    element.show = false
-                });
+    async getData(id) {
 
+        this.id = id
+
+        this.load = true
+        this.show = true
+
+        this._inventory.owners(this.id)
+            .subscribe(resp => {
+                this.items = resp.data
+                this.load = false
+                this.markAsRead(this.id)
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
             }, (err) => {
                 console.log(Object.keys(err));
@@ -42,19 +58,34 @@ export class IndexComponent implements OnInit {
             });
     }
 
-    hideQr(user) {
-        user.show = false
-        this.img = ''
+    async markAsRead(id) {
+
+        this.id = this.getCookie('current')
+        this._inventory.markAsRead(id)
+            .subscribe(resp => {
+                console.log('ok mark as read');
+                if (resp.err) { functionsUtils.showErros(resp); return false; }
+            }, (err) => {
+                console.log(Object.keys(err));
+                console.log(err.err);
+            });
     }
 
-    showQr(user) {
 
-        this.items.forEach(element => {
-            element.show = false
-        });
-
-        user.show = true
-        this.img = environment.base_media + 'imgs/stores/qr' + user.id + '.png'
-        console.log(this.img);
+    getCookie(cname: string) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
     }
+
 }

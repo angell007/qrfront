@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { inventoryService } from 'src/app/services/inventory.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
@@ -8,6 +8,11 @@ import { Html5QrcodeScanner } from "html5-qrcode"
 import { Html5Qrcode } from "html5-qrcode"
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+
+
+import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-inventory',
@@ -22,12 +27,13 @@ export class InventoryComponent implements OnInit {
 
   selectedItem: number;
   items: any
-  elements: any
+  elements: any = []
   store: any
 
   created_at: any
   updated_at: any
   show: boolean = false
+  titleTable: string = 'Nuevo Inventario'
 
   inventario: any = [];
 
@@ -40,12 +46,52 @@ export class InventoryComponent implements OnInit {
   public flag = false
   public reread = false
   element: string = "iniciando...";
-  showInv: any;
+  showInv: boolean = false;
+  btnText: any = 'Inicio';
+  action: string = 'register';
+  currentQr: string = null;
+  msg: string;
+  idSend: number;
+  id: number;
 
-  constructor(private formBuilder: FormBuilder, private _inventory: inventoryService) { }
+
+
+  @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
+  private componentRef: ComponentRef<any>;
+
+  constructor(
+
+    private Service: AngularNotificationService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private _inventory: inventoryService) { }
 
   ngOnInit() {
     this.getData()
+  }
+
+  addNotifElement() {
+    let setting = {
+      width: '300px',
+      type: 'success',
+      // title: ' <i> Ok <i>  ',
+      body: '<b><p style="color:black">Elemento leido correctamente <p></b>',
+      position: 'center',
+      duration: 1000,
+      background: '#FFF'
+    };
+    this.Service.setProperties(setting);
+    const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
+    this.componentRef = this.target.createComponent(childComponent);
+  }
+
+  selectCamera(cameraLabel: string) {
+    this.cameras.forEach(camera => {
+      if (camera.label.includes(cameraLabel)) {
+        this.myDevice = camera;
+        console.log(camera.label);
+        this.scannerEnabled = true;
+      }
+    })
   }
 
   getData() {
@@ -60,13 +106,24 @@ export class InventoryComponent implements OnInit {
   }
 
   getLast() {
-    console.log(this.selectedItem);
+
+    if (!this.selectedItem) {
+      Swal.fire('warning', 'Debes seleccionar un estante', 'warning');
+      return false;
+    }
+
+    this.showInv = false;
+    this.elements = []
+    this.btnText = 'Loading...';
+    this.idSend = this.selectedItem
+
+
     this._inventory.last(this.selectedItem)
       .subscribe(resp => {
-
+        this.showInv = true;
+        this.btnText = 'Inicio';
 
         if (!resp.data) {
-          this.showInv = true;
           Swal.fire('Success', 'Sin inventario previo', 'success');
           return false;
         }
@@ -76,6 +133,7 @@ export class InventoryComponent implements OnInit {
         this.created_at = resp.data.created_at
         this.updated_at = resp.data.updated_at
         this.show = true
+        this.id = resp.data.id
 
         if (resp.err) { functionsUtils.showErros(resp); return false; }
       }, (err) => {
@@ -83,55 +141,58 @@ export class InventoryComponent implements OnInit {
         console.log(err.err);
       });
   }
-
-
-
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
     this.cameras = cameras;
     this.selectCamera(this.cameras[0].label);
   }
-
-
-
   async scanSuccessHandler(event: string) {
+
+    this.msg = 'scanning...'
+
+    console.log('scanning...');
+
+    if (event == this.currentQr) {
+      this.reread = true
+      this.msg = ''
+      this.addNotifElement()
+      return false
+    }
+
+    if (event != this.currentQr) this.currentQr = event
 
     this.element = event
     this.reread = false
 
-    const promise = new Promise<number>((resolve, reject) => {
-      resolve(this.inventario.forEach(element => {
-        if (element.qr == event) {
-          element.quantity += 1;
-          this.flag = true
-          this.reread = true
-        }
-      }))
-    })
-
-    await promise.then(() => {
-      this.getDataElement(event)
-    }).finally(() => {
+    this.filter(event).then(async (bool) => await this.getDataElement(bool, event)).finally(() => {
       this.flag = false
       this.results.unshift(event);
+      this.addNotifElement();
     });
-
-
   }
 
-  selectCamera(cameraLabel: string) {
-    this.cameras.forEach(camera => {
-      if (camera.label.includes(cameraLabel)) {
-        this.myDevice = camera;
-        console.log(camera.label);
-        this.scannerEnabled = true;
-      }
-    })
+  filter = async (event: string) => {
+    return await this.inventario.some((element) => {
+      return element.qr == event;
+    });
   }
 
 
-  async getDataElement(event) {
 
-    if (!this.flag) {
+  msgshow() {
+    // Swal.fire({
+    //   title: 'Elemento Leido!',
+    //   text: 'El elemento ya ha sido agregado.',
+    //   icon: 'success',
+    //   position: 'bottom',
+    //   showConfirmButton: false,
+    //   timer: 1000
+    // });
+
+  }
+
+  async getDataElement(flag, event) {
+
+    if (!flag) {
       this.reread = false
       this._inventory.getElement(event)
         .subscribe(resp => {
@@ -141,9 +202,10 @@ export class InventoryComponent implements OnInit {
             "qr": event,
             "name": resp.data.name,
             "reference": resp.data.reference,
-            "img": environment.base_media + 'stores/' + event + '.png',
+            "img": environment.base_media + 'items/' + event + '.png',
 
           })
+          this.msg = ''
           if (resp.err) { functionsUtils.showErros(resp); return false; }
         }, (err) => {
           console.log(Object.keys(err));
@@ -151,17 +213,56 @@ export class InventoryComponent implements OnInit {
         });
     }
 
+    if (flag) {
+      this.flag = true
+      this.reread = true
+      this.msg = ''
+    }
 
   }
 
 
+  editInventory() {
+    this.msg = ''
+    this.inventario = []
+    this.action = 'edit'
+    this.titleTable = "Actualizando Ultimo inventario";
+    this.elements.forEach(element => {
+      if (element.quantities.quantity) {
+        this.inventario.push({
+          "quantity": element.quantities.quantity,
+          "qr": element.qr,
+          "name": element.name,
+          "reference": element.reference,
+          "img": environment.base_media + 'items/' + element.qr + '.png',
+        })
+      }
+    });
+
+    this.idSend = this.id
+    this.reread = false
+  }
+
+  newInventory() {
+    this.msg = ''
+    this.action = 'register'
+    this.titleTable = "Nuevo Inventario";
+    this.inventario = []
+    this.reread = false
+    this.currentQr = null
+    this.idSend = this.selectedItem
+  }
+
   sendInventory() {
     this.submitted = true;
-    this._inventory.register({ "items": this.inventario }, this.selectedItem)
+    this._inventory.register({ "items": this.inventario }, this.idSend, this.action)
       .subscribe(resp => {
         if (resp.err) { functionsUtils.showErros(resp); return false; }
+        this.newInventory()
+        this.getLast()
         Swal.fire('Success', 'Operación realizada correctamente', 'success');
         this.inventario = []
+        this.submitted = false;
       }, (err) => {
         console.log(Object.keys(err));
         console.log(err.err);

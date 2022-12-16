@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" (click)="getLast()">Inicio</button>
+                        <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
                     </div>
                 </div>
             </div>
@@ -21,54 +21,62 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-sm-12" *ngIf="show">
-        <app-card cardTitle="Información último inventario" [options]="false">
 
-            <div class="row mb-3">
+        <app-card cardTitle="Información último inventario" [options]="true" color="red">
+
+            <div class="row mb-3" *ngIf="this.elements.length  >0 ">
                 <div class="col-md-6">
 
+                    <br>
+                    <b> Opciones: </b> <button title="editar" type="button" class="btn btn-primary btn-sm"
+                        (click)="editInventory()"><i class="feather icon-edit"></i>
+                    </button>
+                    <button title="nuevo" type="button" class="btn btn-success btn-sm" (click)="newInventory()"><i
+                            class="feather icon-book"></i>
+                    </button>
+                    <br>
                     <span> <b> Estante: </b> {{store.name}}</span>
                     <br>
                     <span> <b>Dirección:</b> {{store.address}}</span>
-
-
                 </div>
                 <div class="col-md-6">
-
-                    <span><b>Creado:</b> {{created_at |date:'medium'}}</span>
+                    <br>
+                    <span><b>Creado:</b> {{created_at}}</span>
                     <br>
                     <span><b>Actualizado:</b> {{updated_at |date:'medium':'-5'}}</span>
 
-
-
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Elemento</th>
-                                <th>Referencia</th>
-                                <th>Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of elements">
-                                <td class="text"><label class="text">{{item.name}}</label></td>
-                                <td class="text"><label class="text">{{item.reference}}</label></td>
-                                <td class="text"><label
-                                        class="badge badge-light-primary">{{item.quantities.quantity}}</label></td>
-                            </tr>
-                        </tbody>
-                    </table>
 
-                </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Elemento</th>
+                            <th>Referencia</th>
+                            <th>Existencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of elements">
+                            <td class="text"><label class="text">{{item.name}}</label></td>
+                            <td class="text"><label class="text">{{item.reference}}</label></td>
+                            <td class="text">
+
+                                <label *ngIf="item.quantities.quantity > 0 " class="badge badge-light-primary"><i
+                                        class="feather icon-check"></i> </label>
+                                <label *ngIf="item.quantities.quantity == 0 " class="badge badge-light-danger"><i
+                                        class="feather icon-x"></i> </label>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
-
         </app-card>
     </div>
 </div>
@@ -96,15 +104,11 @@
                     </div>
                 </div>
                 <div class="col-md-6 justify-content-center text-center">
-
-
-
                     <div class="form-group">
-
                         <div class="row">
                             <div class="col-md-12">
 
-                                <app-card cardTitle="Usuarios">
+                                <app-card cardTitle="{{titleTable}}">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0">
                                             <thead>
@@ -122,13 +126,13 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" lass="text"><label class="badge badge-light-primary"
-                                                            *ngIf="!reread"> Leyendo ...</label>
-                                                    </td>
+                                                    <td colspan="3" class="text text-primary">{{msg}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" lass="text"><label class="badge badge-light-primary"
-                                                            *ngIf="reread"> Ya leido ...</label>
+                                                    <td colspan="3" class="text" *ngIf="reread"><label
+                                                            class="text-danger" *ngIf="msg == ''">
+                                                            Ya leido
+                                                            ...</label>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -138,8 +142,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <button type="button" class="btn btn-primary btn-sm" [disabled]="this.submitted"
                         (click)="sendInventory()">Enviar</button>
                 </div>
@@ -147,3 +149,5 @@
         </app-card>
     </div>
 </div>
+
+<div #parent> </div> 

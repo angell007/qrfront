@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-    <app-card cardTitle="Usuarios">
+    <app-card cardTitle="Elementos">
       <div class="table-responsive">
         <table class="table table-xs">
           <thead>
@@ -25,7 +25,8 @@
                     class="feather icon-eye-off"></i></button>
               </td>
               <td>
-                <img *ngIf="user.show" src="{{img}}" alt="">
+                <img style="width: 200px; height: auto" *ngIf="user.show" src="{{img}}" alt=""
+                  class="img-responsive ">
               </td>
             </tr>
           </tbody>

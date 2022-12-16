@@ -48,7 +48,7 @@ const NavigationItems = [
         children: [
           {
             id: 'register',
-            title: 'Registro',
+            title: 'Gestión',
             type: 'item',
             url: '/dashboard/user/register',
             target: false
@@ -110,7 +110,7 @@ const NavigationItems = [
         id: 'Inventory',
         title: 'Inventario',
         type: 'collapse',
-        icon: 'feather icon-tag',
+        icon: 'feather icon-layers',
         children: [
           {
             id: 'register',
@@ -120,10 +120,10 @@ const NavigationItems = [
             target: false
           },
           {
-            id: 'register',
-            title: 'Index',
+            id: 'index',
+            title: 'Inventarios',
             type: 'item',
-            url: '/dashboard/inventories/resource-inventory/index',
+            url: '/dashboard/inventories/resource-inventory/alls',
             target: false
           }
         ]

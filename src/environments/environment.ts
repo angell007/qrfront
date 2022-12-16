@@ -3,9 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  base_url: 'https://6d22-2800-e2-2f7f-f459-c17a-4023-670b-a97c.ngrok.io/baseApi/public/api',
-  base_media: 'https://6d22-2800-e2-2f7f-f459-c17a-4023-670b-a97c.ngrok.io/baseApi/public/imgs/',
+  // production: false,
+  base_url: 'https://baseapi.test/api',
+  // base_url: 'https://apiqr.conectaedu.co/api',
+  base_media: 'https://baseapi.test/imgs/',
+  // base_media: 'https://apiqr.conectaedu.co/imgs/',
+
+  production: true,
+  // base_url: 'https://apiqr.conectaedu.co/api',
+  // base_media: 'https://apiqr.conectaedu.co/imgs/',
+  
+
 };
 
 /*

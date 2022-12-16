@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { userService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 export class TblSizingComponent implements OnInit {
 
   public users: any
-  constructor(private _user: userService) { }
+  constructor(private _user: userService, private router: Router) { }
 
   ngOnInit() {
     this.getData()
@@ -27,5 +28,10 @@ export class TblSizingComponent implements OnInit {
         console.log(Object.keys(err));
         console.log(err.err);
       });
+  }
+
+  goMyInventories(id) {
+    this.router.navigate(['/dashboard/inventories/resource-inventory/myowners'], { queryParams: { hash: id } });
+
   }
 }

@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
         });
 
         user.show = true
-        this.img = environment.base_media + 'stores/qr' + user.id + '.png'
+        this.img = environment.base_media + 'items/qr' + user.id + '.png'
         console.log(this.img);
     }
 }

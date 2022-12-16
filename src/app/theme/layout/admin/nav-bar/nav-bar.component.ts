@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NextConfig} from '../../../../app-config';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ObservablesService } from 'src/app/observables/observable.service';
+import { NextConfig } from '../../../../app-config';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,15 +15,22 @@ export class NavBarComponent implements OnInit {
 
   @Output() onNavCollapse = new EventEmitter();
   @Output() onNavHeaderMobCollapse = new EventEmitter();
+  points: any;
+  alerts: any;
 
-  constructor() {
+  constructor(private _obs: ObservablesService) {
     this.nextConfig = NextConfig.config;
     this.menuClass = false;
     this.collapseStyle = 'none';
     this.windowWidth = window.innerWidth;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+
+    this.points = this._obs.points.subscribe(async (alerts: string) => this.alerts = alerts)
+
+  }
 
   toggleMobOption() {
     this.menuClass = !this.menuClass;

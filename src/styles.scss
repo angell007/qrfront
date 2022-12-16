@@ -3,3 +3,29 @@
 /* SCSS */
 @import "scss/style";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+* {
+    // font-family: Raleway-SemiBold;
+    // font-size: 1em;
+}
+
+.btn {
+    font-family: Raleway-SemiBold;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    line-height: 15px !important;
+    border: 2px solid rgba(118, 177, 255, 0.75) !important;
+    border-radius: 40px !important;
+    transition: all 0.3s ease 0s !important;
+}
+
+.badge {
+    // font-family: Raleway-SemiBold;
+    font-size: 1em;
+    // font-size: 13px !important;
+    // letter-spacing: 1px !important;
+    // line-height: 15px !important;
+    // border: 2px solid rgba(118, 177, 255, 0.75) !important;
+    // border-radius: 40px !important;
+    transition: all 0.3s ease 0s !important;
+}

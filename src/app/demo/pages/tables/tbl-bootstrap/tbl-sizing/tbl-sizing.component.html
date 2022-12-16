@@ -17,7 +17,8 @@
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
               <td>
-                <button type="button" class="btn btn-icon btn-info btn-xs"><i class="feather icon-eye"></i></button>
+                <button (click)="goMyInventories(user.id)" type="button" class="btn btn-icon btn-info btn-xs"><i
+                    class="feather icon-eye"></i></button>
               </td>
             </tr>
           </tbody>

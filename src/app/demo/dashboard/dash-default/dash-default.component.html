@@ -33,10 +33,9 @@
         <app-card [hidHeader]="true" cardClass="support-bar overflow-hidden" blockClass="p-0" [isCardFooter]="true"
           footerClass="bg-success text-white">
           <div class="p-20 pb-0">
-            <h2 class="m-0">{{storesWithMissings}}</h2>
-            <span class="text-c-green">Estantes con menos elementos que el inventario anterior</span>
-            <p class="mb-3 mt-3">Numero total de estantes que tienen menos cantidad comparado frente al ultimo
-              inventario.</p>
+            <h2 class="m-0">{{stores}}</h2>
+            <span class="text-c-green">Tiendas activas</span>
+            <p class="mb-3 mt-3">Numero total de tiendas regstaradas en el sistema.</p>
           </div>
           <app-apex-chart chartID="support-chart-2" [chartConfig]="this.supportChartData2"></app-apex-chart>
           <!-- <div class="app-card-footer">
@@ -65,8 +64,8 @@
         <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="bg-c-yellow">
           <div class="row align-items-center">
             <div class="col-8">
-              <h4 class="text-c-yellow">{{missings}}</h4>
-              <h6 class="text-muted m-b-0">Inventarios con elementos menores al inventario anterior</h6>
+              <h4 class="text-c-yellow">{{inventories}}</h4>
+              <h6 class="text-muted m-b-0">Inventarios registrados en el sitio</h6>
             </div>
             <div class="col-4 text-right">
               <i class="feather icon-bar-chart-2 f-28"></i>

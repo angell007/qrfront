@@ -1,35 +1,72 @@
-<div class="row">
-  <div class="col-sm-12">
-    <app-card cardTitle="Usuarios">
-      <div class="table-responsive">
-        <!-- <table class="table table-xs">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Referencía</th>
-              <th>Acción</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of items; index as i;">
-              <td>{{i+1}}</td>
-              <td>{{user.name}}</td>
-              <td>{{user.reference}}</td>
-              <td>
-                <button type="button" class="btn btn-icon btn-info btn-sm" (click)="showQr(user)"> <i
-                    class="feather icon-eye"></i></button>
-                <button type="button" class="btn btn-icon btn-danger btn-sm" (click)="hideQr(user)"> <i
-                    class="feather icon-eye-off"></i></button>
-              </td>
-              <td>
-                <img *ngIf="user.show" src="{{img}}" alt="">
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
-      </div>
-    </app-card>
+<app-card cardTitle="" [options]="false" *ngIf="!load && !show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Ir a inicio {{load}}
+        {{show}}</p>
+    </div>
   </div>
+</app-card>
+
+
+<app-card cardTitle="" [options]="false" *ngIf="load && show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+    </div>
+  </div>
+</app-card>
+
+<div *ngIf="!load && show">
+  <ng-container *ngFor="let item of items">
+    <div class="row">
+      <div class="col-sm-12" *ngIf="show">
+        <app-card cardTitle="Información último inventario" [options]="false">
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+
+              <span> <b> Estante: </b> {{item.store.name}}</span>
+              <br>
+              <span> <b>Dirección:</b> {{item.store.address}}</span>
+
+
+            </div>
+            <div class="col-md-6">
+
+              <span><b>Creado:</b> {{item.created_at}}</span>
+              <br>
+              <span><b>Actualizado:</b> {{item.updated_at |date:'medium':'-5'}}</span>
+
+
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Elemento</th>
+                    <th>Referencia</th>
+                    <th>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of item.elements">
+                    <td class="text"><label class="text">{{item.name}}</label></td>
+                    <td class="text"><label class="text">{{item.reference}}</label></td>
+                    <td class="text"><label class="badge badge-light-primary">{{item.quantities.quantity}}</label></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+        </app-card>
+      </div>
+
+    </div>
+  </ng-container>
 </div>
