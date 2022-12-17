@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
 import { userService } from 'src/app/services/user.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
 
@@ -19,7 +20,11 @@ export class MyownersComponent implements OnInit {
   id: string = null;
   load = false;
   user: any;
-  constructor(private route: ActivatedRoute, private _user: userService) { }
+  private componentRef: ComponentRef<any>;
+  @ViewChild('parents', { read: ViewContainerRef }) target: ViewContainerRef;
+  constructor(private Service: AngularNotificationService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private route: ActivatedRoute, private _user: userService) { }
 
   ngOnInit() {
 
@@ -32,9 +37,8 @@ export class MyownersComponent implements OnInit {
 
 
   print(id: string) {
-
+    this.addNotifElement()
     let printContents, popupWin;
-
     printContents = document.getElementById(id).innerHTML.toString();
     printContents = (<string>printContents + "").replace("col-sm", "col-xs");
     popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
@@ -85,11 +89,45 @@ export class MyownersComponent implements OnInit {
     popupWin.document.close();
   }
 
+  printQr(id) {
+    this.addNotifElement()
+    this._user.getpdflist(id)
+      .subscribe(resp => {
+        let fileName = 'qrReference'
+        this.downloadFile2(resp.body);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+  }
+
+  downloadFile2(data: Blob) {
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = 'qrReference';
+    link.click();
+  }
 
 
+  addNotifElement() {
+    console.log('notify');
+    let setting = {
+      width: '300px',
+      type: 'success',
+      body: '<b><p style="color:black">Descargando archivo por favor espere ... <p></b>',
+      position: 'center',
+      duration: 3000,
+      background: '#FFF'
+    };
+    this.Service.setProperties(setting);
+    this.Service.setProperties(setting);
+    const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
+    this.componentRef = this.target.createComponent(childComponent);
+  }
 
   getexcel(id) {
-
+    this.addNotifElement()
     this._user.getexcel(id)
       .subscribe(resp => {
 

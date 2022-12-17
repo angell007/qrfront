@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-        <app-card cardTitle="Registro de usuario" [options]="false">
+        <app-card cardTitle="Registro de elemento" [options]="false">
             <!-- <h5>Registro de usuario</h5> -->
             <!-- <hr> -->
             <form [formGroup]="ModelForm" (ngSubmit)="onSubmit()">
@@ -13,8 +13,26 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Referencía</label>
-                            <input type="text" class="form-control" placeholder="" formControlName="reference">
+                            <label>Referencía - sku</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="sku">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Material</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="material">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>sheet size</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="size">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Packing</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="packing">
                         </div>
                     </div>
                     <div class="col-md-12">

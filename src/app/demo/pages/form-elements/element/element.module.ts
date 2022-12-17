@@ -4,6 +4,7 @@ import { ElementComponent } from './element.component';
 import { IndexComponent } from './index/index.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ElementRoutingModule } from './element-routing.module';
+import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -13,6 +14,8 @@ import { ElementRoutingModule } from './element-routing.module';
     CommonModule,
     ElementRoutingModule,
     SharedModule,
+    NgbPaginationModule,
+    NgbAlertModule
   ]
 })
 export class ElementModule { }

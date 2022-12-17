@@ -1,37 +1,65 @@
 <div class="row">
   <div class="col-sm-12">
     <app-card cardTitle="Elementos">
+
+      <div class="col-sm-12">
+        <!-- <input  type="text" class="form-control" /> -->
+
+
+        <input placeholder="filtrar..." class="form-control" [(ngModel)]="filter" type="text"
+          (ngModelChange)="this.filterUpdate.next($event)">
+
+      </div>
+
+      <br>
+
       <div class="table-responsive">
-        <table class="table table-xs">
+        <table class="table">
           <thead>
             <tr>
               <th>#</th>
               <th>Nombre</th>
               <th>Referencía</th>
+              <th>Size</th>
+              <th>Packing</th>
+              <th>Estado</th>
               <!-- <th>Elementos</th> -->
               <th>Acción</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of items; index as i;">
+            <tr *ngFor="let item of items; index as i;">
               <td>{{i+1}}</td>
-              <td>{{user.name}}</td>
-              <td>{{user.reference}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.sku}}</td>
+              <td>{{item.sheet_size}}</td>
+              <td>{{item.packing}}</td>
+              <td  [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">{{item.status}}</td>
               <td>
-                <button type="button" class="btn btn-icon btn-info btn-sm" (click)="showQr(user)"> <i
+                <button type="button" class="btn btn-icon btn-default btn-xs" (click)="printQr(item.id)"> <i
+                    class="feather icon-file"></i></button>
+                <button title="Cambiar estado" type="button" class="btn btn-icon btn-success btn-xs"
+                  (click)="status(item.id)"> <i class="feather icon-check"></i></button>
+                <button type="button" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)"> <i
                     class="feather icon-eye"></i></button>
-                <button type="button" class="btn btn-icon btn-danger btn-sm" (click)="hideQr(user)"> <i
+                <button type="button" class="btn btn-icon btn-danger btn-xs" (click)="hideQr(item)"> <i
                     class="feather icon-eye-off"></i></button>
               </td>
               <td>
-                <img style="width: 200px; height: auto" *ngIf="user.show" src="{{img}}" alt=""
-                  class="img-responsive ">
+                <img style="width: 200px; height: auto" *ngIf="item.show" src="{{img}}" alt="" class="img-responsive ">
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <ngb-pagination ngbTooltip="Tooltip on top" class="d-flex justify-content-center" [rotate]="true"
+        (pageChange)="recall($event)" [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="10"
+        [boundaryLinks]="true">
+      </ngb-pagination>
+
     </app-card>
   </div>
 </div>
+
+<div #parent> </div> 

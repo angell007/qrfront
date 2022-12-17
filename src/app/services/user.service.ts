@@ -43,4 +43,15 @@ export class userService {
     // return this.client.get(this._rutaBase + '/inventory/export?id=' + id, { responseType: 'arraybuffer' });
   }
 
+  getpdflist(id): Observable<any> {
+
+    var HTTPOptions = {
+      headers: new HttpHeaders({ 'Accept': '*/*; charset=UTF-8', }),
+      observe: "response" as 'body',// to display the full response & as 'body' for type cast
+      'responseType': 'blob' as 'json'
+    }
+
+    return this.client.get(this._rutaBase + '/elements/pdfdownload/' + id, HTTPOptions);
+  }
+
 }

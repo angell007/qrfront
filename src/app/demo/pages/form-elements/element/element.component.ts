@@ -40,7 +40,12 @@ export class ElementComponent implements OnInit {
   cleanForm() {
     this.ModelForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      reference: ['', [Validators.required]],
+      // reference: ['', [Validators.required]],
+      sku: ['', [Validators.required]],
+      material: ['', [Validators.required]],
+      size: ['', [Validators.required]],
+      packing: ['', [Validators.required]],
+     
     });
   }
 }

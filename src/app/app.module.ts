@@ -79,7 +79,8 @@ import { environment } from '../environments/environment';
     NgbButtonsModule,
     NgbTabsetModule,
     AuthModule, 
-    AngularNotificationModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
+    AngularNotificationModule, 
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
     // NgxLaravelEchoModule.forRoot(echoConfig),
 
   ],

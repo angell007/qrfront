@@ -23,8 +23,8 @@
             <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Inventarios por
                 ejecutivo </p>
             <br>
-            <button (click)="print('all')" type="button" class="btn btn-icon btn-info btn-xs"><i
-                    class="feather icon-printer"></i></button>
+            <button (click)="print('all')" ngbTooltip="Todos Los inventarios del usuario" type="button"
+                class="btn btn-icon btn-info btn-xs"><i class="feather icon-printer"></i></button>
         </div>
 
 
@@ -35,17 +35,17 @@
     <ng-container *ngFor="let item of items">
 
         <div *ngIf="show" id="table">
-            <app-card cardTitle="Información inventario" [options]="false">
+            <app-card cardTitle="Información inventario" [options]="true">
 
                 <div class="row mb-3">
                     <div class="col-md-6">
 
-                        <span id="noprint"> <b> Imprimir Inventario: </b> 
-                            
-                            <button (click)="print('table')" type="button"
+                        <span id="noprint"> <b> Imprimir Inventario: </b>
+
+                            <button (click)="print('table')" ngbTooltip="Inventario completo" type="button"
                                 class="btn btn-icon btn-info btn-xs"><i class="feather icon-printer"></i></button>
 
-                            <button (click)="getexcel(item.id)" title="Solo faltantes" type="button"
+                            <button (click)="getexcel(item.id)" ngbTooltip="Solo faltantes" type="button"
                                 class="btn btn-icon btn-warning btn-xs"><i class="feather icon-printer"></i></button>
                         </span>
                         <br>
@@ -65,29 +65,39 @@
 
                     </div>
                 </div>
+            <!-- </app-card> -->
+            <!-- <app-card cardTitle=""> -->
+                <div class="table-responsive">
+                    <table class="table table-xs">
 
-
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Elemento</th>
-                            <th>Referencia</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of item.elements">
-                            <td class="text"><label class="text">{{item.name}}</label></td>
-                            <td class="text"><label class="text">{{item.reference}}</label></td>
-                            <td class="text"><label
-                                    class="badge badge-light-primary">{{item.quantities.quantity}}</label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <thead>
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Referencia</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of item.elements">
+                                <td class="text"><label class="text">{{item.name}}</label></td>
+                                <td class="text"><label class="text">{{item.sku}}</label></td>
+                                <td class="text"><label class="badge"
+                                        [ngClass]="item.quantities.quantity == 0  ? 'badge-light-danger' : 'badge-light-primary'">
+                                        {{ item.quantities.quantity ?
+                                        '✓' : 'x'}}</label>
+                                </td>
+                                <button type="button" class="btn btn-icon btn-default btn-sm" (click)="printQr(item.id)"
+                                    ngbTooltip="Qr de la referencia"> <i class="feather icon-file"></i></button>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
             </app-card>
         </div>
 
     </ng-container>
+    <div #parents> </div> 
 </div>
+

@@ -5,65 +5,66 @@ import { inventoryService } from 'src/app/services/inventory.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { userService } from 'src/app/services/user.service';
 
 @Component({
-    selector: 'app-inventory-all-index',
-    templateUrl: './index.component.html',
+  selector: 'app-inventory-all-index',
+  templateUrl: './index.component.html',
 })
 export class allIndexComponent implements OnInit {
 
 
-    loginForm: FormGroup;
-    submitted = false;
-    error = '';
-    items: any = [];
-    img: any;
-    show: boolean = false;
-    current: boolean = false;
-    id: string = null;
-    public obsuser: Subscription
-    load = false;
-    constructor(private route: ActivatedRoute, private _inventory: inventoryService, private _obs: ObservablesService, private router: Router) { }
+  loginForm: FormGroup;
+  submitted = false;
+  error = '';
+  items: any = [];
+  img: any;
+  show: boolean = false;
+  current: boolean = false;
+  id: string = null;
+  public obsuser: Subscription
+  load = false;
+  constructor(private _user: userService, private route: ActivatedRoute, private _inventory: inventoryService, private _obs: ObservablesService, private router: Router) { }
 
-    ngOnInit() {
+  ngOnInit() {
 
-        this.getData()
-
-
-    }
-
-    async getData() {
-
-        this.load = true
-        this.show = true
-
-        this._inventory.alls()
-            .subscribe(resp => {
-                this.items = resp.data
-                console.log(this.items);
-                this.load = false
-                if (resp.err) { functionsUtils.showErros(resp); return false; }
-            }, (err) => {
-                console.log(Object.keys(err));
-                console.log(err.err);
-            });
-    }
+    this.getData()
 
 
-    print(id: string, name: string) {
+  }
 
-        let printContents, popupWin;
+  async getData() {
 
-        printContents = document.getElementById(id).innerHTML.toString();
-        printContents = (<string>printContents + "").replace("col-sm", "col-xs");
-        popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
-        const date = new Date();
+    this.load = true
+    this.show = true
 
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
+    this._inventory.alls()
+      .subscribe(resp => {
+        this.items = resp.data
+        console.log(this.items);
+        this.load = false
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+  }
 
-        popupWin.document.write(`
+
+  print(id: string, name: string) {
+
+    let printContents, popupWin;
+
+    printContents = document.getElementById(id).innerHTML.toString();
+    printContents = (<string>printContents + "").replace("col-sm", "col-xs");
+    popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    popupWin.document.write(`
           <html>
             <head>
               <title>Reporte ${name} </title>
@@ -101,7 +102,47 @@ export class allIndexComponent implements OnInit {
               </div>
             </body>
           </html>`);
-        popupWin.document.close();
-    }
+    popupWin.document.close();
+  }
 
+
+  getexcel(id) {
+
+    this._user.getexcel(id)
+      .subscribe(resp => {
+        this.downloadFile(resp.body);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+
+  }
+
+  downloadFile(data: Blob) {
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = 'reporte';
+    link.click();
+  }
+
+
+  printQr(id) {
+    this._user.getpdflist(id)
+      .subscribe(resp => {
+        let fileName = 'qrReference'
+        this.downloadFile2(resp.body);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+  }
+
+  downloadFile2(data: Blob) {
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = 'qrReference';
+    link.click();
+  }
 }
