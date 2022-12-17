@@ -29,6 +29,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { MyownersComponent } from './demo/pages/form-elements/user/myowners/myowners.component';
 import { AngularNotificationModule } from 'angular-notification-alert';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 // import { EchoConfig, NgxLaravelEchoModule } from 'ngx-laravel-echo';
@@ -77,7 +79,7 @@ import { AngularNotificationModule } from 'angular-notification-alert';
     NgbButtonsModule,
     NgbTabsetModule,
     AuthModule, 
-    AngularNotificationModule,
+    AngularNotificationModule, ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
     // NgxLaravelEchoModule.forRoot(echoConfig),
 
   ],

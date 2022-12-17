@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~9.0.1",
     "@angular/platform-browser-dynamic": "~9.0.1",
     "@angular/router": "~9.0.1",
+    "@angular/service-worker": "~9.0.1",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
     "@ng-select/ng-select": "^7.4.0",
     "@sweetalert2/ngx-sweetalert2": "^7.3.0",
