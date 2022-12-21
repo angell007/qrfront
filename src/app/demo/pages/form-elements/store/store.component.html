@@ -1,34 +1,28 @@
+
+
+
 <div class="row">
   <div class="col-sm-12">
-    <app-card cardTitle="Registro de usuario" [options]="false">
-      <!-- <h5>Registro de usuario</h5> -->
-      <!-- <hr> -->
+    <app-card cardTitle="Shelf register" [options]="false">
       <form [formGroup]="ModelForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label>Nombre</label>
+              <label>Name</label>
               <input type="text" class="form-control" placeholder="" formControlName="name">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label>Dirección</label>
+              <label>Address</label>
               <input type="text" class="form-control" placeholder="" formControlName="address">
             </div>
           </div>
           <div class="col-md-12">
-            <button type="submit" class="btn btn-primary" [disabled]="(ModelForm.invalid)">Guardar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="(ModelForm.invalid)">Save</button>
           </div>
         </div>
       </form>
     </app-card>
   </div>
 </div>
-
-
-
-
-<ng-template #notData>
-  <!-- <app-not-data [loading]="loading"></app-not-data> -->
-</ng-template>

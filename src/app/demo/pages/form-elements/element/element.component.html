@@ -1,19 +1,17 @@
 <div class="row">
     <div class="col-sm-12">
-        <app-card cardTitle="Registro de elemento" [options]="false">
-            <!-- <h5>Registro de usuario</h5> -->
-            <!-- <hr> -->
+        <app-card cardTitle="Register of element" [options]="false">
             <form [formGroup]="ModelForm" (ngSubmit)="onSubmit()">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Nombre</label>
+                            <label>Name</label>
                             <input type="text" class="form-control" placeholder="" formControlName="name">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Referencía - sku</label>
+                            <label>Reference - sku</label>
                             <input type="text" class="form-control" placeholder="" formControlName="sku">
                         </div>
                     </div>
@@ -25,18 +23,38 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>sheet size</label>
+                            <label>Sheet size</label>
                             <input type="text" class="form-control" placeholder="" formControlName="size">
                         </div>
                     </div>
+
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Packing</label>
                             <input type="text" class="form-control" placeholder="" formControlName="packing">
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <label>Picture</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-camera"></i></span>
+                            </div>
+                            <div class="custom-file d-flex justify-content-center">
+                                <input style="cursor: pointer;" type="file" class="custom-file-input" id="file0"
+                                    (change)="onChange($event)">
+                                <label class="custom-file-label" for="file0"><i class="fa fa-upload"></i></label>
+                            </div>
+                        </div>
+                        <br>
+                        <img [src]="preview" width="70px" class="preview">
+                    </div>
+
+
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary" [disabled]="(ModelForm.invalid)">Guardar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="(ModelForm.invalid)">Save</button>
                     </div>
                 </div>
             </form>

@@ -141,6 +141,18 @@ export const functionsUtils = {
     }
     html += `</ul>`
     Swal.fire('Error', html, 'error');
+  },
+
+  showErros2(resp: any) {
+    let html = `<ul>`;
+    for (var clave in resp.error) {
+      for (var error in resp.error[clave]) {
+        console.log(error);
+        html += `<li> ${resp.error[clave][error]}</li>`
+      }
+    }
+    html += `</ul>`
+    Swal.fire('Error', html, 'error');
   }
 
 };

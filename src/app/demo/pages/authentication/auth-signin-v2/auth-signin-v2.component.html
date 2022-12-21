@@ -1,15 +1,15 @@
-<div class="auth-wrapper align-items-stretch aut-bg-img">
+<div class="auth-wrapper align-items-stretch aut-bg-img ">
   <div class="flex-grow-1">
-    <div class="h-100 d-md-flex align-items-center auth-side-img">
+    <div class="h-100 d-md-flex align-items-center auth-side-img bg-gray">
       <div class="col-sm-10 auth-content w-auto">
-        <!-- <img src="assets/images/auth/auth-logo.png" alt="" class="img-fluid"> -->
+        <!-- <img src="assets/images/auth/img-auth-big.jpg" width="200px" alt="" class="img-fluid"> -->
         <h1 class="text-white my-4">Hola, de nuevo!</h1>
         <h4 class="text-white font-weight-normal">Ingresa tus credenciales.<br /></h4>
       </div>
     </div>
-    <div class="auth-side-form">
-      <div class=" auth-content">
-        <img src="assets/images/auth/auth-logo-dark.png" alt="" class="img-fluid mb-4 d-block d-xl-none d-lg-none">
+    <div class="auth-side-form ">
+      <div class="auth-content bg-form">
+        <img src="assets/images/auth/img-auth-big.png" width="130px" alt="" class="rounded mx-auto d-block img-fluid mb-4">
         <h3 class="mb-4 f-w-400">Ingreso</h3>
         <form class="form-horizontal mb-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}

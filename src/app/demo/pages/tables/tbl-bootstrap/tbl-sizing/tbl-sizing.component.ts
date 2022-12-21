@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 export class TblSizingComponent implements OnInit {
 
   public users: any
+  public show: boolean = false
+
   constructor(private _user: userService, private router: Router) { }
 
   ngOnInit() {
@@ -21,6 +23,7 @@ export class TblSizingComponent implements OnInit {
     this._user.index()
       .subscribe(resp => {
         this.users = resp.data
+        this.show = true
         // if (resp.err) { functionsUtils.showErros(resp); return false; }
         // Swal.fire('Success', 'Operación realizada correctamente', 'success');
         // this.cleanForm()
@@ -34,4 +37,10 @@ export class TblSizingComponent implements OnInit {
     this.router.navigate(['/dashboard/inventories/resource-inventory/myowners'], { queryParams: { hash: id } });
 
   }
+
+  goEdit(id) {
+    this.router.navigate(['/dashboard/user/update'], { queryParams: { hash: id } });
+
+  }
+  
 }

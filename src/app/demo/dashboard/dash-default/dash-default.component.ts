@@ -28,6 +28,7 @@ export class DashDefaultComponent implements OnInit {
   public storesWithMissings: Number;
   inventories: any;
   stores: any;
+  show: boolean = false;
 
   constructor(private _staticts: statictsService,) {
     this.supportChartData1 = SupportChartData1.supportChartData;
@@ -53,6 +54,9 @@ export class DashDefaultComponent implements OnInit {
       this.missings = r.data.missings
       this.storesWithAlerts = r.data.storesWithAlerts
       this.storesWithMissings = r.data.storesWithMissings
+
+      this.show = true
+
       console.log(r);
     })
   }

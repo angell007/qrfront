@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MyownersComponent } from '../user/myowners/myowners.component';
+import { UpdateComponent } from '../user/update/update.component';
 import { allIndexComponent } from './alls/index.component';
 import { IndexComponent } from './index/index.component';
 import { InventoryComponent } from './inventory.component';

@@ -14,15 +14,10 @@ export class storeService {
 
     constructor(private client: HttpClient,
     ) { }
-
-
-
     register(data: FormData): Observable<any> {
         return this.client.post(this._rutaBase + '/stores/register', data);
     }
-
     index(): Observable<any> {
         return this.client.get(this._rutaBase + '/stores/index');
     }
-
 }

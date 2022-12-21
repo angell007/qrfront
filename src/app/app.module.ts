@@ -23,32 +23,15 @@ import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-ful
 
 /* Menu Items */
 import { NavigationItem } from './theme/layout/admin/navigation/navigation';
-import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbButtonsModule, NgbDropdownModule, NgbModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { MyownersComponent } from './demo/pages/form-elements/user/myowners/myowners.component';
 import { AngularNotificationModule } from 'angular-notification-alert';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-
-
-// import { EchoConfig, NgxLaravelEchoModule } from 'ngx-laravel-echo';
-
-// export const echoConfig: EchoConfig = {
-//   userModel: 'users',
-//   notificationNamespace: 'App\\Notifications',
-//   options: {
-//     broadcaster: 'pusher',
-//     key: '124',
-//     wsHost: 'api.test',
-//     authEndpoint: 'http://api.test/broadcasting/auth',
-//     host: 'api.test',
-//     wsPort: 6001,
-//     disableStats: true,
-//     namespace: ''
-//   }
-// };
+import { HttpCancelService } from './services/http-cancel-service.service';
+import { ManageHttpInterceptor } from './Interceptors/managehttp.interceptor';
+// import { NgbToastModule } from  'ngb-toast';
 
 
 @NgModule({
@@ -78,13 +61,16 @@ import { environment } from '../environments/environment';
     NgbTooltipModule,
     NgbButtonsModule,
     NgbTabsetModule,
-    AuthModule, 
-    AngularNotificationModule, 
-    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
-    // NgxLaravelEchoModule.forRoot(echoConfig),
-
+    AuthModule,
+    AngularNotificationModule,
+    // NgbToastModule,
+    NgbModule
   ],
-  providers: [NavigationItem, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  providers: [
+    NavigationItem,
+    HttpCancelService,
+    { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 
   bootstrap: [AppComponent]

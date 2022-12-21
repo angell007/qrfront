@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <app-card cardTitle="" [options]="false">
-      <h5>Registro de usuario</h5>
+      <h5>User register </h5>
       <hr>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="row">
@@ -9,8 +9,8 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Email</label>
               <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1"
-                aria-describedby="emailHelp" placeholder="Enter email">
-              <small id="emailHelp" class="form-text text-muted">Los emails son unicos.</small>
+                aria-describedby="emailHelp" placeholder="Enter email" autocomplete="off">
+              <small id="emailHelp" class="form-text text-muted">Emails are unique. </small>
             </div>
             <!-- <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
@@ -25,33 +25,43 @@
           <div class="col-md-6">
             <!-- <form action="javascript:"> -->
             <div class="form-group">
-              <label>Nombre</label>
-              <input type="text" class="form-control" placeholder="" formControlName="name">
+              <label>Seller Rep./ Name </label>
+              <input type="text" class="form-control" placeholder="" formControlName="name" autocomplete="off">
             </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Tipo de Documento</label>
+
+            <!-- <div class="form-group">
+              <label for="exampleFormControlSelect1">Document type </label>
               <select class="form-control" id="exampleFormControlSelect1" formControlName="document_type">
                 <option>CC</option>
                 <option>Passport</option>
                 <option>Nit</option>
               </select>
-            </div>
+            </div> -->
 
             <div class="form-group">
-              <label>Numero de ID</label>
-              <input type="text" class="form-control" placeholder="" formControlName="document_number">
+              <label>ID number </label>
+              <input type="text" class="form-control" placeholder="" formControlName="document_number" autocomplete="off">
               <!-- <div *ngIf="submitted && form.user.errors" class="invalid-feedback">
                 <div *ngIf="form.document_number.errors.required">El campo usuario es obligatorio
                 </div>
               </div> -->
             </div>
 
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">User type </label>
+              <select class="form-control" id="exampleFormControlSelect1" formControlName="user_type">
+                <option>Warehouse</option>
+                <option>Vendor</option>
+              </select>
+            </div>
+
+
             <!-- <div class="form-group">
               <label for="exampleFormControlTextarea1">Example textarea</label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div> -->
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="(loginForm.invalid)">Guardar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="(loginForm.invalid)">Save</button>
         </div>
       </form>
     </app-card>

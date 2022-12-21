@@ -1,8 +1,9 @@
 import { Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
 import { userService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
+
 
 @Component({
   selector: 'app-myowners',
@@ -20,11 +21,8 @@ export class MyownersComponent implements OnInit {
   id: string = null;
   load = false;
   user: any;
-  private componentRef: ComponentRef<any>;
-  @ViewChild('parents', { read: ViewContainerRef }) target: ViewContainerRef;
-  constructor(private Service: AngularNotificationService,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private route: ActivatedRoute, private _user: userService) { }
+
+  constructor(private route: ActivatedRoute, private _user: userService, public toastEvent: ToastService) { }
 
   ngOnInit() {
 
@@ -35,9 +33,21 @@ export class MyownersComponent implements OnInit {
       );
   }
 
+  // showSuccess(): void {
+  //   const toast: NgbToast = {
+  //     toastType: NgbToastType.Info,
+  //     text: "El documento se descargará en breve, espere un momento...",
+  //     // dismissible: true,
+  //     timeInSeconds: 1,
+  //   }
+  //   this.toastService.show(toast);
+  // }
+
+  // removeToast(toast: NgbToast): void {
+  //   this.toastService.remove(toast);
+  // }
 
   print(id: string) {
-    this.addNotifElement()
     let printContents, popupWin;
     printContents = document.getElementById(id).innerHTML.toString();
     printContents = (<string>printContents + "").replace("col-sm", "col-xs");
@@ -90,7 +100,9 @@ export class MyownersComponent implements OnInit {
   }
 
   printQr(id) {
-    this.addNotifElement()
+    
+    this.toastEvent.toast({ uid: 'toastRight', delay: 1500 })
+
     this._user.getpdflist(id)
       .subscribe(resp => {
         let fileName = 'qrReference'
@@ -110,24 +122,7 @@ export class MyownersComponent implements OnInit {
   }
 
 
-  addNotifElement() {
-    console.log('notify');
-    let setting = {
-      width: '300px',
-      type: 'success',
-      body: '<b><p style="color:black">Descargando archivo por favor espere ... <p></b>',
-      position: 'center',
-      duration: 3000,
-      background: '#FFF'
-    };
-    this.Service.setProperties(setting);
-    this.Service.setProperties(setting);
-    const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
-    this.componentRef = this.target.createComponent(childComponent);
-  }
-
   getexcel(id) {
-    this.addNotifElement()
     this._user.getexcel(id)
       .subscribe(resp => {
 
@@ -152,10 +147,6 @@ export class MyownersComponent implements OnInit {
   }
 
   downloadFile(data: Blob) {
-
-
-
-
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
     link.download = 'reporte';

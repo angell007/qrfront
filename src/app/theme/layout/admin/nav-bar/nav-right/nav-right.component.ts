@@ -25,7 +25,7 @@ export class NavRightComponent implements OnInit {
 
   constructor(private _inventory: inventoryService, private router: Router, private _obs: ObservablesService) { }
 
-  obsTimer: Observable<number> = timer(0, 30000);
+  obsTimer: Observable<number> = timer(0, 60000);
 
   ngOnInit() {
 

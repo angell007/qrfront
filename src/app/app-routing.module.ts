@@ -4,6 +4,8 @@ import { AuthRoutingModule } from './auth/auth.routing';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthenticationRoutingModule } from './demo/pages/authentication/authentication-routing.module';
 import { AdminComponent } from './theme/layout/admin/admin.component';
+import { PreloadAllModules } from '@angular/router';
+
 
 const routes: Routes = [
   {
@@ -32,9 +34,11 @@ const routes: Routes = [
 
 ];
 
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    // RouterModule.forRoot(routes),
     AuthRoutingModule,
     AuthenticationRoutingModule
   ],

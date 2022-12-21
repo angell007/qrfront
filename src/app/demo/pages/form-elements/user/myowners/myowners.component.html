@@ -1,33 +1,52 @@
+
+
+
+<div class="row d-flex justify-content-center align-items-center">
+    <div class="fixedbutton">
+        <app-toast uID="toastRight">
+            <strong>
+                Downloading document soon ...
+            </strong>
+        </app-toast>
+    </div>
+</div>
+
 <app-card cardTitle="" [options]="false" *ngIf="!load && !show">
     <div class="row">
         <div class="col-sm-12 text-center">
-            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Ir a inicio
-                {{load}}
-                {{show}}</p>
+            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Ir a inicio</p>
         </div>
     </div>
 </app-card>
 
 
-<app-card cardTitle="" [options]="false" *ngIf="load && show">
+
+<app-card cardTitle="" [options]="true" *ngIf="load && show">
     <div class="row">
         <div class="col-sm-12 text-center">
+            <br>
             <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+
         </div>
     </div>
 </app-card>
 
-<app-card cardTitle="" [options]="false" *ngIf="!load && show">
+
+
+<app-card cardTitle="" [options]="true" *ngIf="!load && show">
+
     <div class="row">
         <div class="col-sm-12 text-center">
+            <br>
             <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Inventarios por
                 ejecutivo </p>
-            <br>
-            <button (click)="print('all')" ngbTooltip="Todos Los inventarios del usuario" type="button"
-                class="btn btn-icon btn-info btn-xs"><i class="feather icon-printer"></i></button>
+            <button (click)="print('all')" container="body" ngbTooltip="Todos Los inventarios del usuario" type="button"
+                class="btn btn-icon btn btn-link btn-sm"><i class="feather icon-printer"></i></button>
         </div>
-
-
     </div>
 </app-card>
 
@@ -35,18 +54,20 @@
     <ng-container *ngFor="let item of items">
 
         <div *ngIf="show" id="table">
+            <br>
             <app-card cardTitle="Información inventario" [options]="true">
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-
+                        <br>
                         <span id="noprint"> <b> Imprimir Inventario: </b>
 
-                            <button (click)="print('table')" ngbTooltip="Inventario completo" type="button"
-                                class="btn btn-icon btn-info btn-xs"><i class="feather icon-printer"></i></button>
+                            <button type="button" (click)="print('table')" container="body" ngbTooltip="all"
+                                class="btn btn-icon btn btn-link btn-sm"><i class="feather icon-printer"></i></button>
 
-                            <button (click)="getexcel(item.id)" ngbTooltip="Solo faltantes" type="button"
-                                class="btn btn-icon btn-warning btn-xs"><i class="feather icon-printer"></i></button>
+                            <button type="button" (click)="getexcel(item.id)" container="body"
+                                ngbTooltip="just missing" class="btn btn-icon btn-warning btn-sm"><i
+                                    class="feather icon-printer"></i></button>
                         </span>
                         <br>
                         <span> <b> Estante: </b> {{item.store.name}}</span>
@@ -56,7 +77,7 @@
 
                     </div>
                     <div class="col-md-6">
-
+                        <br>
                         <span><b>Creado:</b> {{item.created_at}}</span>
                         <br>
                         <span><b>Actualizado:</b> {{item.updated_at |date:'medium':'-5'}}</span>
@@ -65,8 +86,8 @@
 
                     </div>
                 </div>
-            <!-- </app-card> -->
-            <!-- <app-card cardTitle=""> -->
+                <!-- </app-card> -->
+                <!-- <app-card cardTitle=""> -->
                 <div class="table-responsive">
                     <table class="table table-xs">
 
@@ -87,17 +108,15 @@
                                         {{ item.quantities.quantity ?
                                         '✓' : 'x'}}</label>
                                 </td>
-                                <button type="button" class="btn btn-icon btn-default btn-sm" (click)="printQr(item.id)"
-                                    ngbTooltip="Qr de la referencia"> <i class="feather icon-file"></i></button>
+                                <button type="button" class="btn btn-icon btn btn-link btn-sm"
+                                    (click)="printQr(item.id)" container="body" ngbTooltip="Qr de la referencia"> <i
+                                        class="feather icon-file"></i></button>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
             </app-card>
         </div>
 
     </ng-container>
-    <div #parents> </div> 
 </div>
-

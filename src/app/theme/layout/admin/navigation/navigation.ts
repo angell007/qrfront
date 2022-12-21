@@ -42,42 +42,42 @@ const NavigationItems = [
       },
       {
         id: 'page-layouts',
-        title: 'Usuarios',
+        title: 'Users',
         type: 'collapse',
         icon: 'feather icon-users',
         children: [
           {
             id: 'register',
-            title: 'Gestión',
+            title: 'Create new user',
             type: 'item',
             url: '/dashboard/user/register',
             target: false
           },
           {
             id: 'index',
-            title: 'index',
+            title: 'User list',
             type: 'item',
             url: '/dashboard/user/index',
             target: false
-          }
+          },
         ]
       },
       {
         id: 'Estantes',
-        title: 'Estantes',
+        title: 'Stores',
         type: 'collapse',
-        icon: 'feather icon-grid',
+        icon: 'fa fa-store',
         children: [
           {
             id: 'register',
-            title: 'Registro',
+            title: 'Create new store',
             type: 'item',
             url: '/dashboard/store/resource/register',
             target: false
           },
           {
             id: 'register',
-            title: 'Index',
+            title: 'Store list',
             type: 'item',
             url: '/dashboard/store/resource/index',
             target: false
@@ -86,20 +86,20 @@ const NavigationItems = [
       },
       {
         id: 'Elementos',
-        title: 'Elementos',
+        title: 'Items',
         type: 'collapse',
         icon: 'feather icon-tag',
         children: [
           {
             id: 'register',
-            title: 'Registro',
+            title: 'Create new item',
             type: 'item',
             url: '/dashboard/elements/resource-element/register',
             target: false
           },
           {
             id: 'register',
-            title: 'Index',
+            title: 'Item list',
             type: 'item',
             url: '/dashboard/elements/resource-element/index',
             target: false
@@ -108,20 +108,20 @@ const NavigationItems = [
       },
       {
         id: 'Inventory',
-        title: 'Inventario',
+        title: 'Daily report',
         type: 'collapse',
         icon: 'feather icon-layers',
         children: [
           {
             id: 'register',
-            title: 'Registro',
+            title: 'Scan',
             type: 'item',
             url: '/dashboard/inventories/resource-inventory/register',
             target: false
           },
           {
             id: 'index',
-            title: 'Inventarios',
+            title: 'Report list',
             type: 'item',
             url: '/dashboard/inventories/resource-inventory/alls',
             target: false

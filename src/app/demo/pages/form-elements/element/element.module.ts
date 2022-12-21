@@ -4,7 +4,7 @@ import { ElementComponent } from './element.component';
 import { IndexComponent } from './index/index.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ElementRoutingModule } from './element-routing.module';
-import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbButtonsModule, NgbDropdownModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -15,7 +15,8 @@ import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap'
     ElementRoutingModule,
     SharedModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgbTooltipModule,
   ]
 })
 export class ElementModule { }

@@ -1,4 +1,18 @@
-<div class="row">
+<app-card cardTitle="" [options]="true" *ngIf="!show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <br>
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+
+    </div>
+  </div>
+</app-card>
+
+<div class="row" *ngIf="show">
   <!-- site Analytics card start -->
   <div class="col-xl-7 col-sm-12">
     <div class="row">
@@ -7,8 +21,8 @@
           footerClass="bg-primary text-white">
           <div class="p-20 pb-0">
             <h2 class="m-0">{{storesWithAlerts}}</h2>
-            <span class="text-c-blue">Estantes con alertas</span>
-            <p class="mb-3 mt-3">Numero total de estantes que tienen elementos pendientes.</p>
+            <span class="text-c-blue">Stores with alerts</span>
+            <p class="mb-3 mt-3">Total number of Stores that have pending items.</p>
           </div>
           <app-apex-chart chartID="support-chart-1" [chartConfig]="this.supportChartData1"></app-apex-chart>
           <!-- <div class="app-card-footer">
@@ -34,8 +48,8 @@
           footerClass="bg-success text-white">
           <div class="p-20 pb-0">
             <h2 class="m-0">{{stores}}</h2>
-            <span class="text-c-green">Tiendas activas</span>
-            <p class="mb-3 mt-3">Numero total de tiendas regstaradas en el sistema.</p>
+            <span class="text-c-green">Active stores</span>
+            <p class="mb-3 mt-3">Total number of stores registered in the system.</p>
           </div>
           <app-apex-chart chartID="support-chart-2" [chartConfig]="this.supportChartData2"></app-apex-chart>
           <!-- <div class="app-card-footer">
@@ -65,7 +79,7 @@
           <div class="row align-items-center">
             <div class="col-8">
               <h4 class="text-c-yellow">{{inventories}}</h4>
-              <h6 class="text-muted m-b-0">Inventarios registrados en el sitio</h6>
+              <h6 class="text-muted m-b-0">Inventories registered on the site </h6>
             </div>
             <div class="col-4 text-right">
               <i class="feather icon-bar-chart-2 f-28"></i>
@@ -88,7 +102,7 @@
           <div class="row align-items-center">
             <div class="col-8">
               <h4 class="text-c-blue">{{alerts}}</h4>
-              <h6 class="text-muted m-b-0">Inventarios con elementos en cero</h6>
+              <h6 class="text-muted m-b-0">Inventories with zero elements              </h6>
             </div>
             <div class="col-4 text-right">
               <i class="feather icon-file-text f-28"></i>

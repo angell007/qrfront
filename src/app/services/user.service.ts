@@ -20,6 +20,14 @@ export class userService {
     return this.client.post(this._rutaBase + '/users/register', data);
   }
 
+  update(data: FormData): Observable<any> {
+    return this.client.post(this._rutaBase + '/users/update', data);
+  }
+
+  getData(id: number): Observable<any> {
+    return this.client.post(this._rutaBase + '/users/getdata', {id: id});
+  }
+
   index(): Observable<any> {
     return this.client.get(this._rutaBase + '/users/index');
   }
@@ -27,9 +35,6 @@ export class userService {
   myowners(id): Observable<any> {
     return this.client.get(this._rutaBase + '/users/myowners/' + id);
   }
-
-
-
 
   getexcel(id): Observable<any> {
 

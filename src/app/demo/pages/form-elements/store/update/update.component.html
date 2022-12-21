@@ -1,0 +1,39 @@
+<app-card cardTitle="" [options]="true" *ngIf="!show">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <br>
+            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+
+        </div>
+    </div>
+</app-card>
+
+<div class="row" *ngIf="show">
+    <div class="col-sm-12">
+        <app-card cardTitle="Shelf register" [options]="false">
+            <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" class="form-control" placeholder="" formControlName="address">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" [disabled]="(modelForm.invalid)">Save</button>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>

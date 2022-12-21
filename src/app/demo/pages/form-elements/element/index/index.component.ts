@@ -7,11 +7,13 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Subject } from 'rxjs-compat';
 
 import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
+import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 
 
 @Component({
     selector: 'app-element-index',
     templateUrl: './index.component.html',
+    styleUrls: ['./element.component.scss']
 })
 export class IndexComponent implements OnInit {
 
@@ -23,6 +25,7 @@ export class IndexComponent implements OnInit {
     img: any;
     show: boolean = false;
     current: boolean = false;
+    showelements: boolean = false;
     page = 1;
     total = null;
     params = {}
@@ -34,30 +37,12 @@ export class IndexComponent implements OnInit {
     public filter: string;
     filterUpdate = new Subject<string>();
 
-    constructor(private _element: elementService, private Service: AngularNotificationService,
-        private componentFactoryResolver: ComponentFactoryResolver) {
-        this.addNotifElement();
+    constructor(private _element: elementService, public toastEvent: ToastService) {
         this.params = {
             page: 1,
             name: this.query,
             reference: this.query
         }
-    }
-
-
-    addNotifElement() {
-        let setting = {
-            width: '300px',
-            type: 'danger',
-            title: 'this an error message',
-            body: '<b>Something went wrong </b> check it out',
-            position: 'center',
-            duration: 4000,
-            background: '#fff'
-        };
-        this.Service.setProperties(setting);
-        const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
-        this.componentRef = this.target.createComponent(childComponent);
     }
 
     ngOnInit() {
@@ -88,6 +73,7 @@ export class IndexComponent implements OnInit {
 
     getData() {
 
+        this.showelements = false
         this._element.index(this.params)
             .subscribe(resp => {
                 this.items = resp.data.data
@@ -96,7 +82,7 @@ export class IndexComponent implements OnInit {
                 this.items.forEach(element => {
                     element.show = false
                 });
-
+                this.showelements = true
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
             }, (err) => {
                 console.log(Object.keys(err));
@@ -110,6 +96,9 @@ export class IndexComponent implements OnInit {
     }
 
     printQr(id) {
+
+        this.toastEvent.toast({ uid: 'toastRight', delay: 1500 })
+
         this._element.getpdflist(id)
             .subscribe(resp => {
                 let fileName = 'qrReference'
@@ -140,7 +129,9 @@ export class IndexComponent implements OnInit {
     }
 
     status(id) {
-        this.addNotifElement();
+
+        this.toastEvent.toast({ uid: 'toastRight2', delay: 1500 })
+        
         this._element.changuestatus({ id: id })
             .subscribe(resp => {
                 this.getData();

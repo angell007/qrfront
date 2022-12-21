@@ -1,14 +1,29 @@
-<div class="row">
+<app-card cardTitle="" [options]="true" *ngIf="!show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <br>
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+
+    </div>
+  </div>
+</app-card>
+
+<div class="row" *ngIf="show">
   <div class="col-sm-12">
-    <app-card cardTitle="Usuarios">
+    <app-card cardTitle="Users">
       <div class="table-responsive">
         <table class="table table-xs">
           <thead>
             <tr>
               <th>#</th>
-              <th>Nombre</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Acción</th>
+              <th>Role</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -16,9 +31,12 @@
               <td>{{i+1}}</td>
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
+              <td>{{user.user_type}}</td>
               <td>
                 <button (click)="goMyInventories(user.id)" type="button" class="btn btn-icon btn-info btn-xs"><i
                     class="feather icon-eye"></i></button>
+                <button (click)="goEdit(user.id)" type="button" class="btn btn-icon btn-success btn-xs"><i
+                    class="fa fa-pen"></i></button>
               </td>
             </tr>
           </tbody>

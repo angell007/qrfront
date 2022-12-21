@@ -1,12 +1,46 @@
-<div class="row">
+<app-card cardTitle="" [options]="true" *ngIf="!showelements">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <br>
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+
+    </div>
+  </div>
+</app-card>
+
+
+<div class="row d-flex justify-content-center align-items-center">
+  <div class="fixedbutton">
+      <app-toast uID="toastRight">
+          <strong>
+              Downloading document soon ...
+          </strong>
+      </app-toast>
+  </div>
+</div>
+
+<div class="row d-flex justify-content-center align-items-center">
+  <div class="fixedbutton">
+      <app-toast uID="toastRight2">
+          <strong>
+            Changing status, please wait ...
+          </strong>
+      </app-toast>
+  </div>
+</div>
+
+
+<div class="row" *ngIf="showelements">
   <div class="col-sm-12">
-    <app-card cardTitle="Elementos">
+    <app-card cardTitle="Elements" [options]="true">
 
       <div class="col-sm-12">
-        <!-- <input  type="text" class="form-control" /> -->
 
-
-        <input placeholder="filtrar..." class="form-control" [(ngModel)]="filter" type="text"
+        <input placeholder="Search items..." class="form-control" [(ngModel)]="filter" type="text"
           (ngModelChange)="this.filterUpdate.next($event)">
 
       </div>
@@ -18,13 +52,12 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nombre</th>
-              <th>Referencía</th>
+              <th>Name</th>
+              <th>Reference - sku</th>
               <th>Size</th>
               <th>Packing</th>
-              <th>Estado</th>
-              <!-- <th>Elementos</th> -->
-              <th>Acción</th>
+              <th>Status</th>
+              <th>Action</th>
               <th></th>
             </tr>
           </thead>
@@ -35,12 +68,14 @@
               <td>{{item.sku}}</td>
               <td>{{item.sheet_size}}</td>
               <td>{{item.packing}}</td>
-              <td  [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">{{item.status}}</td>
+              <td [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">{{item.status}}
+              </td>
               <td>
-                <button type="button" class="btn btn-icon btn-default btn-xs" (click)="printQr(item.id)"> <i
-                    class="feather icon-file"></i></button>
-                <button title="Cambiar estado" type="button" class="btn btn-icon btn-success btn-xs"
-                  (click)="status(item.id)"> <i class="feather icon-check"></i></button>
+                <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
+                  (click)="printQr(item.id)"> <i class="feather icon-file"></i></button>
+                <button type="button" placement="auto" ngbTooltip="Change Status"
+                  class="btn btn-icon btn-success btn-xs" (click)="status(item.id)"> <i
+                    class="feather icon-check"></i></button>
                 <button type="button" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)"> <i
                     class="feather icon-eye"></i></button>
                 <button type="button" class="btn btn-icon btn-danger btn-xs" (click)="hideQr(item)"> <i
@@ -53,13 +88,10 @@
           </tbody>
         </table>
       </div>
-      <ngb-pagination ngbTooltip="Tooltip on top" class="d-flex justify-content-center" [rotate]="true"
-        (pageChange)="recall($event)" [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="10"
-        [boundaryLinks]="true">
+      <ngb-pagination class="d-flex justify-content-center" [rotate]="true" (pageChange)="recall($event)"
+        [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="5" [boundaryLinks]="true">
       </ngb-pagination>
 
     </app-card>
   </div>
 </div>
-
-<div #parent> </div> 

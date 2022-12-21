@@ -1,4 +1,18 @@
-<div class="row">
+<app-card cardTitle="" [options]="true" *ngIf="!show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <br>
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+
+    </div>
+  </div>
+</app-card>
+
+<div class="row" *ngIf="show">
   <div class="col-sm-12">
     <app-card cardTitle="Estantes">
       <div class="table-responsive">
@@ -6,21 +20,30 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nombre</th>
-              <th>Dirección</th>
-              <!-- <th>Elementos</th> -->
-              <!-- <th>Acción</th> -->
+              <th>Name</th>
+              <th>Address</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of items; index as i;">
+            <tr *ngFor="let item of items; index as i;">
               <td>{{i+1}}</td>
-              <td>{{user.name}}</td>
-              <td>{{user.address}}</td>
-              <!-- <td>{{user.quantity_elements}}</td> -->
-              <!-- <td>
-                <button type="button" class="btn btn-icon btn-info btn-xs"><i class="feather icon-eye"></i></button>
-              </td> -->
+              <td>{{item.name}}</td>
+              <td>{{item.address}}</td>
+              <td>
+
+
+                <button type="button" (click)="goEdit(item.id)" container="body" ngbTooltip="Edit"
+                  class="btn btn-icon btn-info btn-sm"><i class="fa fa-pen"></i> </button>
+
+                <button *ngIf="item.status == 1" type="button" (click)="delete(item.id)" container="body" ngbTooltip="Change Status"
+                  class="btn btn-icon btn-danger btn-sm"><i class="feather icon-trash"></i> </button>
+
+                <button *ngIf="item.status == 0" type="button" (click)="delete(item.id)" container="body" ngbTooltip="Change Status"
+                  class="btn btn-icon btn-success btn-sm"><i class="feather icon-check"></i> </button>
+
+              </td>
+
             </tr>
           </tbody>
         </table>

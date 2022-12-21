@@ -33,7 +33,8 @@ export class InventoryComponent implements OnInit {
   created_at: any
   updated_at: any
   show: boolean = false
-  titleTable: string = 'Nuevo Inventario'
+  showsearch: boolean = false
+  titleTable: string = 'Scanned items'
 
   inventario: any = [];
 
@@ -47,7 +48,7 @@ export class InventoryComponent implements OnInit {
   public reread = false
   element: string = "iniciando...";
   showInv: boolean = false;
-  btnText: any = 'Inicio';
+  btnText: any = 'Start';
   action: string = 'register';
   currentQr: string = null;
   msg: string;
@@ -98,6 +99,7 @@ export class InventoryComponent implements OnInit {
     this._inventory.stores()
       .subscribe(resp => {
         this.items = resp.data
+        this.showsearch = true
         if (resp.err) { functionsUtils.showErros(resp); return false; }
       }, (err) => {
         console.log(Object.keys(err));
@@ -112,7 +114,9 @@ export class InventoryComponent implements OnInit {
       return false;
     }
 
-    this.showInv = false;
+    // this.showInv = false;
+    this.showInv = true;
+
     this.elements = []
     this.btnText = 'Loading...';
     this.idSend = this.selectedItem
@@ -120,8 +124,7 @@ export class InventoryComponent implements OnInit {
 
     this._inventory.last(this.selectedItem)
       .subscribe(resp => {
-        this.showInv = true;
-        this.btnText = 'Inicio';
+        this.btnText = 'Start';
 
         if (!resp.data) {
           Swal.fire('Success', 'Sin inventario previo', 'success');
@@ -201,7 +204,7 @@ export class InventoryComponent implements OnInit {
             "quantity": 1,
             "qr": event,
             "name": resp.data.name,
-            "reference": resp.data.reference,
+            "reference": resp.data.sku,
             "img": environment.base_media + 'items/' + event + '.png',
 
           })
@@ -226,17 +229,17 @@ export class InventoryComponent implements OnInit {
     this.msg = ''
     this.inventario = []
     this.action = 'edit'
-    this.titleTable = "Actualizando Ultimo inventario";
+    this.titleTable = "Updating Last Inventory";
     this.elements.forEach(element => {
-      if (element.quantities.quantity) {
+      // if (element.quantities.quantity) {
         this.inventario.push({
           "quantity": element.quantities.quantity,
           "qr": element.qr,
           "name": element.name,
-          "reference": element.reference,
+          "reference": element.sku,
           "img": environment.base_media + 'items/' + element.qr + '.png',
         })
-      }
+      // }
     });
 
     this.idSend = this.id
@@ -246,7 +249,7 @@ export class InventoryComponent implements OnInit {
   newInventory() {
     this.msg = ''
     this.action = 'register'
-    this.titleTable = "Nuevo Inventario";
+    this.titleTable = "Scanned items";
     this.inventario = []
     this.reread = false
     this.currentQr = null
