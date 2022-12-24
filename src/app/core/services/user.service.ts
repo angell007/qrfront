@@ -20,6 +20,7 @@ export class UserService {
 
     public user: any;
     // public user: User;
+    treeObs: Observable<any>;
 
     constructor(private http: HttpClient,
         private router: Router,
@@ -53,18 +54,22 @@ export class UserService {
         );
     }
 
+    validarPermission(): Observable<boolean> {
+        this.treeObs = new Observable(obs => obs.next(this.user.user_type == 'Warehouse'));
+        return this.treeObs;
+    }
+
     logout() {
         localStorage.removeItem('token');
-        this.validarToken()
         this.router.navigateByUrl('/signin-v2');
-        // this.router.navigateByUrl('/signin-v2');
+        location.reload()
+        this.validarToken()
     }
 
     login(formData: LoginForm) {
         return this.http.post(`${base_url}/auth/login`, formData)
             .pipe(
                 tap((resp: any) => {
-                    console.log(resp);
                     this.guardarLocalStorage(resp.token);
                 })
             );

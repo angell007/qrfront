@@ -88,7 +88,7 @@ export class BreadcrumbComponent implements OnInit {
                 b.children.forEach((c) => {
                   // console.log(activeLink);
                   // console.log(c.url);
-                  console.log(c.url === activeLink.replace(/[0-9]/g, ':id'));
+                  // console.log(c.url === activeLink.replace(/[0-9]/g, ':id'));
                   if ((c.type === 'item' && 'url' in c && c.url === activeLink) || c.url === activeLink.replace(/[0-9]/g, ':id')) {
                     result = [
                       {

@@ -8,18 +8,17 @@ import { UserService } from "../services/user.service";
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanLoad {
+export class PermissionsGuard implements CanActivate, CanLoad {
 
     constructor(private _user: UserService,
         private router: Router) { }
 
     canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> {
-        return this._user.validarToken()
+        return this._user.validarPermission()
             .pipe(
-                tap(estaAutenticado => {
-                    if (!estaAutenticado) {
-                        localStorage.removeItem('token');
-                        this.router.navigateByUrl('/signin-v2');
+                tap(isallow => {
+                    if (!isallow) {
+                        this.router.navigateByUrl('/dashboard/default');
                     }
                 })
             );
@@ -28,15 +27,17 @@ export class AuthGuard implements CanActivate, CanLoad {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot) {
-        return this._user.validarToken()
+        return this._user.validarPermission()
             .pipe(
-                tap(estaAutenticado => {
-                    if (!estaAutenticado) {
-                        localStorage.removeItem('token');
-                        this.router.navigateByUrl('/signin-v2');
+                tap(isallow => {
+                    if (!isallow) {
+                        this.router.navigateByUrl('/dashboard/default');
                     }
                 })
             );
 
     }
+
+
+
 }

@@ -127,14 +127,6 @@ const NavigationItems = [
             url: '/dashboard/inventories/resource-inventory/alls',
             target: false
           },
-          // {
-          //   id: 'indexuser',
-          //   title: 'By user',
-          //   type: 'item',
-          //   hidden: true,
-          //   exactMatch: false,
-          //   url: '/dashboard/inventories/resource-inventory/index/:id',
-          // },
           {
             id: 'myowners',
             title: 'By user',
@@ -150,6 +142,13 @@ const NavigationItems = [
             hidden: true,
             exactMatch: false,
             url: "/dashboard/inventories/resource-inventory/index/:id",
+          },
+          {
+            id: 'my_auth_owners',
+            title: 'By user ',
+            type: 'item',
+            exactMatch: false,
+            url: "/dashboard/inventories/resource-inventory/myauthowners",
           }
         ]
       }

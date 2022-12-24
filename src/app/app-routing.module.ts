@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
     component: AdminComponent,
     children: [
       {
@@ -38,7 +38,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-    // RouterModule.forRoot(routes),
     AuthRoutingModule,
     AuthenticationRoutingModule
   ],

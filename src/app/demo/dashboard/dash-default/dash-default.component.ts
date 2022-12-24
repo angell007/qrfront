@@ -64,8 +64,6 @@ export class DashDefaultComponent implements OnInit {
       // this.storesWithMissings = r.data.storesWithMissings
 
       this.show = true
-
-      console.log(r);
     })
   }
 
