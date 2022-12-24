@@ -33,14 +33,17 @@ export class TblSizingComponent implements OnInit {
       });
   }
 
-  goMyInventories(id) {
-    this.router.navigate(['/dashboard/inventories/resource-inventory/myowners'], { queryParams: { hash: id } });
-
+  goMyInventories(hash) {
+    // this.router.navigate(['/dashboard/inventories/resource-inventory/myowners'], { queryParams: { hash: id } });
+    // this.router.navigate(['/dashboard/inventories/resource-inventory/myowners'], { queryParams: { hash: id } });
+    this.router.navigate(
+      ['/dashboard/inventories/resource-inventory/myowners', hash]
+    );
   }
 
   goEdit(id) {
     this.router.navigate(['/dashboard/user/update'], { queryParams: { hash: id } });
 
   }
-  
+
 }

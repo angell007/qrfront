@@ -14,6 +14,7 @@ export class User {
         public person: Person,
         public menu: Array<any>,
         public password?: string,
+        public permission?: Array<any>,
 
     ) { }
 

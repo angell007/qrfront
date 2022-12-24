@@ -3,23 +3,23 @@
     <div class="h-100 d-md-flex align-items-center auth-side-img bg-gray">
       <div class="col-sm-10 auth-content w-auto">
         <!-- <img src="assets/images/auth/img-auth-big.jpg" width="200px" alt="" class="img-fluid"> -->
-        <h1 class="text-white my-4">Hola, de nuevo!</h1>
-        <h4 class="text-white font-weight-normal">Ingresa tus credenciales.<br /></h4>
+        <h1 class="text-white my-4">Welcome Back!</h1>
+        <h4 class="text-white font-weight-normal">Signin to your account.<br /></h4>
       </div>
     </div>
     <div class="auth-side-form ">
       <div class="auth-content bg-form">
         <img src="assets/images/auth/img-auth-big.png" width="130px" alt="" class="rounded mx-auto d-block img-fluid mb-4">
-        <h3 class="mb-4 f-w-400">Ingreso</h3>
+        <h3 class="mb-4 f-w-400">Signin</h3>
         <form class="form-horizontal mb-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}
           </ngb-alert>
           <div class="form-group auth-form-group-custom mb-4">
             <i class="ri-user-2-line auti-custom-input-icon"></i>
-            <label for="user">Usuario</label>
-            <input type="text" formControlName="user" class="form-control" id="user" placeholder="Ingrese email">
+            <label for="user">Email</label>
+            <input type="text" formControlName="user" class="form-control" id="user" placeholder="Email">
             <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
-              <div *ngIf="f.email.errors.required">El campo usuario es obligatorio
+              <div *ngIf="f.email.errors.required">The field email is required
               </div>
             </div>
           </div>
@@ -28,25 +28,25 @@
             <i class="ri-lock-2-line auti-custom-input-icon"></i>
             <label for="password">Password</label>
             <input type="password" formControlName="password" class="form-control" id="password"
-              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Ingrese Contraseña" />
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">El campo password es obligatorio
+              <div *ngIf="f.password.errors.required">The field password is required
               </div>
             </div>
           </div>
 
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" formControlName="remember" id="remember">
-            <label class="custom-control-label" for="remember">Recordarme</label>
+            <label class="custom-control-label" for="remember">Save credentials</label>
           </div>
 
           <div class="mt-4 text-center">
-            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Iniciar Sesión</button>
+            <button class="btn btn-primary w-md waves-effect waves-light" type="submit" [disabled]="loginForm.invalid || submitted" >Signin</button>
           </div>
 
           <div class="mt-4 text-center">
             <a routerLink="/account/reset-password" class="text-muted"><i class="mdi mdi-lock mr-1"></i>
-              Recuperar Contraseña</a>
+              Forgot password?</a>
           </div>
           <!-- <div class="mt-5 text-center">
             <p>
@@ -60,7 +60,7 @@
         </div> -->
         <!-- <button class="btn btn-block btn-primary mb-0">Ingresar</button> -->
         <div class="text-center">
-          <div class="saprator my-4"><span>Ó</span></div>
+          <div class="saprator my-4"><span>OR</span></div>
           <!-- <button class="btn text-white bg-facebook mb-2 mr-2  wid-40 px-0 hei-40 rounded-circle"><i
               class="fab fa-facebook-f"></i></button>
           <button class="btn text-white bg-googleplus mb-2 mr-2 wid-40 px-0 hei-40 rounded-circle"><i

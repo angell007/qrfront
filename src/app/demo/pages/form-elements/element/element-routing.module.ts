@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ElementComponent } from './element.component';
 import { IndexComponent } from './index/index.component';
+import { UpdateComponent } from './update/update.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: ElementComponent
+  },
+  {
+    path: 'update',
+    component: UpdateComponent
   }
 ];
 

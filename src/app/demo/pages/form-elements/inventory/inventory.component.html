@@ -1,4 +1,4 @@
-<app-card cardTitle="" [options]="true" *ngIf="!showsearch">
+<!-- <app-card cardTitle="" [options]="false" *ngIf="!showsearch && loading">
     <div class="row">
         <div class="col-sm-12 text-center">
             <br>
@@ -6,18 +6,63 @@
 
             <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
-              </div>
+            </div>
+
+        </div>
+    </div>
+</app-card> -->
+
+<app-card cardTitle="" [options]="false" *ngIf="!showsearch && !showInv">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <br>
+            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
 
         </div>
     </div>
 </app-card>
 
+<div class="col-sm-12" *ngIf="showsearch">
+    <app-card cardTitle="Inventory management" [options]="false">
 
-<div class="row" *ngIf="showsearch">
-    <div class="col-sm-12">
-        <app-card cardTitle="Inventory management" [options]="false">
-            <label>Select shelf</label>
-            <div class="row">
+        <div class="row d-flex justify-content-center text-center">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" #selectList (change)="selectCamera(selectList.value)">
+                        <option *ngFor="let camera of cameras" value={{camera.label}}>
+                            <strong class="font-weight-bold"> Scan Store </strong> {{ camera.label }}
+                        </option>
+                    </select>
+                </div>
+                <!-- </div> -->
+
+                <!-- <div class="col-md-3"> -->
+                <div class="form-group">
+                    <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+                        (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandlerStore($event)"
+                        [timeBetweenScans]="3000" [delayBetweenScanSuccess]="3000">
+
+                    </zxing-scanner>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <ng-select [(ngModel)]="storeName" [disabled]="true">
+                            <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <span class="text text-primary">{{msg2}}</span>
+            </div> -->
+
+            <!-- <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <ng-select [(ngModel)]="selectedItem">
@@ -32,15 +77,28 @@
                     </div>
                 </div>
             </div>
-        </app-card>
-    </div>
+        -->
+        </div>
+    </app-card>
+    <span class="text text-primary">{{msg2}}</span>
 </div>
 
 
 
 <div class="row" *ngIf="showInv">
+    <!-- <div class="col-sm-12"> -->
+    <!-- <app-card cardTitle="" [options]="false"> -->
+    <!-- <div class="row"> -->
+    <!-- <div class="col-sm-12 text-center"> -->
+    <!-- <br> -->
+    <!-- <p><span class="n-time text-muted">Store : </span> {{selectedItem | json }} </p> -->
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </app-card> -->
+    <!-- </div> -->
+
     <div class="col-sm-12">
-        <app-card cardTitle="Inventory management" [options]="false">
+        <app-card cardTitle="Inventory management - Store : {{selectedItem.name}} " [options]="false">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -102,7 +160,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-sm" [disabled]="this.submitted"
-                        (click)="sendInventory()">Send</button>
+                        (click)="sendInventory()">{{btnTextInv}}</button>
                 </div>
             </div>
         </app-card>
@@ -112,7 +170,7 @@
 <div class="row">
     <div class="col-sm-12" *ngIf="show">
 
-        <app-card cardTitle="Last inventory information" [options]="true" color="red">
+        <app-card cardTitle="Last inventory information" [options]="false" color="red">
 
             <div class="row mb-3" *ngIf="this.elements.length  >0 ">
                 <div class="col-md-6">

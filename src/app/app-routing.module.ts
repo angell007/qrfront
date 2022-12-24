@@ -10,8 +10,8 @@ import { PreloadAllModules } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    // canActivate: [AuthGuard],
-    // canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     component: AdminComponent,
     children: [
       {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { userService } from 'src/app/services/user.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
 import Swal from 'sweetalert2';
@@ -15,7 +16,7 @@ export class UserComponent implements OnInit {
   submitted = false;
   error = '';
 
-  constructor(private formBuilder: FormBuilder, private _user: userService) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private _user: userService) { }
 
   ngOnInit() {
     this.cleanForm()
@@ -28,6 +29,7 @@ export class UserComponent implements OnInit {
         if (resp.err) { functionsUtils.showErros(resp); return false; }
         Swal.fire('Success', 'Operación realizada correctamente', 'success');
         this.cleanForm()
+        this.router.navigate(['/dashboard/user/index']);
       }, (err) => {
         console.log(Object.keys(err));
         console.log(err.err);

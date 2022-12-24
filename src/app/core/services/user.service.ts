@@ -18,7 +18,8 @@ const base_url = environment.base_url;
 
 export class UserService {
 
-    public user: User;
+    public user: any;
+    // public user: User;
 
     constructor(private http: HttpClient,
         private router: Router,
@@ -41,8 +42,10 @@ export class UserService {
         return this.http.get(`${base_url}/auth/renew`, {
         }).pipe(
             map((resp: any) => {
-                const { id, usuario, change_password, person, menu } = resp.user;
-                this.user = new User(id, usuario, change_password, person, menu);
+                // const { id, usuario, change_password, person, menu, permission } = resp.user;
+                // this.user = new User(id, usuario, change_password, person, menu, permission);
+                this.user = resp.user;
+                if (this.user == undefined) return false
                 this.guardarLocalStorage(resp.token);
                 return true;
             }),
@@ -52,7 +55,9 @@ export class UserService {
 
     logout() {
         localStorage.removeItem('token');
-        this.router.navigateByUrl('/login');
+        this.validarToken()
+        this.router.navigateByUrl('/signin-v2');
+        // this.router.navigateByUrl('/signin-v2');
     }
 
     login(formData: LoginForm) {

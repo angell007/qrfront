@@ -29,6 +29,10 @@ export class DashDefaultComponent implements OnInit {
   inventories: any;
   stores: any;
   show: boolean = false;
+  elementsRotatives: any;
+  sotresRotatives: any;
+  elements: any;
+  storesCount: any;
 
   constructor(private _staticts: statictsService,) {
     this.supportChartData1 = SupportChartData1.supportChartData;
@@ -48,12 +52,16 @@ export class DashDefaultComponent implements OnInit {
   getStaticts() {
     this._staticts.getStatics().subscribe((r: any) => {
 
-      this.alerts = r.data.alerts
+      this.elementsRotatives = r.data.elementsRotatives
       this.inventories = r.data.inventories
+      this.storesCount = r.data.storesCount
+      this.sotresRotatives = r.data.sotresRotatives
       this.stores = r.data.stores
-      this.missings = r.data.missings
-      this.storesWithAlerts = r.data.storesWithAlerts
-      this.storesWithMissings = r.data.storesWithMissings
+      this.elements = r.data.elements
+
+      // this.alerts = r.data.alerts
+      // this.missings = r.data.missings
+      // this.storesWithMissings = r.data.storesWithMissings
 
       this.show = true
 

@@ -54,7 +54,8 @@ export class AuthSigninV2Component implements OnInit {
       }, (err) => {
         // Si sucede un error
 
-        Swal.fire('Error', 'Credenciales incorrectas', 'error');
+        Swal.fire('Error', 'wrong credentials', 'error');
+        this.submitted = false;
       });
 
 

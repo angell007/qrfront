@@ -1,7 +1,8 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
-import {NavigationItem} from '../../navigation';
-import {NextConfig} from '../../../../../../app-config';
-import {Location} from '@angular/common';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { NavigationItem } from '../../navigation';
+import { NextConfig } from '../../../../../../app-config';
+import { Location } from '@angular/common';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-nav-item',
@@ -13,12 +14,15 @@ export class NavItemComponent implements OnInit {
   public nextConfig: any;
   public themeLayout: string;
 
-  constructor(private location: Location) {
+  constructor(private location: Location, private _user: UserService) {
     this.nextConfig = NextConfig.config;
     this.themeLayout = this.nextConfig['layout'];
   }
 
   ngOnInit() {
+    if (this.item.title == 'Report list') {
+      if (this._user.user.user_type == 'vendor') this.item.hidden = true
+    }
   }
 
   closeOtherMenu(event) {

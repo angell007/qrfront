@@ -47,8 +47,12 @@ export class inventoryService {
     markAsRead(id: String): Observable<any> {
         return this.client.get(this._rutaBase + '/inventory/markasread/' + id);
     }
-    alls(): Observable<any> {
-        return this.client.get(this._rutaBase + '/inventory/alls');
+
+    changuestatus(id): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/check/' + id);
+    }
+    alls(params): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/alls', { params: params });
     }
 
 }

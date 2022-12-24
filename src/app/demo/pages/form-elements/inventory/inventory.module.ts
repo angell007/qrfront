@@ -8,11 +8,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { allIndexComponent } from './alls/index.component';
+import { IndexuserComponent } from './indexuser/indexuser.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
-  declarations: [InventoryComponent, IndexComponent, allIndexComponent],
+  declarations: [InventoryComponent, IndexComponent, allIndexComponent, IndexuserComponent],
   imports: [
     CommonModule,
     InventoryRoutingModule,
@@ -20,6 +22,7 @@ import { allIndexComponent } from './alls/index.component';
     NgSelectModule,
     FormsModule,
     ZXingScannerModule,
+    NgbTooltipModule,
     // BrowserModule
   ]
 })

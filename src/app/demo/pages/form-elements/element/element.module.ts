@@ -5,11 +5,12 @@ import { IndexComponent } from './index/index.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ElementRoutingModule } from './element-routing.module';
 import { NgbAlertModule, NgbButtonsModule, NgbDropdownModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateComponent } from './update/update.component';
 
 
 
 @NgModule({
-  declarations: [ElementComponent, IndexComponent],
+  declarations: [ElementComponent, IndexComponent, UpdateComponent],
   imports: [
     CommonModule,
     ElementRoutingModule,

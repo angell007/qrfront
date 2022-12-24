@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { storeService } from 'src/app/services/store.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
 import Swal from 'sweetalert2';
@@ -15,7 +16,7 @@ export class StoreComponent implements OnInit {
     submitted = false;
     error = '';
 
-    constructor(private formBuilder: FormBuilder, private _store: storeService) { }
+    constructor(private router: Router, private formBuilder: FormBuilder, private _store: storeService) { }
 
     ngOnInit() {
         this.cleanForm()
@@ -28,6 +29,7 @@ export class StoreComponent implements OnInit {
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
                 Swal.fire('Success', 'Operación realizada correctamente', 'success');
                 this.cleanForm()
+                this.router.navigate(['/dashboard/store/resource/index']);
             }, (err) => {
                 console.log(Object.keys(err));
                 console.log(err.err);

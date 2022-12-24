@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NavigationItem} from '../../../layout/admin/navigation/navigation';
-import {Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
+import { Component, Input, OnInit } from '@angular/core';
+import { NavigationItem } from '../../../layout/admin/navigation/navigation';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -14,11 +14,15 @@ export class BreadcrumbComponent implements OnInit {
   public navigation: any;
   breadcrumbList: Array<any> = [];
   public navigationList: Array<any> = [];
+  // param: any
 
   constructor(private route: Router, public nav: NavigationItem, private titleService: Title) {
     this.navigation = this.nav.get();
     this.type = 'theme2';
     this.setBreadcrumb();
+    this.setHidden();
+    // this.param = this.router.snapshot.paramMap.get('id');
+
   }
 
   ngOnInit() {
@@ -41,24 +45,35 @@ export class BreadcrumbComponent implements OnInit {
     });
   }
 
+  setHidden() {
+
+    let result = [];
+    let title = 'Welcome';
+    this.navigationList = result;
+    this.titleService.setTitle(title + ' 2022-');
+  }
+
   filterNavigation(activeLink) {
     let result = [];
     let title = 'Welcome';
     this.navigation.forEach((a) => {
-      if (a.type === 'item' && 'url' in a && a.url === activeLink) {
+
+      if ((a.type === 'item' && 'url' in a && a.url === activeLink) || a.url === activeLink.replace(/[0-9]/g, ':id')) {
         result = [
           {
             url: ('url' in a) ? a.url : false,
             title: a.title,
             breadcrumbs: ('breadcrumbs' in a) ? a.breadcrumbs : true,
-            type: a.type
+            type: a.type,
+            hidden: false
           }
         ];
         title = a.title;
       } else {
         if (a.type === 'group' && 'children' in a) {
           a.children.forEach((b) => {
-            if (b.type === 'item' && 'url' in b && b.url === activeLink) {
+
+            if ((b.type === 'item' && 'url' in b && b.url === activeLink) || b.url === activeLink.replace(/[0-9]/g, ':id')) {
               result = [
                 {
                   url: ('url' in b) ? b.url : false,
@@ -71,7 +86,10 @@ export class BreadcrumbComponent implements OnInit {
             } else {
               if (b.type === 'collapse' && 'children' in b) {
                 b.children.forEach((c) => {
-                  if (c.type === 'item' && 'url' in c && c.url === activeLink) {
+                  // console.log(activeLink);
+                  // console.log(c.url);
+                  console.log(c.url === activeLink.replace(/[0-9]/g, ':id'));
+                  if ((c.type === 'item' && 'url' in c && c.url === activeLink) || c.url === activeLink.replace(/[0-9]/g, ':id')) {
                     result = [
                       {
                         url: ('url' in b) ? b.url : false,
@@ -90,7 +108,8 @@ export class BreadcrumbComponent implements OnInit {
                   } else {
                     if (c.type === 'collapse' && 'children' in c) {
                       c.children.forEach((d) => {
-                        if (d.type === 'item' && 'url' in d && d.url === activeLink) {
+
+                        if ((d.type === 'item' && 'url' in d && d.url === activeLink) || d.url === activeLink.replace(/[0-9]/g, ':id')) {
                           result = [
                             {
                               url: ('url' in b) ? b.url : false,
@@ -124,7 +143,7 @@ export class BreadcrumbComponent implements OnInit {
       }
     });
     this.navigationList = result;
-    this.titleService.setTitle(title + ' | Able Pro Angular 9+ Free Admin Template');
+    this.titleService.setTitle(title + ' 2022-');
   }
 
 }

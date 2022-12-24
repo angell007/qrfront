@@ -8,6 +8,8 @@ import { Subject } from 'rxjs-compat';
 
 import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
+import { CrudService } from 'src/app/services/crud.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -29,20 +31,29 @@ export class IndexComponent implements OnInit {
     page = 1;
     total = null;
     params = {}
+    filters = {
+        page: 1,
+        name: '',
+        sku: '',
+        sheet_size: '',
+        status: '',
+    }
     query = null
 
     @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
     private componentRef: ComponentRef<any>;
 
-    public filter: string;
+    // public filter: string;
     filterUpdate = new Subject<string>();
+    productimg: string;
 
-    constructor(private _element: elementService, public toastEvent: ToastService) {
-        this.params = {
-            page: 1,
-            name: this.query,
-            reference: this.query
-        }
+    constructor(
+        private _element: elementService,
+        public toastEvent: ToastService,
+        private _crud: CrudService,
+        private router: Router
+    ) {
+        this._crud.model = 'elements'
     }
 
     ngOnInit() {
@@ -50,31 +61,19 @@ export class IndexComponent implements OnInit {
         this.filterUpdate.pipe(
             debounceTime(500),
             distinctUntilChanged())
-            .subscribe(value => {
-                this.query = value
-                this.params = {
-                    page: 1,
-                    name: value,
-                    reference: value
-                }
-                this.getData();
-            });
+            .subscribe(() => { this.filters.page = 1; this.getData() });
     }
 
     recall($event: number) {
         this.page = $event;
-        this.params = this.params = {
-            page: $event,
-            name: this.query,
-            reference: this.query
-        }
+        this.filters.page = $event
         this.getData()
     }
 
     getData() {
 
         this.showelements = false
-        this._element.index(this.params)
+        this._element.index(this.filters)
             .subscribe(resp => {
                 this.items = resp.data.data
                 // this.page = resp.data.current_page
@@ -97,7 +96,7 @@ export class IndexComponent implements OnInit {
 
     printQr(id) {
 
-        this.toastEvent.toast({ uid: 'toastRight', delay: 1500 })
+        this.toastEvent.toast({ uid: 'toastRight2', delay: 2100 })
 
         this._element.getpdflist(id)
             .subscribe(resp => {
@@ -117,28 +116,46 @@ export class IndexComponent implements OnInit {
         link.click();
     }
 
-    showQr(user) {
+    showQr(item) {
 
         this.items.forEach(element => {
             element.show = false
         });
 
-        user.show = true
-        this.img = environment.base_media + 'items/qr' + user.id + '.png'
+        item.show = true
+        this.img = environment.base_media + 'items/qr' + item.id + '.png'
+        this.productimg = environment.base_media + 'imgproducts/' + item.photo
         console.log(this.img);
     }
 
-    status(id) {
+    status(item) {
 
         this.toastEvent.toast({ uid: 'toastRight2', delay: 1500 })
-        
-        this._element.changuestatus({ id: id })
+
+        this._element.changuestatus({ id: item.id })
             .subscribe(resp => {
-                this.getData();
+                item.status = (item.status == 'activo') ? 'inactivo' : 'activo'
+                // this.getData();
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
             }, (err) => {
                 console.log(Object.keys(err));
                 console.log(err.err);
             });
     }
+
+    goEdit(id) {
+        console.log(id);
+        this.router.navigate(['/dashboard/elements/resource-element/update'], { queryParams: { hash: id } });
+    }
+
+    clean() {
+        this.filters = {
+            page: 1,
+            name: '',
+            sku: '',
+            sheet_size: '',
+            status: '',
+        }
+        this.getData()
+    };
 }

@@ -7,6 +7,8 @@ import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 import { StoreComponent } from './store.component';
 import { IndexComponent } from './index/index.component';
 import { UpdateComponent } from './update/update.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -14,7 +16,11 @@ import { UpdateComponent } from './update/update.component';
     StoreRoutingModule,
     SharedModule,
     NgbTooltipModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+
+    NgSelectModule,
+    FormsModule,
+
   ],
   declarations: [StoreComponent, IndexComponent, UpdateComponent]
 })

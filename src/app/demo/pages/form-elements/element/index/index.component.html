@@ -1,4 +1,4 @@
-<app-card cardTitle="" [options]="true" *ngIf="!showelements">
+<app-card cardTitle="" [options]="false" *ngIf="!showelements">
   <div class="row">
     <div class="col-sm-12 text-center">
       <br>
@@ -13,42 +13,42 @@
 </app-card>
 
 
-<div class="row d-flex justify-content-center align-items-center">
+<!-- <div class="row d-flex justify-content-center align-items-center">
   <div class="fixedbutton">
-      <app-toast uID="toastRight">
-          <strong>
-              Downloading document soon ...
-          </strong>
-      </app-toast>
+    <app-toast uID="toastRight">
+      <strong>
+        Downloading document soon ...
+      </strong>
+    </app-toast>
   </div>
-</div>
+</div> -->
 
 <div class="row d-flex justify-content-center align-items-center">
   <div class="fixedbutton">
-      <app-toast uID="toastRight2">
-          <strong>
-            Changing status, please wait ...
-          </strong>
-      </app-toast>
+    <app-toast uID="toastRight2">
+      <strong>
+        please wait ...
+      </strong>
+    </app-toast>
   </div>
 </div>
 
 
 <div class="row" *ngIf="showelements">
   <div class="col-sm-12">
-    <app-card cardTitle="Elements" [options]="true">
-
+    <app-card cardTitle="Elements" [options]="false">
+      <!-- 
       <div class="col-sm-12">
 
         <input placeholder="Search items..." class="form-control" [(ngModel)]="filter" type="text"
           (ngModelChange)="this.filterUpdate.next($event)">
 
-      </div>
+      </div> -->
 
       <br>
 
       <div class="table-responsive">
-        <table class="table">
+        <table class="table text-center ">
           <thead>
             <tr>
               <th>#</th>
@@ -58,33 +58,75 @@
               <th>Packing</th>
               <th>Status</th>
               <th>Action</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
+
+            <tr>
+              <th></th>
+              <th><input placeholder="Name" class="form-control" [(ngModel)]="filters.name" type="text"
+                  (ngModelChange)="this.filterUpdate.next($event)"></th>
+              <th><input placeholder="Sku" class="form-control" [(ngModel)]="filters.sku" type="text"
+                  (ngModelChange)="this.filterUpdate.next($event)"></th>
+              <th><input placeholder="Size" class="form-control" [(ngModel)]="filters.sheet_size" type="text"
+                  (ngModelChange)="this.filterUpdate.next($event)"></th>
+              <th></th>
+              <th>
+                <select (ngModelChange)="this.filterUpdate.next($event)" [(ngModel)]="filters.status"
+                  class="form-control">
+                  <option></option>
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </th>
+              <th><button type="button" class="btn btn-icon btn-info btn-xs" placement="auto" ngbTooltip="Clean filter"
+                  (click)="clean()"> <i class="fa fa-trash"></i></button>
+              </th>
+            </tr>
+
             <tr *ngFor="let item of items; index as i;">
               <td>{{i+1}}</td>
               <td>{{item.name}}</td>
               <td>{{item.sku}}</td>
               <td>{{item.sheet_size}}</td>
               <td>{{item.packing}}</td>
-              <td [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">{{item.status}}
+              <td style="height: 100%;
+                  text-align: center;
+                  vertical-align: middle;"
+                [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">
+                <span *ngIf="item.status == 'activo'">on stock</span>
+                <span *ngIf="item.status != 'activo'">Sold out</span>
               </td>
-              <td>
+
+              <td style="height: 100%;
+              text-align: center;
+              vertical-align: middle;">
+
+                <button type="button" class="btn btn-icon btn-warning btn-xs" placement="auto" ngbTooltip="Edit"
+                  (click)="goEdit(item.id)"> <i class="fa fa-pen"></i></button>
+
+                <button type="button" placement="auto" ngbTooltip="Change Status" class="btn btn-icon  btn-xs"
+                  (click)="status(item)" [ngClass]="item.status == 'activo' ? 'btn-danger' : 'btn-success'"> <i
+                    [ngClass]="item.status == 'activo' ? 'feather icon-x' : 'feather icon-check'"></i></button>
+
                 <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
                   (click)="printQr(item.id)"> <i class="feather icon-file"></i></button>
-                <button type="button" placement="auto" ngbTooltip="Change Status"
-                  class="btn btn-icon btn-success btn-xs" (click)="status(item.id)"> <i
-                    class="feather icon-check"></i></button>
-                <button type="button" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)"> <i
+
+                <button type="button" ngbTooltip="Show Qr" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)"> <i
                     class="feather icon-eye"></i></button>
-                <button type="button" class="btn btn-icon btn-danger btn-xs" (click)="hideQr(item)"> <i
+
+                <button ngbTooltip="Hide Qr" type="button" class="btn btn-icon btn-secondary btn-xs" (click)="hideQr(item)"> <i
                     class="feather icon-eye-off"></i></button>
-              </td>
-              <td>
-                <img style="width: 200px; height: auto" *ngIf="item.show" src="{{img}}" alt="" class="img-responsive ">
+
+                <img *ngIf="item.show"  class="img-fluid img-thumbnail rounded mx-auto d-block mt-2"
+                  style=" width: 150px; height: 100%; border: none !important;" src="{{productimg}}">
+
+                <img *ngIf="item.show" class="img-fluid img-thumbnail rounded mx-auto d-block"
+                  style=" width: 150px; height: 100%;" src="{{img}}">
+
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>

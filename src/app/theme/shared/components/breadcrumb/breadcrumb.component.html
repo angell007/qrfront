@@ -6,10 +6,11 @@
           <div class="col-md-12">
             <div class="page-header-title">
               <ng-container *ngFor="let breadcrumb of navigationList; let last = last">
-                <h5 class="m-b-10" *ngIf="last">{{breadcrumb.title}}</h5>
+                <!-- <h5 class="m-b-10" *ngIf="last">{{breadcrumb.title}}</h5> -->
+                <h1 class="m-b-10 mb-2" style="line-height: 2;"></h1>
               </ng-container>
             </div>
-            <ul class="breadcrumb">
+            <ul class="breadcrumb  mt-3">
               <li class="breadcrumb-item">
                 <a [routerLink]="['/dashboard/analytics/']" *ngIf="type === 'theme2'"><i
                     class="feather icon-home"></i></a>

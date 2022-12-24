@@ -60,8 +60,16 @@ export class NavRightComponent implements OnInit {
 
   dispachtUser(id: any) {
     this._obs.obsuser.next(id)
-    this.router.navigate(['/dashboard/inventories/resource-inventory/index/'], { queryParams: { id: id } });
-    // this.router.navigateByUrl('/dashboard/inventories/resource-inventory/index/' + id);
+    // this.router.navigate(['/dashboard/inventories/resource-inventory/index'], { queryParams: { id: id } });
+    // this.router.navigate(['/dashboard/inventories/resource-inventory/index'], { queryParams: { id: id } });
+    this.router.navigate(
+      ['/dashboard/inventories/resource-inventory/myowners', id]
+    );
+
+  //   this.router.navigate(
+  //     ['/dashboard/inventories/resource-inventory/index', id]
+  //  );
+    // this.router.navigateByUrl('/dashboard/inventories/resource-inventory/index');
   }
 
 

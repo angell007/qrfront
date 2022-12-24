@@ -1,122 +1,175 @@
-
-
+<app-card cardTitle="" [options]="false" *ngIf="!load && !show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> go to Home</p>
+    </div>
+  </div>
+</app-card>
 
 <div class="row d-flex justify-content-center align-items-center">
-    <div class="fixedbutton">
-        <app-toast uID="toastRight">
-            <strong>
-                Downloading document soon ...
-            </strong>
-        </app-toast>
-    </div>
+  <div class="fixedbutton">
+    <app-toast uID="toastRight2">
+      <strong>
+        please wait ...
+      </strong>
+    </app-toast>
+  </div>
 </div>
 
-<app-card cardTitle="" [options]="false" *ngIf="!load && !show">
-    <div class="row">
-        <div class="col-sm-12 text-center">
-            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Ir a inicio</p>
-        </div>
+<app-card cardTitle="" [options]="false" *ngIf="load && show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
+  </div>
 </app-card>
 
+<app-card cardTitle="" [options]="false" *ngIf="!load && show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span>
+        Inventories registered</p>
+      <br>
 
-
-<app-card cardTitle="" [options]="true" *ngIf="load && show">
-    <div class="row">
-        <div class="col-sm-12 text-center">
-            <br>
-            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
-
-            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
-
-        </div>
     </div>
-</app-card>
 
-
-
-<app-card cardTitle="" [options]="true" *ngIf="!load && show">
-
-    <div class="row">
-        <div class="col-sm-12 text-center">
-            <br>
-            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Inventarios por
-                ejecutivo </p>
-            <button (click)="print('all')" container="body" ngbTooltip="Todos Los inventarios del usuario" type="button"
-                class="btn btn-icon btn btn-link btn-sm"><i class="feather icon-printer"></i></button>
-        </div>
+    <div class="col-sm-6">
+      <label for="" class="label-from"> Code </label>
+      <div class="form-group">
+        <input class="form-control" type="text" [(ngModel)]="code">
+      </div>
     </div>
+
+    <div class="col-sm-6">
+      <label for="" class="label-from"> Stores </label>
+      <div class="form-group">
+        <ng-select class="custom" [multiple]="true" [(ngModel)]="selectedStores">
+          <ng-option *ngFor="let item of stores" [value]="item.id">{{item.name}}
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <button (click)="filterInventories()" type="button" class="btn btn-info">
+        Filter
+      </button>
+    </div>
+
+  </div>
 </app-card>
 
 <div *ngIf="!load && show" id="all">
-    <ng-container *ngFor="let item of items">
+  <ng-container *ngFor="let item of items ; index as i ">
 
-        <div *ngIf="show" id="table">
+    <div *ngIf="show" id="table">
+
+      <app-card cardTitle="Inventory information " [options]="false">
+
+        <br>
+
+        <div class="row mb-3">
+
+          <div class="col-md-6">
+
+            <span> <b> Code: </b> {{item.id}}</span>
             <br>
-            <app-card cardTitle="Información inventario" [options]="true">
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <br>
-                        <span id="noprint"> <b> Imprimir Inventario: </b>
-
-                            <button type="button" (click)="print('table')" container="body" ngbTooltip="all"
-                                class="btn btn-icon btn btn-link btn-sm"><i class="feather icon-printer"></i></button>
-
-                            <button type="button" (click)="getexcel(item.id)" container="body"
-                                ngbTooltip="just missing" class="btn btn-icon btn-warning btn-sm"><i
-                                    class="feather icon-printer"></i></button>
-                        </span>
-                        <br>
-                        <span> <b> Estante: </b> {{item.store.name}}</span>
-                        <br>
-                        <span> <b>Dirección:</b> {{item.store.address}}</span>
+            <span> <b> Shelf: </b> {{item.store.name}}</span>
+            <br>
+            <span> <b>Address:</b> {{item.store.address}}</span>
+            <br>
+            <span id="noprint"> <b> Print Inventory: </b>
+              <button ngbTooltip="Print report on PDF" (click)="print('table', item.user.name)" type="button"
+                class="btn btn-icon btn-info btn-xs mx-auto"><i class="fa fa-file-pdf"></i></button>
 
 
-                    </div>
-                    <div class="col-md-6">
-                        <br>
-                        <span><b>Creado:</b> {{item.created_at}}</span>
-                        <br>
-                        <span><b>Actualizado:</b> {{item.updated_at |date:'medium':'-5'}}</span>
+              <button (click)="getexcel(item.id)" ngbTooltip="only missings Excel" type="button"
+                class="btn btn-icon btn-warning btn-xs mx-auto"><i class="fa fa-file-excel-o"></i></button>
 
+            </span>
 
+          </div>
 
-                    </div>
-                </div>
-                <!-- </app-card> -->
-                <!-- <app-card cardTitle=""> -->
-                <div class="table-responsive">
-                    <table class="table table-xs">
+          <div class="col-md-6">
+            <span><b>Checked : </b>
+              <button placement="bottom" ngbTooltip="Change status" (click)="checkedInv(item)" type="button"
+                class="btn btn-sm mx-auto" [ngClass]="item.check == 0 ? 'btn-danger' : 'btn-success'">
+                <i [ngClass]="item.check == 0 ? 'feather icon-x' : 'fa fa-check'"></i>
+              </button></span>
+            <br>
+            <span><b>Vendor:</b> {{item.user.name }}</span>
+            <br>
+            <span><b>Created at:</b> {{item.created_at |date:'medium':'-5'}}</span>
+            <br>
+            <span><b>Updated at:</b> {{item.updated_at |date:'medium':'-5'}}</span>
+            <br>
+            <b>Show detail : </b><button ngbTooltip="Show detail" (click)="showDetail(item)" type="button"
+              class="btn btn-info btn-sm">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button ngbTooltip="Hide detail" (click)="hiddenDetail()" type="button" class="btn btn-secondary btn-sm">
+              <i class="feather icon-eye-off"></i>
+            </button>
+            <br>
+          </div>
+        </div>
+        <!-- </app-card> -->
 
-                        <thead>
-                            <tr>
-                                <th>Elemento</th>
-                                <th>Referencia</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of item.elements">
-                                <td class="text"><label class="text">{{item.name}}</label></td>
-                                <td class="text"><label class="text">{{item.sku}}</label></td>
-                                <td class="text"><label class="badge"
-                                        [ngClass]="item.quantities.quantity == 0  ? 'badge-light-danger' : 'badge-light-primary'">
-                                        {{ item.quantities.quantity ?
-                                        '✓' : 'x'}}</label>
-                                </td>
-                                <button type="button" class="btn btn-icon btn btn-link btn-sm"
-                                    (click)="printQr(item.id)" container="body" ngbTooltip="Qr de la referencia"> <i
-                                        class="feather icon-file"></i></button>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </app-card>
+        <!-- <app-card cardTitle="Inventario relaizado por : {{item.user.name}}" [options]="false"> -->
+        <div class="table-responsive " *ngIf="item.show">
+          <!-- <table class="table text-center "> -->
+          <table class="table text-center table-xs">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Reference - sku</th>
+                <th>Size</th>
+                <!-- <th>Packing</th> -->
+                <th>Available</th>
+                <th>Existence</th>
+                <!-- <th>Quantity</th> -->
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of item.elements">
+                <td>{{item.name}}</td>
+                <td>{{item.sku}}</td>
+                <td>{{item.sheet_size}}</td>
+                <!-- <td>{{item.packing}}</td> -->
+
+                <td [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">
+
+                  <span *ngIf="item.status == 'activo'">on stock</span>
+                  <span *ngIf="item.status != 'activo'">Sold out</span>
+
+                </td>
+
+                <td class="text"><label class="badge"
+                    [ngClass]="item.quantities.quantity == 0  ? 'badge-light-danger' : 'badge-light-primary'">
+                    {{ item.quantities.quantity ?
+                    'in stock' : 'Restock'}}</label>
+                </td>
+
+                <td>
+                  <button type="button" class="btn btn-icon btn-default btn-sm" (click)="printQr(item.id)"
+                    ngbTooltip="Qr de la referencia"> <i class="feather icon-file"></i></button>
+
+                  <button type="button" placement="auto" ngbTooltip="Change Status"
+                    class="btn btn-icon btn-success btn-xs" (click)="status(item)"> <i
+                      class="feather icon-check"></i></button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-    </ng-container>
+      </app-card>
+    </div>
+
+  </ng-container>
 </div>

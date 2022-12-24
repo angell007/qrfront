@@ -1,4 +1,4 @@
-<app-card cardTitle="" [options]="true" *ngIf="!show">
+<app-card cardTitle="" [options]="false" *ngIf="!show">
     <div class="row">
         <div class="col-sm-12 text-center">
             <br>
@@ -6,7 +6,7 @@
 
             <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
-              </div>
+            </div>
         </div>
     </div>
 </app-card>
@@ -20,6 +20,7 @@
             <hr>
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
@@ -29,19 +30,21 @@
                         </div>
 
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Seller Rep./ Name </label>
                             <input type="text" class="form-control" placeholder="" formControlName="name"
                                 autocomplete="off">
                         </div>
+                    </div>
 
-                        <!-- <div class="form-group">
+                    <!-- <div class="form-group">
                             <label>ID number </label>
                             <input type="text" class="form-control" placeholder="" formControlName="document_number"
                                 autocomplete="off">
                         </div> -->
-
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">User type </label>
                             <select class="form-control" id="exampleFormControlSelect1" formControlName="user_type">
@@ -49,15 +52,22 @@
                                 <option value="vendor">Vendor</option>
                             </select>
                         </div>
+                    </div>
 
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label>New Password</label>
                             <input type="password" class="form-control" placeholder="" formControlName="password"
                                 autocomplete="off">
                         </div>
-
                     </div>
-                    <button type="submit" class="btn btn-primary" [disabled]="(loginForm.invalid) || sending ">Save</button>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="(loginForm.invalid) || sending ">Save</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </app-card>

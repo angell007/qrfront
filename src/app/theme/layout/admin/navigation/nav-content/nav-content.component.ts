@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, NgZone, OnInit, Out
 import { NavigationItem } from '../navigation';
 import { NextConfig } from '../../../../../app-config';
 import { Location } from '@angular/common';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -24,7 +25,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
   @ViewChild('navbarContent', {static: false}) navbarContent: ElementRef;
   @ViewChild('navbarWrapper', {static: false}) navbarWrapper: ElementRef;
 
-  constructor(public nav: NavigationItem, private zone: NgZone, private location: Location) {
+  constructor(public nav: NavigationItem, private zone: NgZone, private location: Location, public _user : UserService) {
     this.nextConfig = NextConfig.config;
     this.windowWidth = window.innerWidth;
 

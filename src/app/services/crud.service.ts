@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,8 +10,11 @@ export class CrudService {
 
   private _rutaBase: string = environment.base_url;
   model: string;
+  httpClient: HttpClient;
 
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private handler: HttpBackend) {
+    this.httpClient = new HttpClient(handler)
+  }
 
   register(data: FormData): Observable<any> {
     return this.client.post(this._rutaBase + '/' + this.model + '/register', data);
@@ -32,6 +35,14 @@ export class CrudService {
 
   delete(id: number): Observable<any> {
     return this.client.delete(this._rutaBase + '/' + this.model + '/' + id);
+  }
+
+  sendRegiserWithFile(data: FormData): Observable<any> {
+    return this.httpClient.post(this._rutaBase + '/' + this.model + '/register', data);
+  }
+
+  sendUpdateWithFile(data: FormData): Observable<any> {
+    return this.httpClient.post(this._rutaBase + '/' + this.model + '/update', data);
   }
 
 }

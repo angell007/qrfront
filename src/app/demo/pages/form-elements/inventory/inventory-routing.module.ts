@@ -4,19 +4,20 @@ import { MyownersComponent } from '../user/myowners/myowners.component';
 import { UpdateComponent } from '../user/update/update.component';
 import { allIndexComponent } from './alls/index.component';
 import { IndexComponent } from './index/index.component';
+import { IndexuserComponent } from './indexuser/indexuser.component';
 import { InventoryComponent } from './inventory.component';
 
 const routes: Routes = [
   {
-    path: 'index',
-    component: IndexComponent
+    path: 'index/:id',
+    component: IndexuserComponent
   },
   {
     path: 'register',
     component: InventoryComponent
   },
   {
-    path: 'myowners',
+    path: 'myowners/:id',
     component: MyownersComponent
     // /dashboard/inventories/resource-inventory/myowners
   },

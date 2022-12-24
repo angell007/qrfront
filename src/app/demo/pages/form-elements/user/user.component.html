@@ -37,16 +37,19 @@
                 <option>Nit</option>
               </select>
             </div> -->
-
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               <label>ID number </label>
-              <input type="text" class="form-control" placeholder="" formControlName="document_number" autocomplete="off">
+              <input type="text" class="form-control" placeholder="" formControlName="document_number"
+                autocomplete="off">
               <!-- <div *ngIf="submitted && form.user.errors" class="invalid-feedback">
                 <div *ngIf="form.document_number.errors.required">El campo usuario es obligatorio
                 </div>
               </div> -->
             </div>
-
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               <label for="exampleFormControlSelect1">User type </label>
               <select class="form-control" id="exampleFormControlSelect1" formControlName="user_type">
@@ -54,14 +57,19 @@
                 <option>Vendor</option>
               </select>
             </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [disabled]="(loginForm.invalid)">Save</button>
+            </div>
+          </div>
 
 
-            <!-- <div class="form-group">
+          <!-- <div class="form-group">
               <label for="exampleFormControlTextarea1">Example textarea</label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div> -->
-          </div>
-          <button type="submit" class="btn btn-primary" [disabled]="(loginForm.invalid)">Save</button>
         </div>
       </form>
     </app-card>

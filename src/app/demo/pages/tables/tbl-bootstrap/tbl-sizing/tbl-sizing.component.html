@@ -1,4 +1,4 @@
-<app-card cardTitle="" [options]="true" *ngIf="!show">
+<app-card cardTitle="" [options]="false" *ngIf="!show">
   <div class="row">
     <div class="col-sm-12 text-center">
       <br>
@@ -14,9 +14,9 @@
 
 <div class="row" *ngIf="show">
   <div class="col-sm-12">
-    <app-card cardTitle="Users">
+    <app-card  [options]="false" cardTitle="Users">
       <div class="table-responsive">
-        <table class="table table-xs">
+        <table class="table text-center table-xs">
           <thead>
             <tr>
               <th>#</th>
@@ -33,9 +33,9 @@
               <td>{{user.email}}</td>
               <td>{{user.user_type}}</td>
               <td>
-                <button (click)="goMyInventories(user.id)" type="button" class="btn btn-icon btn-info btn-xs"><i
+                <button ngbTooltip="Show reports" (click)="goMyInventories(user.id)" type="button" class="btn btn-icon btn-info btn-xs"><i
                     class="feather icon-eye"></i></button>
-                <button (click)="goEdit(user.id)" type="button" class="btn btn-icon btn-success btn-xs"><i
+                <button ngbTooltip="Edit" (click)="goEdit(user.id)" type="button" class="btn btn-icon btn-success btn-xs"><i
                     class="fa fa-pen"></i></button>
               </td>
             </tr>

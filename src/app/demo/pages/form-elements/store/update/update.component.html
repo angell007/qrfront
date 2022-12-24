@@ -1,4 +1,4 @@
-<app-card cardTitle="" [options]="true" *ngIf="!show">
+<app-card cardTitle="" [options]="false" *ngIf="!show">
     <div class="row">
         <div class="col-sm-12 text-center">
             <br>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary" [disabled]="(modelForm.invalid)">Save</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="(modelForm.invalid) || submitted">Save</button>
                     </div>
                 </div>
             </form>

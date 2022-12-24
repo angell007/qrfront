@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NavigationItem} from '../../navigation';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {NextConfig} from '../../../../../../app-config';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-nav-collapse',
@@ -25,13 +26,16 @@ export class NavCollapseComponent implements OnInit {
   public nextConfig: any;
   public themeLayout: string;
 
-  constructor() {
+  constructor( private _user: UserService) {
     this.visible = false;
     this.nextConfig = NextConfig.config;
     this.themeLayout = this.nextConfig.layout;
   }
 
   ngOnInit() {
+    if (this.item.title == 'Users' || this.item.title == 'Items') {
+      if (this._user.user.user_type == 'vendor') this.item.hidden = true
+    }
   }
 
   navCollapse(e) {

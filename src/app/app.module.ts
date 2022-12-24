@@ -27,10 +27,10 @@ import { NgbButtonsModule, NgbDropdownModule, NgbModule, NgbTabsetModule, NgbToo
 import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
-import { MyownersComponent } from './demo/pages/form-elements/user/myowners/myowners.component';
 import { AngularNotificationModule } from 'angular-notification-alert';
 import { HttpCancelService } from './services/http-cancel-service.service';
 import { ManageHttpInterceptor } from './Interceptors/managehttp.interceptor';
+import { NgxImageCompressService } from 'ngx-image-compress';
 // import { NgbToastModule } from  'ngb-toast';
 
 
@@ -49,8 +49,7 @@ import { ManageHttpInterceptor } from './Interceptors/managehttp.interceptor';
     NavSearchComponent,
     NavRightComponent,
     ConfigurationComponent,
-    ToggleFullScreenDirective,
-    MyownersComponent
+    ToggleFullScreenDirective
   ],
   imports: [
     BrowserModule,
@@ -67,6 +66,7 @@ import { ManageHttpInterceptor } from './Interceptors/managehttp.interceptor';
     NgbModule
   ],
   providers: [
+    NgxImageCompressService,
     NavigationItem,
     HttpCancelService,
     { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true },

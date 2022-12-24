@@ -9,6 +9,11 @@
     z-index: 10000;
 }
 
+.btn-xs {
+    font-size: .5rem;
+    line-height: .4;
+}
+
 .ng-select.custom ::ng-deep .ng-select-container :focus {
     border: none;
     border-bottom: 2px solid #4680ff;
@@ -24,7 +29,6 @@
     background-clip: padding-box;
 }
 
-
 .ng-select.custom ::ng-deep .ng-select-container {
 
     border: none;
@@ -34,7 +38,7 @@
     transition: background 0s ease-out;
 
 
-    height: calc(1.4em + 1.35rem + 2px);
+    height: calc(1.3em + 1.20rem + 2px);
     padding: 0.625rem 1.1875rem;
     font-size: 0.875rem;
     font-weight: 400;

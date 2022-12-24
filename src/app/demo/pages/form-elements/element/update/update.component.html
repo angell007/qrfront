@@ -1,12 +1,23 @@
-<div class="row">
-    <div class="col-sm-12">
-        <app-card cardTitle="Register of element" [options]="false">
-            <form [formGroup]="ModelForm" (ngSubmit)="onSubmit()">
-                <div class="row">
+<app-card cardTitle="" [options]="false" *ngIf="!show">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <br>
+            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
 
-                    <!-- <button (click)="compressFile()">Upload and compress Image</button>
-                    <img [src]="imgResultBeforeCompression" *ngIf="imgResultBeforeCompression" />
-                    <img [src]="imgResultAfterCompression" *ngIf="imgResultAfterCompression"  /> -->
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+
+        </div>
+    </div>
+</app-card>
+
+
+<div class="row" *ngIf="show">
+    <div class="col-sm-12">
+        <app-card cardTitle="Update of element" [options]="false">
+            <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+                <div class="row">
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -48,7 +59,6 @@
                                 <span class="input-group-text"><i class="fa fa-camera"></i></span>
                             </div>
                             <div class="custom-file d-flex justify-content-center">
-                                <!-- <input style="cursor: pointer;" type="file" class="custom-file-input" id="file0"> -->
                                 <label style="cursor: pointer;" (click)="compressFile()" class="custom-file-label"
                                     for="file0">
                                     <i class="fa fa-upload"></i>
@@ -61,17 +71,11 @@
 
 
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary" [disabled]="(ModelForm.invalid) || submitted ">Save</button>
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="(modelForm.invalid) || submitted ">Save</button>
                     </div>
                 </div>
             </form>
         </app-card>
     </div>
 </div>
-
-
-
-
-<ng-template #notData>
-    <!-- <app-not-data [loading]="loading"></app-not-data> -->
-</ng-template>

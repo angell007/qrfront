@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 export interface NavigationItem {
   id: string;
@@ -125,6 +126,30 @@ const NavigationItems = [
             type: 'item',
             url: '/dashboard/inventories/resource-inventory/alls',
             target: false
+          },
+          // {
+          //   id: 'indexuser',
+          //   title: 'By user',
+          //   type: 'item',
+          //   hidden: true,
+          //   exactMatch: false,
+          //   url: '/dashboard/inventories/resource-inventory/index/:id',
+          // },
+          {
+            id: 'myowners',
+            title: 'By user',
+            type: 'item',
+            hidden: true,
+            exactMatch: false,
+            url: "/dashboard/inventories/resource-inventory/myowners/:id",
+          },
+          {
+            id: 'my_owners',
+            title: 'By user last',
+            type: 'item',
+            hidden: true,
+            exactMatch: false,
+            url: "/dashboard/inventories/resource-inventory/index/:id",
           }
         ]
       }
