@@ -224,7 +224,6 @@ export class allIndexComponent implements OnInit {
     });
 
     item.show = true
-    console.log(item);
   }
 
   hiddenDetail() {
@@ -240,7 +239,6 @@ export class allIndexComponent implements OnInit {
     this._element.changuestatus({ id: item.id })
       .subscribe(resp => {
         item.status = resp.data.item.status
-        console.log(item);
         // item.status =  item.status == 'activo' ? 'inactivo' : 'activo'
         // this.getData();
         if (resp.err) { functionsUtils.showErros(resp); return false; }

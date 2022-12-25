@@ -94,12 +94,14 @@
           </div>
 
           <div class="col-md-6">
-            <span><b>Checked : </b>
-              <button placement="bottom" ngbTooltip="Change status" (click)="checkedInv(item)" type="button"
-                class="btn btn-sm mx-auto" [ngClass]="item.check == 0 ? 'btn-danger' : 'btn-success'">
-                <i [ngClass]="item.check == 0 ? 'feather icon-x' : 'fa fa-check'"></i>
-              </button></span>
-            <br>
+            <ng-container *ngIf="this._userc.user.user_type != 'vendor' ">
+              <span><b>Checked : </b>
+                <button placement="bottom" ngbTooltip="Change status" (click)="checkedInv(item)" type="button"
+                  class="btn btn-sm mx-auto" [ngClass]="item.check == 0 ? 'btn-danger' : 'btn-success'">
+                  <i [ngClass]="item.check == 0 ? 'feather icon-x' : 'fa fa-check'"></i>
+                </button></span>
+              <br>
+            </ng-container>
             <span><b>Vendor:</b> {{item.user.name }}</span>
             <br>
             <span><b>Created at:</b> {{item.created_at |date:'medium':'-5'}}</span>
@@ -118,7 +120,7 @@
         </div>
         <!-- </app-card> -->
 
-        <!-- <app-card cardTitle="Inventario relaizado por : {{item.user.name}}" [options]="false"> -->
+        <!-- <app-card cardTitle="Inventario relaizado por : {{item.user.name}}" [options]="true"> -->
         <div class="table-responsive " *ngIf="item.show">
           <!-- <table class="table text-center "> -->
           <table class="table text-center table-xs">

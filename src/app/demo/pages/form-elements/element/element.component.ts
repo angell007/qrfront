@@ -109,6 +109,7 @@ export class ElementComponent implements OnInit {
             (compressedImage) => {
               this.imgResultAfterCompression = compressedImage;
               this.photo = compressedImage
+              console.log(this.photo);
               // console.log("Size in bytes after compression is now:", this.imageCompress.byteCount(compressedImage));
             }
           );

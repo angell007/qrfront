@@ -2,6 +2,7 @@ import { Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, V
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs-compat';
+import { UserService } from 'src/app/core/services/user.service';
 import { ObservablesService } from 'src/app/observables/observable.service';
 import { elementService } from 'src/app/services/element.service';
 import { inventoryService } from 'src/app/services/inventory.service';
@@ -199,11 +200,12 @@ export class MyownersComponent implements OnInit {
     date: ''
   }
   users: any;
-  param: any;
+  param: any = null;
 
 
   constructor(
     public toastEvent: ToastService,
+    public _userc: UserService,
     private _user: userService,
     private _inventory: inventoryService,
     private _element: elementService,
@@ -213,17 +215,23 @@ export class MyownersComponent implements OnInit {
 
   ngOnInit() {
     this.getStores()
-    this.param = [this.route.snapshot.paramMap.get('id')];
-    // this.route.queryParams
-    //   .subscribe((params: any) => {
+
+    let id = this.route.snapshot.paramMap.get('id')
+
+    if (id) this.param = [id];
+    if (!id) this.param = 0;
+
+    console.log(this.param);
+
     this.filters = {
       vendors: this.param,
       stores: [this.selectedStores],
       code: this.code,
       date: ''
     }
+
     this.getData()
-    // });
+
   }
 
   // this._obs.obsuser.subscribe(arg => {
@@ -437,7 +445,6 @@ export class MyownersComponent implements OnInit {
     });
 
     item.show = true
-    console.log(item);
   }
 
   hiddenDetail() {
@@ -453,7 +460,6 @@ export class MyownersComponent implements OnInit {
     this._element.changuestatus({ id: item.id })
       .subscribe(resp => {
         item.status = resp.data.item.status
-        console.log(item);
         // item.status =  item.status == 'activo' ? 'inactivo' : 'activo'
         // this.getData();
         if (resp.err) { functionsUtils.showErros(resp); return false; }

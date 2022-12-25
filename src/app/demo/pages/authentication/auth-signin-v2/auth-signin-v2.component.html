@@ -9,7 +9,8 @@
     </div>
     <div class="auth-side-form ">
       <div class="auth-content bg-form">
-        <img src="assets/images/auth/img-auth-big.png" width="130px" alt="" class="rounded mx-auto d-block img-fluid mb-4">
+        <img src="assets/images/auth/img-auth-big.png" width="130px" alt=""
+          class="rounded mx-auto d-block img-fluid mb-4">
         <h3 class="mb-4 f-w-400">Signin</h3>
         <form class="form-horizontal mb-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}
@@ -39,9 +40,10 @@
             <input type="checkbox" class="custom-control-input" formControlName="remember" id="remember">
             <label class="custom-control-label" for="remember">Save credentials</label>
           </div>
-
+          
           <div class="mt-4 text-center">
-            <button class="btn btn-primary w-md waves-effect waves-light" type="submit" [disabled]="loginForm.invalid || submitted" >Signin</button>
+            <button class="btn btn-primary w-md waves-effect waves-light" type="submit"
+              [disabled]="loginForm.invalid || submitted">Signin</button>
           </div>
 
           <div class="mt-4 text-center">

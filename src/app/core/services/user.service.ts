@@ -61,9 +61,9 @@ export class UserService {
 
     logout() {
         localStorage.removeItem('token');
-        this.router.navigateByUrl('/signin-v2');
-        location.reload()
         this.validarToken()
+        location.href = './signin-v2'
+        // this.router.navigateByUrl('/signin-v2');
     }
 
     login(formData: LoginForm) {
