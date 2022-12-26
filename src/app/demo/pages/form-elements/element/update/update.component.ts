@@ -76,7 +76,7 @@ export class UpdateComponent implements OnInit, UpdateContract {
     if (this.photo != '') formData.append("file", this.photo);
 
     this._crud.sendUpdateWithFile(formData).subscribe((resp: ResponseContract) => {
-      Swal.fire('Success', 'Operación realizada correctamente', 'success');
+      Swal.fire('Success', 'Good job', 'success');
       this.cleanForm()
       this.photo = null
       this.router.navigate(['/dashboard/elements/resource-element/index']);

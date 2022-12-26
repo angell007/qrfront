@@ -10,6 +10,9 @@ import { AngularNotificationService, NotifComponent } from 'angular-notification
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { Router } from '@angular/router';
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { ResponseContract } from 'src/app/core/class/ResponseContract';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -24,6 +27,7 @@ export class IndexComponent implements OnInit {
     submitted = false;
     error = '';
     items: any;
+    currentItem: any;
     img: any;
     show: boolean = false;
     current: boolean = false;
@@ -39,6 +43,7 @@ export class IndexComponent implements OnInit {
         status: '',
     }
     query = null
+
 
     @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
     private componentRef: ComponentRef<any>;
@@ -76,7 +81,6 @@ export class IndexComponent implements OnInit {
         this._element.index(this.filters)
             .subscribe(resp => {
                 this.items = resp.data.data
-                // this.page = resp.data.current_page
                 this.total = resp.data.total
                 this.items.forEach(element => {
                     element.show = false
@@ -135,7 +139,6 @@ export class IndexComponent implements OnInit {
         this._element.changuestatus({ id: item.id })
             .subscribe(resp => {
                 item.status = (item.status == 'activo') ? 'inactivo' : 'activo'
-                // this.getData();
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
             }, (err) => {
                 console.log(Object.keys(err));
@@ -158,4 +161,39 @@ export class IndexComponent implements OnInit {
         }
         this.getData()
     };
+
+
+
+    fileToBase64 = (file: File): Promise<string> => {
+        return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.toString());
+            reader.onerror = error => reject(error);
+        })
+    }
+
+    onSelect(event, item) {
+        const formData: FormData = new FormData();
+        for (const k in item) {
+            const v = item[k];
+            if (k == 'sheet_size') formData.append('size', v)
+            if (k != 'sheet_size') formData.append(k, v)
+        }
+
+        if (event.addedFiles[0] != '' && event.addedFiles[0] != null)
+            this.fileToBase64(event.addedFiles[0])
+                .then(result => {
+                    const base64String = result;
+                    formData.append("file", base64String);
+                    this._crud.sendUpdateWithFile(formData).subscribe((resp) => {
+                        item.photo = resp.data.item.photo
+                        Swal.fire('Success', 'Good job', 'success');
+                    }, (err) => {
+                        console.log(Object.keys(err));
+                        console.log(err.error);
+                        if (typeof (err.error) == 'object') { functionsUtils.showErros2(err); return false; }
+                    });
+                });
+    }
 }

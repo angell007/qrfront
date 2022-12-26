@@ -37,6 +37,7 @@
     "moment": "^2.24.0",
     "ng-click-outside": "^4.0.0",
     "ng-select": "^1.0.2",
+    "ngx-dropzone": "^3.0.0",
     "ngx-image-compress": "^11.0.3",
     "ngx-lightbox": "^2.0.0",
     "ngx-perfect-scrollbar": "^8.0.0",

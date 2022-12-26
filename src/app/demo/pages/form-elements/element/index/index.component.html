@@ -101,6 +101,14 @@
               <td style="height: 100%;
               text-align: center;
               vertical-align: middle;">
+              
+                <!-- <ngx-dropzone style="height: 43px; width: 43px; overflow: hidden;" class="btn btn-icon" (change)="onSelect($event, item)"> -->
+                  <!-- <ngx-dropzone-label><i class="fa fa-upload"></i></ngx-dropzone-label> -->
+                  <!-- <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)"> -->
+                    <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> </ngx-dropzone-preview> -->
+                <!-- </ngx-dropzone> -->
+
+                <!-- <img [src]="imgResultAfterCompression" width="70px" class="preview"> -->
 
                 <button type="button" class="btn btn-icon btn-warning btn-xs" placement="auto" ngbTooltip="Edit"
                   (click)="goEdit(item.id)"> <i class="fa fa-pen"></i></button>
@@ -112,13 +120,13 @@
                 <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
                   (click)="printQr(item.id)"> <i class="feather icon-file"></i></button>
 
-                <button type="button" ngbTooltip="Show Qr" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)"> <i
-                    class="feather icon-eye"></i></button>
+                <button type="button" ngbTooltip="Show Qr" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)">
+                  <i class="feather icon-eye"></i></button>
 
-                <button ngbTooltip="Hide Qr" type="button" class="btn btn-icon btn-secondary btn-xs" (click)="hideQr(item)"> <i
-                    class="feather icon-eye-off"></i></button>
+                <button ngbTooltip="Hide Qr" type="button" class="btn btn-icon btn-secondary btn-xs"
+                  (click)="hideQr(item)"> <i class="feather icon-eye-off"></i></button>
 
-                <img *ngIf="item.show"  class="img-fluid img-thumbnail rounded mx-auto d-block mt-2"
+                <img *ngIf="item.show" class="img-fluid img-thumbnail rounded mx-auto d-block mt-2"
                   style=" width: 150px; height: 100%; border: none !important;" src="{{productimg}}">
 
                 <img *ngIf="item.show" class="img-fluid img-thumbnail rounded mx-auto d-block"

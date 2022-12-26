@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ElementRoutingModule } from './element-routing.module';
 import { NgbAlertModule, NgbButtonsModule, NgbDropdownModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateComponent } from './update/update.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 
@@ -18,6 +19,7 @@ import { UpdateComponent } from './update/update.component';
     NgbPaginationModule,
     NgbAlertModule,
     NgbTooltipModule,
+    NgxDropzoneModule
   ]
 })
 export class ElementModule { }
