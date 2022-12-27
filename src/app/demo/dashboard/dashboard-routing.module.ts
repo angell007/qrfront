@@ -34,7 +34,13 @@ const routes: Routes = [
         path: 'inventories',
         // canLoad: [AuthGuard],
         loadChildren: () => import('../pages/form-elements/form-elements.module').then(module => module.FormElementsModule)
-      }
+      },
+      {
+        path: 'reparations',
+        // canLoad: [AuthGuard],
+        loadChildren: () => import('../pages/form-elements/form-elements.module').then(module => module.FormElementsModule)
+      },
+
     ]
   }
 ];

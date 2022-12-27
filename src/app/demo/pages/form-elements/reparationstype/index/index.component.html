@@ -1,0 +1,112 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="btn btn-ico" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <i class="feather icon-x"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="dateOfBirth">Date of birth</label>
+                <!-- <div class="input-group">
+                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
+                        #dp="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()"
+                        type="button"></button>
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+<hr />
+
+<pre>{{ closeResult }}</pre>
+
+
+<!-- ************************************************************************************************************* -->
+
+<app-card cardTitle="" [options]="false" *ngIf="!show">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <br>
+            <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+        </div>
+    </div>
+</app-card>
+
+<div class="row d-flex justify-content-center align-items-center">
+    <div class="fixedbutton">
+        <app-toast uID="toastRight2">
+            <strong>
+                please wait ...
+            </strong>
+        </app-toast>
+    </div>
+</div>
+
+<div class="row" *ngIf="show">
+    <div class="col-sm-12">
+        <app-card [options]="false" cardTitle="Estantes">
+            <div class="table-responsive">
+                <table class="table text-center table-xs">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of items; index as i;">
+                            <td>{{i+1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.address}}</td>
+                            <td [ngClass]="item.status == 1 ? 'badge-light-primary' : 'badge-light-danger'">
+
+                                <span *ngIf="item.status == 1">Active</span>
+                                <span *ngIf="item.status != 1">Inactive</span>
+
+                            </td>
+                            <td>
+
+
+                                <button type="button" (click)="goEdit(item.id)" container="body" ngbTooltip="Edit"
+                                    class="btn btn-icon btn-info btn-sm"><i class="fa fa-pen"></i> </button>
+
+                                <button *ngIf="item.status == 1" type="button" (click)="delete(item)" container="body"
+                                    ngbTooltip="Change Status" class="btn btn-icon btn-danger btn-sm"><i
+                                        class="feather icon-trash"></i>
+                                </button>
+
+                                <button *ngIf="item.status == 0" type="button" (click)="delete(item)" container="body"
+                                    ngbTooltip="Change Status" class="btn btn-icon btn-success btn-sm"><i
+                                        class="feather icon-check"></i>
+                                </button>
+
+                                <br>
+                                <img *ngIf="item.show" class="img-fluid img-thumbnail rounded mx-auto d-block my-2"
+                                    style=" width: 150px; height: 100%;" src="{{img}}">
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

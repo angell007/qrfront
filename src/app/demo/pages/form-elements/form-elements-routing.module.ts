@@ -29,6 +29,11 @@ const routes: Routes = [
         path: 'resource-inventory',
         // canLoad: [AuthGuard],
         loadChildren: () => import('./inventory/inventory.module').then(module => module.InventoryModule)
+      },
+      {
+        path: 'resource-operations',
+        // canLoad: [AuthGuard],
+        loadChildren: () => import('./reparationstype/reparationstype.module').then(module => module.ReparationstypeModule)
       }
     ]
   }

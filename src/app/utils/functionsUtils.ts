@@ -143,6 +143,17 @@ export const functionsUtils = {
     Swal.fire('Error', html, 'error');
   },
 
+
+
+  downloadFile(data: Blob) {
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = 'qrReference';
+    link.click();
+  },
+
+  
+
   showErros2(resp: any) {
     let html = `<ul>`;
     for (var clave in resp.error) {

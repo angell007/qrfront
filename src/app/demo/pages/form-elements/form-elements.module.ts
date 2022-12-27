@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FormElementsRoutingModule } from './form-elements-routing.module';
 import {SharedModule} from '../../../theme/shared/shared.module';
+import { ReparationstypeComponent } from './reparationstype/reparationstype.component';
+import { IndexComponent } from './reparationstype/index/index.component';
 
 @NgModule({
   imports: [
@@ -10,6 +12,6 @@ import {SharedModule} from '../../../theme/shared/shared.module';
     FormElementsRoutingModule,
     SharedModule
   ],
-  declarations: []
+  declarations: [ReparationstypeComponent, IndexComponent]
 })
 export class FormElementsModule { }
