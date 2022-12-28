@@ -145,7 +145,7 @@ const NavigationItems = [
           },
           {
             id: 'my_auth_owners',
-            title: 'By user ',
+            title: 'My scan History ',
             type: 'item',
             exactMatch: false,
             url: "/dashboard/inventories/resource-inventory/myauthowners",

@@ -118,58 +118,74 @@ export class allIndexComponent implements OnInit {
   }
 
 
-  print(id: string, name: string) {
+  print(item) {
 
-    let printContents, popupWin;
 
-    printContents = document.getElementById(id).innerHTML.toString();
-    printContents = (<string>printContents + "").replace("col-sm", "col-xs");
-    popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
-    const date = new Date();
+    this.toastEvent.toast({ uid: 'toastRight2', delay: 2100 })
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
+    this._user.getpdf(item.id)
+      .subscribe(resp => {
+        let fileName = 'inventory'
+        this.downloadFile2(resp.body, fileName);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
 
-    popupWin.document.write(`
-          <html>
-            <head>
-              <title>Reporte ${name} </title>
-              <meta name="viewport" content="width=10000, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-              <link rel="stylesheet"
-              href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-              <style>
-                .salto_pagina_despues{
-                  page-break-after:always;
-                }
-    
-                .salto_pagina_anterior{
-                  page-break-before:always;
-                }
-                .btn{
-                  display:none
-                }
-                .noprint{
-                  display:none
-                }
-    
-              </style>
-            </head>
-            <body onload="window.print(); window.close();">
-                <div class="container">
-    
-                <span> <b> Usuario: </b> ${name} </span>
-                <br>
-                <span> <b>Fecha:</b> ${day}-${month}-${year}</span>
-                <br>
-                <br>
-              
-                      ${printContents}
-              </div>
-            </body>
-          </html>`);
-    popupWin.document.close();
+
+    // print(id: string, name: string) {
+
+    // let printContents, popupWin;
+
+    // printContents = document.getElementById(id).innerHTML.toString();
+    // printContents = (<string>printContents + "").replace("col-sm", "col-xs");
+    // popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
+    // const date = new Date();
+
+    // let day = date.getDate();
+    // let month = date.getMonth() + 1;
+    // let year = date.getFullYear();
+
+    // popupWin.document.write(`
+    //       <html>
+    //         <head>
+    //           <title>Reporte ${name} </title>
+    //           <meta name="viewport" content="width=10000, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    //           <link rel="stylesheet"
+    //           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    //           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    //           <style>
+    //             .salto_pagina_despues{
+    //               page-break-after:always;
+    //             }
+
+    //             .salto_pagina_anterior{
+    //               page-break-before:always;
+    //             }
+    //             .btn{
+    //               display:none
+    //             }
+    //             .noprint{
+    //               display:none
+    //             }
+
+    //           </style>
+    //         </head>
+    //         <body onload="window.print(); window.close();">
+    //             <div class="container">
+
+    //             <span> <b> Usuario: </b> ${name} </span>
+    //             <br>
+    //             <span> <b>Fecha:</b> ${day}-${month}-${year}</span>
+    //             <br>
+    //             <br>
+
+    //                   ${printContents}
+    //           </div>
+    //         </body>
+    //       </html>`);
+    // popupWin.document.close();
   }
 
 
@@ -209,10 +225,10 @@ export class allIndexComponent implements OnInit {
       });
   }
 
-  downloadFile2(data: Blob) {
+  downloadFile2(data: Blob, fileName = 'qrReference') {
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
-    link.download = 'qrReference';
+    link.download = fileName;
     link.click();
   }
 

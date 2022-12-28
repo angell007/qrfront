@@ -113,7 +113,7 @@ export class InventoryComponent implements OnInit {
 
   getLast() {
 
-    if (!this.selectedItem.id) {
+    if (!this.selectedItem) {
       Swal.fire('warning', 'Select a shelf', 'warning');
       return false;
     }
@@ -121,10 +121,10 @@ export class InventoryComponent implements OnInit {
 
     this.elements = []
     this.btnText = 'Loading...';
-    this.idSend = this.selectedItem.id
+    this.idSend = this.selectedItem
 
 
-    this._inventory.last(this.selectedItem.id)
+    this._inventory.last(this.selectedItem)
       .subscribe(resp => {
 
         this.showInv = true;
@@ -151,7 +151,8 @@ export class InventoryComponent implements OnInit {
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
     this.cameras = cameras;
-    this.selectCamera(this.cameras[0].label);
+    if (this.cameras.length == 1) this.selectCamera(this.cameras[0].label);
+    if (this.cameras.length > 1) this.selectCamera(this.cameras[1].label);
   }
 
   async scanSuccessHandler(event: string) {

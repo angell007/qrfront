@@ -57,7 +57,7 @@
         <div class="col-sm-3  mt-1">
             <label for="" class="label-from"> Stores </label>
             <div class="form-group">
-                <ng-select  class="custom" [multiple]="true" [(ngModel)]="selectedStores">
+                <ng-select class="custom" [multiple]="true" [(ngModel)]="selectedStores">
                     <ng-option *ngFor="let item of stores" [value]="item.id">{{item.name}}
                     </ng-option>
                 </ng-select>
@@ -105,8 +105,12 @@
                         <span> <b>Address:</b> {{item.store.address}}</span>
                         <br>
                         <span id="noprint"> <b> Print Inventory: </b>
-                            <button ngbTooltip="Print report on PDF" (click)="print('table', item.user.name)" type="button"
-                                class="btn btn-icon btn-info btn-xs mx-auto"><i class="fa fa-file-pdf"></i></button>
+                            <button ngbTooltip="Print report on PDF" (click)="print(item)"
+                                type="button" class="btn btn-icon btn-info btn-xs mx-auto"><i
+                                    class="fa fa-file-pdf"></i></button>
+
+                            <!-- <button ngbTooltip="Print report on PDF" (click)="print('table', item.user.name)" type="button"
+                                class="btn btn-icon btn-info btn-xs mx-auto"><i class="fa fa-file-pdf"></i></button> -->
 
 
                             <button (click)="getexcel(item.id)" ngbTooltip="only missings Excel" type="button"
@@ -118,7 +122,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        
+
 
                         <span><b>Checked : </b>
                             <button (click)="checkedInv(item)" placement="bottom" ngbTooltip="Change status"
@@ -137,7 +141,8 @@
                             class="btn btn-info btn-sm">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <button ngbTooltip="Hide detail" (click)="hiddenDetail()" type="button" class="btn btn-secondary btn-sm">
+                        <button ngbTooltip="Hide detail" (click)="hiddenDetail()" type="button"
+                            class="btn btn-secondary btn-sm">
                             <i class="feather icon-eye-off"></i>
                         </button>
                     </div>
@@ -169,7 +174,7 @@
 
                                 <td [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">
 
-                                    <span *ngIf="item.status == 'activo'">on stock</span>
+                                    <span *ngIf="item.status == 'activo'">in stock</span>
                                     <span *ngIf="item.status != 'activo'">Sold out</span>
 
                                 </td>

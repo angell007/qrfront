@@ -19,6 +19,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
   public scrollWidth: any;
   public windowWidth: number;
   public isNavProfile: boolean;
+  public letter: string;
 
   @Output() onNavMobCollapse = new EventEmitter();
 
@@ -36,6 +37,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
     this.contentWidth = 0;
 
     this.isNavProfile = false;
+    this.letter = _user.user.name.slice(0,1).toUpperCase()
   }
 
   ngOnInit() {

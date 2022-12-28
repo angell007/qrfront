@@ -27,10 +27,10 @@
 </app-card>
 
 <div class="col-sm-12" *ngIf="showsearch">
-    <app-card cardTitle="Inventory management" [options]="false">
+    <app-card cardTitle="" [options]="false">
 
         <div class="row d-flex justify-content-center text-center">
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="form-group">
                     <select class="form-control" #selectList (change)="selectCamera(selectList.value)">
                         <option *ngFor="let camera of cameras" value={{camera.label}}>
@@ -38,9 +38,7 @@
                         </option>
                     </select>
                 </div>
-                <!-- </div> -->
 
-                <!-- <div class="col-md-3"> -->
                 <div class="form-group">
                     <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
                         (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandlerStore($event)"
@@ -48,7 +46,7 @@
 
                     </zxing-scanner>
                 </div>
-            </div>
+            </div> -->
 
             <!-- <div class="col-md-6">
                 <div class="form-group">
@@ -62,7 +60,7 @@
                 <span class="text text-primary">{{msg2}}</span>
             </div> -->
 
-            <!-- <div class="row">
+            <!-- <div class="row"> -->
                 <div class="col-md-6">
                     <div class="form-group">
                         <ng-select [(ngModel)]="selectedItem">
@@ -76,8 +74,8 @@
                         <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
                     </div>
                 </div>
-            </div>
-        -->
+            <!-- </div> -->
+       
         </div>
     </app-card>
     <span class="text text-primary">{{msg2}}</span>
@@ -98,7 +96,7 @@
     <!-- </div> -->
 
     <div class="col-sm-12">
-        <app-card cardTitle="Inventory management - Store : {{selectedItem.name}} " [options]="false">
+        <app-card cardTitle="Inventory management - Store : {{store.name}} " [options]="false">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
