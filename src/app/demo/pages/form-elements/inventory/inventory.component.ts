@@ -159,8 +159,8 @@ export class InventoryComponent implements OnInit {
 
   camerasFoundHandler(cameras: MediaDeviceInfo[]) {
     this.cameras = cameras;
-    if (this.cameras.length == 1) this.selectCamera(this.cameras[0].label);
-    if (this.cameras.length > 1) this.selectCamera(this.cameras[1].label);
+    // if (this.cameras.length == 1) this.selectCamera(this.cameras[0].label);
+    // if (this.cameras.length > 1) this.selectCamera(this.cameras[1].label);
   }
 
   async scanSuccessHandler(event: string) {

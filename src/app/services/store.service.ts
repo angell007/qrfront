@@ -17,9 +17,15 @@ export class storeService {
     register(data: FormData): Observable<any> {
         return this.client.post(this._rutaBase + '/stores/register', data);
     }
-    index(): Observable<any> {
-        return this.client.get(this._rutaBase + '/stores/index');
+    // index(): Observable<any> {
+    //     return this.client.get(this._rutaBase + '/stores/index');
+    // }
+
+    index(parameters = {}): Observable<any> {
+        // let params = new HttpParams().set(parameters);
+        return this.client.get(this._rutaBase + '/stores/index', { params: parameters });
     }
+
 
     getpdflist(id): Observable<any> {
         var HTTPOptions = {

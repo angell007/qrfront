@@ -40,6 +40,10 @@ export class inventoryService {
     getElement(qr: String): Observable<any> {
         return this.client.get(this._rutaBase + '/inventory/get_element/' + qr);
     }
+
+    getAlloElements(): Observable<any> {
+        return this.client.get(this._rutaBase + '/inventory/get_elements');
+    }
     owners(id: String): Observable<any> {
         return this.client.get(this._rutaBase + '/inventory/owners/' + id);
     }

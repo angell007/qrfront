@@ -1,0 +1,61 @@
+<app-card cardTitle="" [options]="false" *ngIf="!show">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <br>
+      <p><span class="n-time text-muted"><i class="icon feather icon-arrow m-r-10"></i></span> Loading... </p>
+
+      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+
+    </div>
+  </div>
+</app-card>
+
+
+<div class="row d-flex justify-content-center align-items-center">
+  <div class="fixedbutton">
+    <app-toast uID="toastRight2">
+      <strong>
+        please wait ...
+      </strong>
+    </app-toast>
+  </div>
+</div>
+
+<div class="row" *ngIf="show">
+  <div class="col-sm-12">
+    <app-card  [options]="false" cardTitle="Users">
+      <div class="table-responsive">
+        <table class="table text-center table-xs">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; index as i;">
+              <td>{{i+1}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.user_type}}</td>
+              <td>
+                <button ngbTooltip="Show reports" (click)="goMyInventories(user.id)" type="button" class="btn btn-icon btn-info btn-xs"><i
+                    class="feather icon-eye"></i></button>
+                <button ngbTooltip="Edit" (click)="goEdit(user.id)" type="button" class="btn btn-icon btn-success btn-xs"><i
+                    class="fa fa-pen"></i></button>
+                    <button  type="button" (click)="delete(user)" container="body"
+                  ngbTooltip="Delete permanently" class="btn btn-icon btn-dark btn-sm"><i class="fa fa-minus"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

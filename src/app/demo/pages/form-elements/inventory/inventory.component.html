@@ -61,21 +61,21 @@
             </div> -->
 
             <!-- <div class="row"> -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <ng-select [(ngModel)]="selectedItem">
-                            <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
-                            </ng-option>
-                        </ng-select>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <ng-select [(ngModel)]="selectedItem">
+                        <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
+                        </ng-option>
+                    </ng-select>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
-                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
                 </div>
+            </div>
             <!-- </div> -->
-       
+
         </div>
     </app-card>
     <span class="text text-primary">{{msg2}}</span>
@@ -107,10 +107,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
-                            (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"
-                            [timeBetweenScans]="1500">
-
+                        <zxing-scanner style="width: 100%;" [device]="myDevice"
+                            (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)">
                         </zxing-scanner>
                         <!-- <p *ngFor="let result of results">{{result}}</p> -->
                     </div>
