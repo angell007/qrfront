@@ -1,0 +1,10 @@
+.preview {
+    width: 120px !important;
+
+}
+
+@media (max-width: 480px) {
+    .preview {
+        width: 70px !important;
+    }
+}

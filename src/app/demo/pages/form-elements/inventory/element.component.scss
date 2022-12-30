@@ -9,13 +9,8 @@
     z-index: 10000;
 }
 
-.preview {
-    width: 120px !important;
-
-}
-
-@media (max-width: 480px) {
-    .preview {
-        width: 70px !important;
-    }
+.btn-xs
+{
+    font-size  : .5rem;
+    line-height  : .4;
 }

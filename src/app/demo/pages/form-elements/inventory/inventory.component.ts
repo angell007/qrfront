@@ -12,11 +12,14 @@ import { environment } from 'src/environments/environment';
 
 import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
+  styleUrls: ['./element.component.scss']
+
 })
 export class InventoryComponent implements OnInit {
 
@@ -69,7 +72,8 @@ export class InventoryComponent implements OnInit {
 
     private Service: AngularNotificationService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private _inventory: inventoryService) { }
+    private _inventory: inventoryService,
+    public toastEvent: ToastService) { }
 
   ngOnInit() {
     this.getData()
@@ -127,13 +131,15 @@ export class InventoryComponent implements OnInit {
 
   getLast() {
 
+    this.btnText = 'loading'
+    
     if (!this.selectedItem) {
       Swal.fire('warning', 'Select a shelf', 'warning');
       return false;
     }
 
     this._inventory.last(this.selectedItem)
-      .subscribe(resp => {
+    .subscribe(resp => {
 
         this.showInv = true;
         this.btnText = 'Start';
@@ -142,14 +148,15 @@ export class InventoryComponent implements OnInit {
           Swal.fire('Success', 'No inventories', 'success');
           return false;
         }
-
+        
         this.elements = resp.data.elements
         this.store = resp.data.store
         this.created_at = resp.data.created_at
         this.updated_at = resp.data.updated_at
         this.show = true
         this.id = resp.data.id
-
+        
+        this.btnText = 'Start'
         if (resp.err) { functionsUtils.showErros(resp); return false; }
       }, (err) => {
         console.log(Object.keys(err));
@@ -165,7 +172,9 @@ export class InventoryComponent implements OnInit {
 
   async scanSuccessHandler(event: string) {
 
-    this.msg = 'scanning...'
+    this.toastEvent.toast({ uid: 'toastRight2', delay: 1500 })
+
+    // this.msg = 'scanning...'
     this.addNotifElement()
 
     if (event == this.currentQr) {

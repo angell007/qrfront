@@ -29,7 +29,7 @@ export interface Navigation extends NavigationItem {
 const NavigationItems = [
   {
     id: 'navigation',
-    title: 'Navegación',
+    title: 'Navigation',
     type: 'group',
     icon: 'feather icon-monitor',
     children: [
