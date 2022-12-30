@@ -55,7 +55,7 @@ export class ElementComponent implements OnInit {
 
     this._crud.sendRegiserWithFile(formData).subscribe((resp: ResponseContract) => {
       console.log(resp);
-      Swal.fire('Success', 'Operación realizada correctamente', 'success');
+      Swal.fire('Success', 'Well done', 'success');
       this.cleanForm()
       this.photo = null
       this.router.navigate(['/dashboard/elements/resource-element/index']);

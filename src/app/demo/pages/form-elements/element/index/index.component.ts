@@ -162,6 +162,32 @@ export class IndexComponent implements OnInit {
         this.getData()
     };
 
+    delete(item) {
+
+        Swal.fire({
+            title: 'Do you want delete ?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // this.show = false
+                this.toastEvent.toast({ uid: 'toastRight2', delay: 2000 })
+                this._crud.delete(item.id)
+                    .subscribe(resp => {
+                        // delete this.items[i-1];
+                        // functionsUtils.deleteByValue(this.items, item.id)
+                        // item.status = (item.status == 1) ? 0 : 1
+                        // this.items = resp.data.data
+                        this.getData()
+                        if (resp.err) { functionsUtils.showErros(resp); return false; }
+                    }, (err) => {
+                        console.log(Object.keys(err));
+                        console.log(err.err);
+                    });
+            }
+        })
+    }
 
 
     fileToBase64 = (file: File): Promise<string> => {

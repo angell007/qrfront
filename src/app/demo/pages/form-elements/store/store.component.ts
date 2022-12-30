@@ -27,7 +27,7 @@ export class StoreComponent implements OnInit {
         this._store.register(this.ModelForm.value)
             .subscribe(resp => {
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
-                Swal.fire('Success', 'Operación realizada correctamente', 'success');
+                Swal.fire('Success', 'Well done', 'success');
                 this.cleanForm()
                 this.router.navigate(['/dashboard/store/resource/index']);
             }, (err) => {

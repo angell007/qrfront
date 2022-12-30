@@ -6,7 +6,7 @@ import { UserComponent } from './user.component';
 const routes: Routes = [
   {
     path: 'index',
-    // loadChildren: () => import('../../tables/tbl-bootstrap/tbl-bootstrap.module').then(module => module.TblBootstrapModule)
+    loadChildren: () => import('../../tables/tbl-bootstrap/tbl-bootstrap.module').then(module => module.TblBootstrapModule)
   },
   {
     path: 'register',

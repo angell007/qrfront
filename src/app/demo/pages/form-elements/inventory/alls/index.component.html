@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-sm-3  mt-1">
-            <label for="" class="label-from"> Vendors </label>
+            <label for="" class="label-from"> Sellers </label>
             <div class="form-group">
                 <ng-select class="custom" [multiple]="true" [(ngModel)]="selectedVendors">
                     <ng-option *ngFor="let item of users" [value]="item.id">{{item.name}}
@@ -131,7 +131,7 @@
                                 <i [ngClass]="item.check == 0 ? 'feather icon-x' : 'fa fa-check'"></i>
                             </button></span>
                         <br>
-                        <span><b>Vendor:</b> {{item.user.name }}</span>
+                        <span><b>Sellers:</b> {{item.user.name }}</span>
                         <br>
                         <span><b>Created at:</b> {{item.created_at |date:'medium':'-5'}}</span>
                         <br>

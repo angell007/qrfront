@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
     this._user.register(this.loginForm.value)
       .subscribe(resp => {
         if (resp.err) { functionsUtils.showErros(resp); return false; }
-        Swal.fire('Success', 'Operación realizada correctamente', 'success');
+        Swal.fire('Success', 'Well done', 'success');
         this.cleanForm()
         this.router.navigate(['/dashboard/user/index']);
       }, (err) => {

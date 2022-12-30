@@ -39,7 +39,7 @@ export class allIndexComponent implements OnInit {
     vendors: '',
     stores: '',
     code: '',
-    checked: '',
+    checked: 1,
     date: ''
   }
   users: any;

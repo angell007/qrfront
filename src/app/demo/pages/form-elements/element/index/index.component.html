@@ -36,7 +36,7 @@
 
 <div class="row" *ngIf="showelements">
   <div class="col-sm-12">
-    <app-card cardTitle="Elements" [options]="false">
+    <app-card cardTitle="Items" [options]="false">
       <!-- 
       <div class="col-sm-12">
 
@@ -117,6 +117,10 @@
                   (click)="status(item)" [ngClass]="item.status == 'activo' ? 'btn-danger' : 'btn-success'"> <i
                     [ngClass]="item.status == 'activo' ? 'feather icon-x' : 'feather icon-check'"></i></button>
 
+                    <button  type="button" (click)="delete(item)" container="body"
+                    ngbTooltip="Delete permanently " class="btn btn-icon btn-dark btn-sm"><i class="fa fa-minus"></i>
+                  </button>
+
                 <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
                   (click)="printQr(item.id)"> <i class="feather icon-file"></i></button>
 
@@ -137,10 +141,10 @@
 
           </tbody>
         </table>
+        <ngb-pagination class="d-flex justify-content-center m-3 p-2" [rotate]="true" (pageChange)="recall($event)"
+          [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="5" [boundaryLinks]="true">
+        </ngb-pagination>
       </div>
-      <ngb-pagination class="d-flex justify-content-center" [rotate]="true" (pageChange)="recall($event)"
-        [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="5" [boundaryLinks]="true">
-      </ngb-pagination>
 
     </app-card>
   </div>

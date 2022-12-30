@@ -61,21 +61,21 @@
             </div> -->
 
             <!-- <div class="row"> -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <ng-select [(ngModel)]="selectedItem">
-                        <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
-                        </ng-option>
-                    </ng-select>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <ng-select [(ngModel)]="selectedItem">
+                            <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
+                    </div>
                 </div>
-            </div>
             <!-- </div> -->
-
+       
         </div>
     </app-card>
     <span class="text text-primary">{{msg2}}</span>
@@ -107,12 +107,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"
-                            (scanFailure)="scanFailureHandler($event)"></zxing-scanner>
-                        <!-- <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
+                        <zxing-scanner style="width: 100%;" [enable]="scannerEnabled" [device]="myDevice"
                             (camerasFound)="camerasFoundHandler($event)" (scanSuccess)="scanSuccessHandler($event)"
-                            [timeBetweenScans]="3000" [delayBetweenScanSuccess]="3000">
-                        </zxing-scanner> -->
+                            [timeBetweenScans]="1500">
+
+                        </zxing-scanner>
                         <!-- <p *ngFor="let result of results">{{result}}</p> -->
                     </div>
 
@@ -171,7 +170,7 @@
 
         <app-card cardTitle="Last inventory information" [options]="false" color="red">
 
-            <div class="row mb-3" *ngIf="this.elements.length  >0 ">
+            <div class="row mb-3" *ngIf="elements.length  > 0 ">
                 <div class="col-md-6">
 
                     <br>

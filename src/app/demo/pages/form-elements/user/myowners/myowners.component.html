@@ -94,7 +94,7 @@
           </div>
 
           <div class="col-md-6">
-            <ng-container *ngIf="this._userc.user.user_type != 'vendor' ">
+            <ng-container *ngIf="this._userc.user.user_type != 'seller' ">
               <span><b>Checked : </b>
                 <button placement="bottom" ngbTooltip="Change status" (click)="checkedInv(item)" type="button"
                   class="btn btn-sm mx-auto" [ngClass]="item.check == 0 ? 'btn-danger' : 'btn-success'">
@@ -102,7 +102,7 @@
                 </button></span>
               <br>
             </ng-container>
-            <span><b>Vendor:</b> {{item.user.name }}</span>
+            <span><b>Seller:</b> {{item.user.name }}</span>
             <br>
             <span><b>Created at:</b> {{item.created_at |date:'medium':'-5'}}</span>
             <br>

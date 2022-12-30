@@ -34,7 +34,7 @@
 
 <div class="row" *ngIf="show">
   <div class="col-sm-12">
-    <app-card [options]="false" cardTitle="Estantes">
+    <app-card [options]="false" cardTitle="Stores">
       <div class="table-responsive">
         <table class="table text-center table-xs">
           <thead>
@@ -47,6 +47,19 @@
             </tr>
           </thead>
           <tbody>
+
+            <tr>
+              <th></th>
+              <th><input placeholder="Name" class="form-control" [(ngModel)]="filters.name" type="text"
+                  (ngModelChange)="this.filterUpdate.next($event)"></th>
+              <th><input placeholder="Address" class="form-control" [(ngModel)]="filters.address" type="text"
+                  (ngModelChange)="this.filterUpdate.next($event)"></th>
+              <th></th>
+              <th><button type="button" class="btn btn-icon btn-info btn-xs" placement="auto" ngbTooltip="Clean filter"
+                  (click)="clean()"> <i class="fa fa-trash"></i></button>
+              </th>
+            </tr>
+
             <tr *ngFor="let item of items; index as i;">
               <td>{{i+1}}</td>
               <td>{{item.name}}</td>
@@ -64,17 +77,17 @@
                   class="btn btn-icon btn-info btn-sm"><i class="fa fa-pen"></i> </button>
 
                 <button *ngIf="item.status == 1" type="button" (click)="delete(item)" container="body"
-                  ngbTooltip="Change Status" class="btn btn-icon btn-danger btn-sm"><i class="feather icon-trash"></i>
+                  ngbTooltip="Delete permanently" class="btn btn-icon btn-dark btn-sm"><i class="fa fa-minus"></i>
                 </button>
 
-                <button *ngIf="item.status == 0" type="button" (click)="delete(item)" container="body"
-                  ngbTooltip="Change Status" class="btn btn-icon btn-success btn-sm"><i class="feather icon-check"></i>
-                </button>
+                <!-- <button *ngIf="item.status == 0" type="button" (click)="delete(item)" container="body"
+                  ngbTooltip="Delete permanently" class="btn btn-icon btn-success btn-sm"><i class="fa fa-minus"></i>
+                </button> -->
 
-                <!-- <button type="button" ngbTooltip="Show Qr" class="btn btn-icon btn-info btn-xs" (click)="showQr(item)">
+                <!-- <button type="button" ngbTooltip="Show Qr" class="btn btn-icon btn-secondary btn-xs" (click)="showQr(item)">
                   <i class="feather icon-eye"></i></button> -->
-<!-- 
-                <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
+
+                <!-- <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
                   (click)="printQr(item.id)"> <i class="feather icon-file"></i></button> -->
 
                 <br>

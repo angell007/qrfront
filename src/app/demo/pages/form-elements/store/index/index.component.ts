@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs-compat';
+
 import { CrudService } from 'src/app/services/crud.service';
 import { storeService } from 'src/app/services/store.service';
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
 import { environment } from 'src/environments/environment';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-store-index',
@@ -22,6 +26,13 @@ export class IndexComponent implements OnInit {
     items: any;
     show: boolean = false;
     img: string;
+    filterUpdate = new Subject<string>();
+
+    filters = {
+        page: 1,
+        name: '',
+        address: '',
+    }
 
     constructor(
         private _store: storeService,
@@ -32,11 +43,25 @@ export class IndexComponent implements OnInit {
 
 
     ngOnInit() {
+
         this.getData()
+        this.filterUpdate.pipe(
+            debounceTime(500),
+            distinctUntilChanged())
+            .subscribe(() => { this.filters.page = 1; this.getData() });
     }
 
+    // recall($event: number) {
+    //     this.page = $event;
+    //     this.filters.page = $event
+    //     this.getData()
+    // }
+
+
+
+
     getData() {
-        this._store.index()
+        this._store.index(this.filters)
             .subscribe(resp => {
                 this.items = resp.data.data
                 this.show = true
@@ -49,18 +74,35 @@ export class IndexComponent implements OnInit {
 
 
     delete(item) {
-        // this.show = false
-        this.toastEvent.toast({ uid: 'toastRight2', delay: 2000 })
-        this._crud.delete(item.id)
-            .subscribe(resp => {
-                item.status = (item.status == 1) ? 0 : 1
-                // this.items = resp.data.data
-                // this.getData()
-                if (resp.err) { functionsUtils.showErros(resp); return false; }
-            }, (err) => {
-                console.log(Object.keys(err));
-                console.log(err.err);
-            });
+
+        Swal.fire({
+            title: 'Do you want delete ?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // this.show = false
+                this.toastEvent.toast({ uid: 'toastRight2', delay: 2000 })
+                this._crud.delete(item.id)
+                    .subscribe(resp => {
+                        // delete this.items[i-1];
+                        // functionsUtils.deleteByValue(this.items, item.id)
+                        // item.status = (item.status == 1) ? 0 : 1
+                        // this.items = resp.data.data
+                        this.getData()
+                        if (resp.err) { functionsUtils.showErros(resp); return false; }
+                    }, (err) => {
+                        console.log(Object.keys(err));
+                        console.log(err.err);
+                    });
+
+            }
+        })
+
+
+
+
     }
 
     goEdit(id) {
@@ -99,4 +141,14 @@ export class IndexComponent implements OnInit {
         this.img = environment.base_media + 'stores/qrs' + item.id + '.png'
         console.log(this.img);
     }
+
+    clean() {
+        this.filters = {
+            page: 1,
+            name: '',
+            address: ''
+        }
+        this.getData()
+    };
+
 }

@@ -2,7 +2,10 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { inventoryService } from 'src/app/services/inventory.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
+import { Html5QrcodeScanner } from "html5-qrcode"
 
+// To use Html5Qrcode (more info below)
+import { Html5Qrcode } from "html5-qrcode"
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
@@ -41,6 +44,7 @@ export class InventoryComponent implements OnInit {
   public myDevice!: MediaDeviceInfo;
   public scannerEnabled = false;
   public results: string[] = [];
+  public elementsCharged: any;
   public flag = false
   public reread = false
   element: string = "iniciando...";
@@ -69,6 +73,7 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit() {
     this.getData()
+    this.getItems()
   }
 
   addNotifElement() {
@@ -108,18 +113,24 @@ export class InventoryComponent implements OnInit {
       });
   }
 
+  getItems() {
+    this._inventory.getAlloElements()
+      .subscribe(resp => {
+        this.elementsCharged = resp.data
+        // this.showsearch = true
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+  }
+
   getLast() {
 
     if (!this.selectedItem) {
       Swal.fire('warning', 'Select a shelf', 'warning');
       return false;
     }
-
-
-    this.elements = []
-    this.btnText = 'Loading...';
-    this.idSend = this.selectedItem
-
 
     this._inventory.last(this.selectedItem)
       .subscribe(resp => {
@@ -152,18 +163,15 @@ export class InventoryComponent implements OnInit {
     if (this.cameras.length > 1) this.selectCamera(this.cameras[1].label);
   }
 
-  scanFailureHandler($event) {
-    this.msg = ''
-  }
-
   async scanSuccessHandler(event: string) {
 
     this.msg = 'scanning...'
+    this.addNotifElement()
 
     if (event == this.currentQr) {
       this.reread = true
       this.msg = ''
-      this.addNotifElement()
+      // this.addNotifElement()
       return false
     }
 
@@ -173,9 +181,10 @@ export class InventoryComponent implements OnInit {
     this.reread = false
 
     this.filter(event).then(async (bool) => await this.getDataElement(bool, event)).finally(() => {
+      this.msg = ''
       this.flag = false
       this.results.unshift(event);
-      this.addNotifElement();
+      // this.addNotifElement();
     });
   }
 
@@ -218,25 +227,40 @@ export class InventoryComponent implements OnInit {
     console.log([flag, event]);
     if (!flag) {
       this.reread = false
-      this._inventory.getElement(event)
-        .subscribe(resp => {
-          if (resp.code == 200) {
-            this.inventario.push({
-              "quantity": 1,
-              "qr": event,
-              "name": resp.data.name,
-              "reference": resp.data.sku,
-              "img": environment.base_media + 'imgproducts/' + resp.data.photo,
-              // "img": environment.base_media + 'items/' + event + '.png',
-            })
-          }
-          if (resp.code != 200) Swal.fire('Warning', 'Item not found', 'warning');
-          this.msg = ''
-          if (resp.err) { functionsUtils.showErros(resp); return false; }
-        }, (err) => {
-          console.log(Object.keys(err));
-          console.log(err.err);
-        });
+
+      // let selectedelement = this.elementsCharged.filter((item) => item.qr == event)
+      let selectedelement = null
+
+      for (var f in this.elementsCharged) {
+        if (this.elementsCharged[f].qr == event) {
+          selectedelement = this.elementsCharged[f];
+        }
+      }
+
+
+      if (selectedelement) {
+        // this._inventory.getElement(event)
+        //   .subscribe(resp => {
+        //     if (resp.code == 200) {
+        this.inventario.push({
+          "quantity": 1,
+          "qr": event,
+          "name": selectedelement.name,
+          "reference": selectedelement.sku,
+          "img": environment.base_media + 'imgproducts/' + selectedelement.photo,
+          // "img": environment.base_media + 'items/' + event + '.png',
+        })
+        // }
+        //     if (resp.code != 200) Swal.fire('Warning', 'Item not found', 'warning');
+        //     this.msg = ''
+        //     if (resp.err) { functionsUtils.showErros(resp); return false; }
+        // }, (err) => {
+        //   console.log(Object.keys(err));
+        //   console.log(err.err);
+        // });
+      } else {
+        if (!selectedelement) Swal.fire('Warning', 'Item not found', 'warning');
+      }
     }
 
     if (flag) {
