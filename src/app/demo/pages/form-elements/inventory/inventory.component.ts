@@ -2,10 +2,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { inventoryService } from 'src/app/services/inventory.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
-import { Html5QrcodeScanner } from "html5-qrcode"
 
-// To use Html5Qrcode (more info below)
-import { Html5Qrcode } from "html5-qrcode"
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
@@ -67,7 +64,7 @@ export class InventoryComponent implements OnInit {
   constructor(
 
     private Service: AngularNotificationService,
-    // private componentFactoryResolver: ComponentFactoryResolver,
+    private componentFactoryResolver: ComponentFactoryResolver,
     private _inventory: inventoryService) { }
 
   ngOnInit() {
@@ -84,9 +81,9 @@ export class InventoryComponent implements OnInit {
       duration: 1000,
       background: '#FFF'
     };
-    // this.Service.setProperties(setting);
-    // const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
-    // this.componentRef = this.target.createComponent(childComponent);
+    this.Service.setProperties(setting);
+    const childComponent = this.componentFactoryResolver.resolveComponentFactory(NotifComponent);
+    this.componentRef = this.target.createComponent(childComponent);
   }
 
   selectCamera(cameraLabel: string) {
@@ -153,6 +150,10 @@ export class InventoryComponent implements OnInit {
     this.cameras = cameras;
     if (this.cameras.length == 1) this.selectCamera(this.cameras[0].label);
     if (this.cameras.length > 1) this.selectCamera(this.cameras[1].label);
+  }
+
+  scanFailureHandler($event) {
+    this.msg = ''
   }
 
   async scanSuccessHandler(event: string) {

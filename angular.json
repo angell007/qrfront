@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "outputPath": "dist/ng-able-pro",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -119,7 +122,6 @@
       }
     }
   },
-  "defaultProject": "ng-able-pro",
   "cli": {
     "analytics": "64e8377f-e9a4-4fbd-9df6-bff3ddf33f4b"
   }
