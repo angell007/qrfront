@@ -37,7 +37,7 @@
 <div class="row" *ngIf="showelements">
   <div class="col-sm-12">
     <app-card cardTitle="Items" [options]="false">
-      <!-- 
+      <!--
       <div class="col-sm-12">
 
         <input placeholder="Search items..." class="form-control" [(ngModel)]="filter" type="text"
@@ -85,27 +85,30 @@
             </tr>
 
             <tr *ngFor="let item of items; index as i;">
-              <td>{{i+1}}</td>
+              <td>{{from+i}}</td>
               <td>{{item.name}}</td>
               <td>{{item.sku}}</td>
               <td>{{item.sheet_size}}</td>
               <td>{{item.packing}}</td>
-              <td style="height: 100%;
-                  text-align: center;
-                  vertical-align: middle;"
-                [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">
+              <td [ngClass]="{
+                'badge-light-primary' : item.status == 'activo',
+                'badge-light-warning' : item.status == 'pendiente',
+                'badge-light-danger' : item.status == 'inactivo'}">
+
                 <span *ngIf="item.status == 'activo'">Present</span>
-                <span *ngIf="item.status != 'activo'">Sold out</span>
+                <span *ngIf="item.status == 'pendiente'">Pending</span>
+                <span *ngIf="item.status == 'inactivo'">Sold out</span>
+
               </td>
 
               <td style="height: 100%;
               text-align: center;
               vertical-align: middle;">
-              
+
                 <!-- <ngx-dropzone style="height: 43px; width: 43px; overflow: hidden;" class="btn btn-icon" (change)="onSelect($event, item)"> -->
-                  <!-- <ngx-dropzone-label><i class="fa fa-upload"></i></ngx-dropzone-label> -->
-                  <!-- <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)"> -->
-                    <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> </ngx-dropzone-preview> -->
+                <!-- <ngx-dropzone-label><i class="fa fa-upload"></i></ngx-dropzone-label> -->
+                <!-- <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)"> -->
+                <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> </ngx-dropzone-preview> -->
                 <!-- </ngx-dropzone> -->
 
                 <!-- <img [src]="imgResultAfterCompression" width="70px" class="preview"> -->
@@ -113,13 +116,19 @@
                 <button type="button" class="btn btn-icon btn-warning btn-xs" placement="auto" ngbTooltip="Edit"
                   (click)="goEdit(item.id)"> <i class="fa fa-pen"></i></button>
 
-                <button type="button" placement="auto" ngbTooltip="Change Status" class="btn btn-icon  btn-xs"
+                <!-- <button type="button" placement="auto" ngbTooltip="Change Status" class="btn btn-icon  btn-xs"
                   (click)="status(item)" [ngClass]="item.status == 'activo' ? 'btn-danger' : 'btn-success'"> <i
-                    [ngClass]="item.status == 'activo' ? 'feather icon-x' : 'feather icon-check'"></i></button>
+                    [ngClass]="item.status == 'activo' ? 'feather icon-x' : 'feather icon-check'"></i></button> -->
 
-                    <button  type="button" (click)="delete(item)" container="body"
-                    ngbTooltip="Delete permanently " class="btn btn-icon btn-dark btn-sm"><i class="fa fa-minus"></i>
-                  </button>
+
+                <button type="button" placement="auto" ngbTooltip="Change Status"
+                  class="btn btn-icon btn-success btn-xs" (click)="status(item)"> <i
+                    class="feather icon-check"></i></button>
+
+
+                <button type="button" (click)="delete(item)" container="body" ngbTooltip="Delete permanently "
+                  class="btn btn-icon btn-dark btn-sm"><i class="fa fa-minus"></i>
+                </button>
 
                 <button type="button" class="btn btn-icon btn-default btn-xs" placement="auto" ngbTooltip="Print Qr"
                   (click)="printQr(item.id)"> <i class="feather icon-file"></i></button>
@@ -141,7 +150,7 @@
 
           </tbody>
         </table>
-        <ngb-pagination class="d-flex justify-content-center m-3 p-2" [rotate]="true" (pageChange)="recall($event)"
+        <ngb-pagination class="d-flex justify-content-center m-3" [rotate]="true" (pageChange)="recall($event)"
           [collectionSize]="total" [(page)]="page" [pageSize]="20" [maxSize]="5" [boundaryLinks]="true">
         </ngb-pagination>
       </div>

@@ -15,14 +15,14 @@
 
 <div class="row d-flex justify-content-center align-items-center">
     <div class="fixedbutton">
-      <app-toast uID="toastRight2">
-        <strong>
-          Item ok ...
-        </strong>
-      </app-toast>
+        <app-toast uID="toastRight2">
+            <strong>
+                Item ok ...
+            </strong>
+        </app-toast>
     </div>
-  </div>
-  
+</div>
+
 
 <app-card cardTitle="" [options]="false" *ngIf="!showsearch && !showInv">
     <div class="row">
@@ -75,7 +75,7 @@
             <!-- <div class="row"> -->
             <div class="col-md-6">
                 <div class="form-group">
-                    <ng-select [(ngModel)]="selectedItem">
+                    <ng-select [(ngModel)]="selectedItem" [disabled]="disableStore">
                         <ng-option *ngFor="let item of items" [value]="item.id">{{item.name}}
                         </ng-option>
                     </ng-select>
@@ -86,6 +86,7 @@
                     <button type="submit" class="btn btn-primary" (click)="getLast()">{{btnText}}</button>
                 </div>
             </div>
+
             <!-- </div> -->
 
         </div>
@@ -108,7 +109,7 @@
     <!-- </div> -->
 
     <div class="col-sm-12">
-        <app-card cardTitle="Inventory management - Store : {{store.name}} " [options]="false">
+        <app-card cardTitle="Inventory management - Store : {{store.name}} : {{store.id}} " [options]="false">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -133,13 +134,17 @@
                         <div class="row">
                             <div class="col-md-12">
 
+
+                                <button type="button" class="btn btn-primary btn-sm" [disabled]="this.submitted"
+                        (click)="sendInventory()">{{btnTextInv}}</button>
+
                                 <app-card cardTitle="{{titleTable}}">
                                     <div class="table-responsive">
                                         <table class="table table-hover mb-0">
                                             <thead>
                                                 <tr>
                                                     <th>Element</th>
-                                                    <th>Reference - sku</th>
+                                                    <th>Reference - Sku</th>
                                                     <th>Img</th>
                                                 </tr>
                                             </thead>
@@ -167,8 +172,6 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-sm" [disabled]="this.submitted"
-                        (click)="sendInventory()">{{btnTextInv}}</button>
                 </div>
             </div>
         </app-card>
@@ -180,18 +183,18 @@
 
         <app-card cardTitle="Last inventory information" [options]="false" color="red">
 
-            <div class="row mb-3" *ngIf="elements.length  > 0 ">
+            <div class="row mb-3" *ngIf="elements.length > 0 ">
                 <div class="col-md-6">
 
                     <br>
-                    <b> Options: </b> <button title="Edit" type="button" class="btn btn-primary btn-sm"
+                    <b> Options: </b> <button title="Edit" type="button" class="btn mr-2 btn-primary btn-sm"
                         (click)="editInventory()"><i class="feather icon-edit"></i>
                     </button>
                     <button title="New" type="button" class="btn btn-success btn-sm" (click)="newInventory()"><i
                             class="feather icon-book"></i>
                     </button>
                     <br>
-                    <span> <b> Shelf: </b> {{store.name}}</span>
+                    <span> <b> Store: </b> {{store.name}}</span>
                     <br>
                     <span> <b>Address:</b> {{store.address}}</span>
                 </div>

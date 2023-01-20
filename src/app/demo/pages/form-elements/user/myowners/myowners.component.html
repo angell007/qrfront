@@ -77,24 +77,24 @@
 
             <span> <b> Code: </b> {{item.id}}</span>
             <br>
-            <span> <b> Shelf: </b> {{item.store.name}}</span>
+            <span> <b> Store: </b> {{item.store.name}}</span>
             <br>
             <span> <b>Address:</b> {{item.store.address}}</span>
             <br>
             <span id="noprint"> <b> Print Inventory: </b>
-              <button ngbTooltip="Print report on PDF" (click)="print('table', item.user.name)" type="button"
+              <button ngbTooltip="Print report on PDF" (click)="print(item)" type="button"
                 class="btn btn-icon btn-info btn-xs mx-auto"><i class="fa fa-file-pdf"></i></button>
 
 
               <button (click)="getexcel(item.id)" ngbTooltip="only missings Excel" type="button"
-                class="btn btn-icon btn-warning btn-xs mx-auto"><i class="fa fa-file-excel-o"></i></button>
+                class="btn btn-icon btn-warning btn-xs mx-auto"><i class="fas fa-file-csv"></i></button>
 
             </span>
 
           </div>
 
           <div class="col-md-6">
-            <ng-container *ngIf="this._userc.user.user_type != 'seller' ">
+            <ng-container *ngIf="_userc.user.user_type != 'Seller' ">
               <span><b>Checked : </b>
                 <button placement="bottom" ngbTooltip="Change status" (click)="checkedInv(item)" type="button"
                   class="btn btn-sm mx-auto" [ngClass]="item.check == 0 ? 'btn-danger' : 'btn-success'">
@@ -116,6 +116,27 @@
               <i class="feather icon-eye-off"></i>
             </button>
             <br>
+
+            <b>Show cols</b>
+            <br>
+
+            <label (click)="showCols.name = showCols.name ? false : true" style="cursor: pointer;"
+              class="mr-1 badge badge-light-primary">Name</label>
+            <label (click)="showCols.reference = showCols.reference ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Reference</label>
+            <label (click)="showCols.size = showCols.size ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Size</label>
+            <label (click)="showCols.available = showCols.available ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Available</label>
+            <label (click)="showCols.existence = showCols.existence ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Existence</label>
+            <label (click)="showCols.img = showCols.img ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Img</label>
+            <label (click)="showCols.options = showCols.options ? false : true" style="cursor: pointer;"
+              class="mx-1 badge badge-light-primary">Options</label>
+
+            <br>
+
           </div>
         </div>
         <!-- </app-card> -->
@@ -126,45 +147,59 @@
           <table class="table text-center table-xs">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Reference - sku</th>
-                <th>Size</th>
-                <!-- <th>Packing</th> -->
-                <th>Available</th>
-                <th>Existence</th>
-                <!-- <th>Quantity</th> -->
-                <th>Options</th>
+                <th *ngIf="showCols.name">Name</th>
+                <th *ngIf="showCols.reference">Reference - sku</th>
+                <th *ngIf="showCols.size">Size</th>
+                <th *ngIf="showCols.available">Available</th>
+                <th *ngIf="showCols.existence">Existence</th>
+                <th *ngIf="showCols.img">Img</th>
+                <th *ngIf="showCols.options && (_userc.user.user_type != 'Seller') ">Options</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of item.elements">
-                <td>{{item.name}}</td>
-                <td>{{item.sku}}</td>
-                <td>{{item.sheet_size}}</td>
-                <!-- <td>{{item.packing}}</td> -->
+              <tr *ngFor="let inv of item.elements">
+                <td *ngIf="showCols.name">{{inv.name}}</td>
+                <td *ngIf="showCols.reference">{{inv.sku}}</td>
+                <td *ngIf="showCols.size">{{inv.sheet_size}}</td>
+                <!-- <td>{{inv.packing}}</td> -->
 
-                <td [ngClass]="item.status == 'activo' ? 'badge-light-primary' : 'badge-light-danger'">
+                <td *ngIf="showCols.available" [ngClass]="{
+                  'badge-light-primary' : inv.status == 'activo',
+                  'badge-light-warning' : inv.status == 'pendiente',
+                  'badge-light-danger' : inv.status == 'inactivo'}">
 
-                  <span *ngIf="item.status == 'activo'">Present</span>
-                  <span *ngIf="item.status != 'activo'">Sold out</span>
+                  <span *ngIf="inv.status == 'activo'">Present</span>
+                  <span *ngIf="inv.status == 'pendiente'">Pending</span>
+                  <span *ngIf="inv.status == 'inactivo'">Sold out</span>
 
                 </td>
 
-                <td class="text"><label class="badge"
-                    [ngClass]="item.quantities.quantity == 0  ? 'badge-light-danger' : 'badge-light-primary'">
-                    {{ item.quantities.quantity ?
+                <td *ngIf="showCols.existence" class="text"><label class="badge"
+                    [ngClass]="inv.quantities.quantity == 0  ? 'badge-light-danger' : 'badge-light-primary'">
+                    {{ inv.quantities.quantity ?
                     'Present' : 'Restock'}}</label>
                 </td>
 
-                <td>
-                  <button type="button" class="btn btn-icon btn-default btn-sm" (click)="printQr(item.id)"
+                <td *ngIf="showCols.img" class="text">
+                  <img *ngIf="item.show" class="img-fluid img-thumbnail rounded mx-auto d-block"
+                    style=" width: 100px; height: 100%;" src="{{urlMedia}}imgproducts/{{inv.photo}}">
+                </td>
+
+                <td *ngIf="showCols.options && (_userc.user.user_type != 'Seller') ">
+                  <button type="button" class="btn btn-icon btn-default btn-sm" (click)="printQr(inv.id)"
                     ngbTooltip="Qr de la referencia"> <i class="feather icon-file"></i></button>
 
                   <button type="button" placement="auto" ngbTooltip="Change Status"
-                    class="btn btn-icon btn-success btn-xs" (click)="status(item)"> <i
+                    class="btn btn-icon btn-success btn-xs" (click)="status(inv)"> <i
                       class="feather icon-check"></i></button>
-                </td>
 
+                  <button type="button" placement="auto" ngbTooltip="Checked" class="btn btn-icon  btn-xs"
+                    [ngClass]="inv.quantities.checked == 0  ? 'btn-danger' : 'btn-secondary' "
+                    (click)="checked(inv, item)">
+                    <i
+                      [ngClass]="inv.quantities.checked == 0  ? 'feather icon-alert-circle' : 'feather icon-check-circle'"></i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>

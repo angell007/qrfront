@@ -31,6 +31,11 @@ export class elementService {
         return this.client.get(this._rutaBase + '/elements/changuestatus', { params: parameters });
     }
 
+    changueChecked(parameters = {}): Observable<any> {
+        // let params = new HttpParams().set(parameters);
+        return this.client.get(this._rutaBase + '/elements/changuecheked', { params: parameters });
+    }
+
     getpdflist(id): Observable<any> {
         var HTTPOptions = {
             headers: new HttpHeaders({ 'Accept': '*/*; charset=UTF-8', }),

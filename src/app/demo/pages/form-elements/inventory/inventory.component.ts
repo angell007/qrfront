@@ -30,7 +30,7 @@ export class InventoryComponent implements OnInit {
 
   selectedItem: any;
   items: any
-  elements: any = []
+  public elements: any = []
   store: any
 
   created_at: any
@@ -58,7 +58,7 @@ export class InventoryComponent implements OnInit {
   action: string = 'register';
   currentQr: string = null;
   msg: string;
-  idSend: number;
+  idSend: any;
   id: number;
 
 
@@ -67,6 +67,7 @@ export class InventoryComponent implements OnInit {
   private componentRef: ComponentRef<any>;
   msg2: string;
   storeName: any;
+  disableStore: boolean = false;
 
   constructor(
 
@@ -132,31 +133,34 @@ export class InventoryComponent implements OnInit {
   getLast() {
 
     this.btnText = 'loading'
-    
+
     if (!this.selectedItem) {
-      Swal.fire('warning', 'Select a shelf', 'warning');
+      Swal.fire('warning', 'Select a store', 'warning');
       return false;
     }
 
     this._inventory.last(this.selectedItem)
-    .subscribe(resp => {
+      .subscribe(resp => {
 
         this.showInv = true;
+        this.disableStore = true;
+
         this.btnText = 'Start';
 
         if (!resp.data) {
           Swal.fire('Success', 'No inventories', 'success');
           return false;
         }
-        
-        this.elements = resp.data.elements
+
+        this.elements = resp.data.elements ?? []
         this.store = resp.data.store
         this.created_at = resp.data.created_at
         this.updated_at = resp.data.updated_at
         this.show = true
         this.id = resp.data.id
-        
-        this.btnText = 'Start'
+        this.show = true,
+
+          this.btnText = 'Start'
         if (resp.err) { functionsUtils.showErros(resp); return false; }
       }, (err) => {
         console.log(Object.keys(err));
@@ -197,19 +201,19 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  async scanSuccessHandlerStore(event: string) {
-    this.msg2 = 'scanning...'
-    console.log(event);
-    this.selectedItem = this.items.filter((el) => el.qr == event)[0]
-    console.log(this.selectedItem);
-    this.storeName = this.selectedItem.name
-    if (!this.storeName) this.msg2 = 'Error, try again'
-    if (this.storeName) this.msg2 = ''
-    if (this.storeName) this.showsearch = false
-    if (this.storeName) this.loading = false
-    if (this.storeName) this.getLast()
-    if (this.storeName) this.showInv = false
-  }
+  // async scanSuccessHandlerStore(event: string) {
+  //   this.msg2 = 'scanning...'
+  //   console.log(event);
+  //   this.selectedItem = this.items.filter((el) => el.qr == event)[0]
+  //   console.log(this.selectedItem);
+  //   this.storeName = this.selectedItem.name
+  //   if (!this.storeName) this.msg2 = 'Error, try again'
+  //   if (this.storeName) this.msg2 = ''
+  //   if (this.storeName) this.showsearch = false
+  //   if (this.storeName) this.loading = false
+  //   if (this.storeName) this.getLast()
+  //   if (this.storeName) this.showInv = false
+  // }
 
 
   filter = async (event: string) => {
@@ -251,7 +255,7 @@ export class InventoryComponent implements OnInit {
         // this._inventory.getElement(event)
         //   .subscribe(resp => {
         //     if (resp.code == 200) {
-        this.inventario.push({
+        this.inventario.unshift({
           "quantity": 1,
           "qr": event,
           "name": selectedelement.name,
@@ -287,19 +291,19 @@ export class InventoryComponent implements OnInit {
     this.action = 'edit'
     this.titleTable = "Updating Last Inventory";
     this.elements.forEach(element => {
-      // if (element.quantities.quantity) {
-      this.inventario.push({
-        "quantity": element.quantities.quantity,
-        "qr": element.qr,
-        "name": element.name,
-        "reference": element.sku,
-        "img": environment.base_media + 'imgproducts/' + element.photo,
-        // "img": environment.base_media + 'items/' + element.qr + '.png',
-      })
-      // }
+      if (element.quantities.quantity) {
+        this.inventario.push({
+          "quantity": element.quantities.quantity,
+          "qr": element.qr,
+          "name": element.name,
+          "reference": element.sku,
+          "img": environment.base_media + 'imgproducts/' + element.photo,
+          // "img": environment.base_media + 'items/' + element.qr + '.png',
+        })
+      }
     });
 
-    this.idSend = this.id
+    // this.idSend = this.id
     this.reread = false
   }
 
@@ -310,13 +314,13 @@ export class InventoryComponent implements OnInit {
     this.inventario = []
     this.reread = false
     this.currentQr = null
-    this.idSend = this.selectedItem
+    // this.idSend = this.selectedItem.id
   }
 
   sendInventory() {
     this.submitted = true;
     this.btnTextInv = 'Sending...'
-    this._inventory.register({ "items": this.inventario }, this.idSend, this.action)
+    this._inventory.register({ "items": this.inventario }, this.selectedItem, this.action)
       .subscribe(resp => {
         if (resp.err) { functionsUtils.showErros(resp); return false; }
         this.newInventory()

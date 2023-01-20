@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { userService } from 'src/app/services/user.service';
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { elementService } from 'src/app/services/element.service';
+import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-inventory-all-index',
@@ -28,6 +30,7 @@ export class allIndexComponent implements OnInit {
   public obsuser: Subscription
   load = false;
   showsearch: boolean = false
+  urlMedia: string = environment.base_media
   // selectedItem: number;
 
   selectedStores: any = [];
@@ -39,15 +42,26 @@ export class allIndexComponent implements OnInit {
     vendors: '',
     stores: '',
     code: '',
-    checked: 1,
+    checked: 0,
     date: ''
+  }
+
+  public showCols: any = {
+    name: true,
+    options: true,
+    reference: true,
+    size: true,
+    img: true,
+    available: true,
+    existence: true
   }
   users: any;
 
 
   constructor(
     public toastEvent: ToastService,
-    private _user: userService,
+    public _userc: UserService,
+    public _user: userService,
     private _inventory: inventoryService,
     private _element: elementService) { }
 
@@ -246,6 +260,21 @@ export class allIndexComponent implements OnInit {
     this.items.forEach(element => {
       element.show = false
     });
+  }
+
+  checkedItem(inv, item) {
+
+    this.toastEvent.toast({ uid: 'toastRight2', delay: 2000 })
+
+    this._element.changueChecked({ invId: inv.id, itemiId: item.id })
+      .subscribe(resp => {
+        item.quantities.checked = resp.data.item.checked
+        console.log(item);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
   }
 
   status(item) {

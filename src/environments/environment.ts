@@ -5,13 +5,13 @@
 export const environment = {
   // production: false,
   // base_url: 'https://baseapi.test/api',
-  base_url: 'https://apiqr.conectaedu.co/api',
+  base_url: 'https://api.mosaicandtiledepot.com/api',
   // base_media: 'https://baseapi.test/imgs/',
-  base_media: 'https://apiqr.conectaedu.co/imgs/',
+  base_media: 'https://api.mosaicandtiledepot.com/imgs/',
 
-  production: true,
-  // base_url: 'https://apiqr.conectaedu.co/api',
-  // base_media: 'https://apiqr.conectaedu.co/imgs/',
+  production: false,
+  // base_url: 'https://api.mosaicandtiledepot.com/api',
+  // base_media: 'https://api.mosaicandtiledepot.com/imgs/',
   
 
 };

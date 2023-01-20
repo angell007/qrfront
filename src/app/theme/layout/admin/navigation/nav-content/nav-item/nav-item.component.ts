@@ -21,7 +21,7 @@ export class NavItemComponent implements OnInit {
 
   ngOnInit() {
     if (this.item.title == 'Report list') {
-      if (this._user.user.user_type == 'vendor') this.item.hidden = true
+      if (this._user.user.user_type == 'Seller') this.item.hidden = true
     }
   }
 

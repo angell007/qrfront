@@ -75,7 +75,7 @@ export class ElementComponent implements OnInit {
       name: ['', [Validators.required]],
       // reference: ['', [Validators.required]],
       sku: ['', [Validators.required]],
-      material: ['', [Validators.required]],
+      material: [''],
       size: ['', [Validators.required]],
       packing: ['', [Validators.required]],
       // file: [''],

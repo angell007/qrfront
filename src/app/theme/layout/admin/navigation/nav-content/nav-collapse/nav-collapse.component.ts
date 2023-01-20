@@ -34,7 +34,7 @@ export class NavCollapseComponent implements OnInit {
 
   ngOnInit() {
     if (this.item.title == 'Users' || this.item.title == 'Items') {
-      if (this._user.user.user_type == 'vendor') this.item.hidden = true
+      if (this._user.user.user_type == 'Seller') this.item.hidden = true
     }
   }
 

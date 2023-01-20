@@ -19,15 +19,17 @@
         <perfect-scrollbar [style.max-height]="'300px'">
           <ul class="noti-body">
             <li class="n-title">
-              <p class="m-b-0">Nuevos</p>
+              <p class="m-b-0">News</p>
             </li>
             <li class="notification" *ngFor="let datum of data; index as i; ">
               <div class="media">
-                <img class="img-radius" src="assets/images/user/avatar-1.jpg" alt="Generic placeholder image">
+                <img class="img-radius"
+                  src="https://placehold.co/300x300?text=I"
+                  alt="Generic placeholder image">
                 <div class="media-body" (click)="dispachtUser(datum.user.id)">
                   <p><strong>{{datum.user.name}}</strong><span class="n-time text-muted"><i
                         class="icon feather icon-clock m-r-10"></i>{{datum.created_at}}</span></p>
-                  <p>Nuevo inventario agregado</p>
+                  <p>New inventory has been added</p>
                 </div>
               </div>
             </li>

@@ -68,6 +68,15 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "outputHashing": "all",
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -80,6 +89,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-able-pro:build:production"
+            },
+            "development": {
+              "browserTarget": "route-app:build:development"
             }
           }
         },

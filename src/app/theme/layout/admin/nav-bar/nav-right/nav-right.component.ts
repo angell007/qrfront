@@ -22,12 +22,15 @@ export class NavRightComponent implements OnInit {
   data: any = []
   point: 0
   obsuser: any;
+  letter: any;
 
   constructor(private _inventory: inventoryService, private router: Router, private _obs: ObservablesService) { }
 
   obsTimer: Observable<number> = timer(0, 60000);
 
   ngOnInit() {
+
+    // this.letter = _user.user.name.slice(0,2).toUpperCase()
 
     this.obsTimer.subscribe(currTime => {
 

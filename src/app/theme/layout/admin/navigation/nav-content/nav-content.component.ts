@@ -37,7 +37,7 @@ export class NavContentComponent implements OnInit, AfterViewInit {
     this.contentWidth = 0;
 
     this.isNavProfile = false;
-    this.letter = _user.user.name.slice(0,1).toUpperCase()
+    this.letter = _user.user.name.slice(0,2).toUpperCase()
   }
 
   ngOnInit() {

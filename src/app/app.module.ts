@@ -31,7 +31,6 @@ import { AngularNotificationModule } from 'angular-notification-alert';
 import { HttpCancelService } from './services/http-cancel-service.service';
 import { ManageHttpInterceptor } from './Interceptors/managehttp.interceptor';
 import { NgxImageCompressService } from 'ngx-image-compress';
-// import { NgbToastModule } from  'ngb-toast';
 
 
 @NgModule({

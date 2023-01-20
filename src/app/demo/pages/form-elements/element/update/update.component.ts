@@ -48,7 +48,7 @@ export class UpdateComponent implements OnInit, UpdateContract {
             this.modelForm = this.formBuilder.group({
               name: [resp.data.name, [Validators.required]],
               sku: [resp.data.sku, [Validators.required]],
-              material: [resp.data.material, [Validators.required]],
+              material: [resp.data.material],
               size: [resp.data.sheet_size, [Validators.required]],
               packing: [resp.data.packing, [Validators.required]],
               id: [resp.data.id, [Validators.required]],
@@ -79,7 +79,9 @@ export class UpdateComponent implements OnInit, UpdateContract {
       Swal.fire('Success', 'Good job', 'success');
       this.cleanForm()
       this.photo = null
-      this.router.navigate(['/dashboard/elements/resource-element/index']);
+      let page = 1;
+      this.route.queryParams.subscribe((params: any) => page = params.page)
+      this.router.navigate(['/dashboard/elements/resource-element/index'], { queryParams: { page: page } });
     }, (err) => {
       console.log(Object.keys(err));
       console.log(err.error);
@@ -114,7 +116,7 @@ export class UpdateComponent implements OnInit, UpdateContract {
     this.modelForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       sku: ['', [Validators.required]],
-      material: ['', [Validators.required]],
+      material: [''],
       size: ['', [Validators.required]],
       packing: ['', [Validators.required]],
       id: ['', [Validators.required]],

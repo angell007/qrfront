@@ -9,6 +9,7 @@ import { inventoryService } from 'src/app/services/inventory.service';
 import { userService } from 'src/app/services/user.service';
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { functionsUtils } from 'src/app/utils/functionsUtils';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -192,13 +193,26 @@ export class MyownersComponent implements OnInit {
   selectedStores: any = [];
   selectedVendors: any = [];
   code: any = '';
+  urlMedia: string = environment.base_media
 
   public filters: any = {
     vendors: '',
     stores: '',
     code: '',
-    date: ''
+    date: '',
+    checked: 0
   }
+
+  public showCols: any = {
+    name: true,
+    options: true,
+    reference: true,
+    size: true,
+    img: true,
+    available: true,
+    existence: true
+  }
+
   users: any;
   param: any = null;
 
@@ -206,7 +220,7 @@ export class MyownersComponent implements OnInit {
   constructor(
     public toastEvent: ToastService,
     public _userc: UserService,
-    private _user: userService,
+    public _user: userService,
     private _inventory: inventoryService,
     private _element: elementService,
     private route: ActivatedRoute,
@@ -227,40 +241,13 @@ export class MyownersComponent implements OnInit {
       vendors: this.param,
       stores: [this.selectedStores],
       code: this.code,
-      date: ''
+      date: '',
+      checked: 0
     }
 
     this.getData()
 
   }
-
-  // this._obs.obsuser.subscribe(arg => {
-  //   document.cookie = "current=" + arg
-  //   this.filters = {
-  //     vendors: [arg],
-  //     stores: [this.selectedStores],
-  //     code: this.code,
-  //     date: ''
-  //   }
-  // }
-  // )
-
-  // this._obs.obsuser.subscribe((id) => console.log(id);)
-
-  // this.route.queryParams
-  //   .subscribe((params: any) => {
-  //     console.log(params.id);
-  //     document.cookie = "current=" + params.id
-  //     this.filters = {
-  //       vendors: [params.id],
-  //       stores: [this.selectedStores],
-  //       code: this.code,
-  //       date: ''
-  //     }
-  //     this.getData()
-  //   }
-  //   );
-  // }
 
 
   async getData() {
@@ -331,64 +318,11 @@ export class MyownersComponent implements OnInit {
       vendors: this.param,
       stores: [this.selectedStores],
       code: this.code,
+      checked: 0,
       date: ''
     }
 
     this.getData()
-  }
-
-  print(id: string, name: string) {
-
-    let printContents, popupWin;
-
-    printContents = document.getElementById(id).innerHTML.toString();
-    printContents = (<string>printContents + "").replace("col-sm", "col-xs");
-    popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-
-    popupWin.document.write(`
-        <html>
-          <head>
-            <title>Reporte ${name} </title>
-            <meta name="viewport" content="width=10000, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <link rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-            <style>
-              .salto_pagina_despues{
-                page-break-after:always;
-              }
-  
-              .salto_pagina_anterior{
-                page-break-before:always;
-              }
-              .btn{
-                display:none
-              }
-              .noprint{
-                display:none
-              }
-  
-            </style>
-          </head>
-          <body onload="window.print(); window.close();">
-              <div class="container">
-  
-              <span> <b> Usuario: </b> ${name} </span>
-              <br>
-              <span> <b>Fecha:</b> ${day}-${month}-${year}</span>
-              <br>
-              <br>
-            
-                    ${printContents}
-            </div>
-          </body>
-        </html>`);
-    popupWin.document.close();
   }
 
 
@@ -430,12 +364,84 @@ export class MyownersComponent implements OnInit {
       });
   }
 
-  downloadFile2(data: Blob) {
+
+  print(item) {
+
+
+    this.toastEvent.toast({ uid: 'toastRight2', delay: 2100 })
+
+    this._user.getpdf(item.id)
+      .subscribe(resp => {
+        let fileName = 'inventory'
+        this.downloadFile2(resp.body, fileName);
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+
+
+    // print(id: string, name: string) {
+
+    // let printContents, popupWin;
+
+    // printContents = document.getElementById(id).innerHTML.toString();
+    // printContents = (<string>printContents + "").replace("col-sm", "col-xs");
+    // popupWin = window.open("", 'popimpr', "top=0,left=0,height=100%,width=auto");
+    // const date = new Date();
+
+    // let day = date.getDate();
+    // let month = date.getMonth() + 1;
+    // let year = date.getFullYear();
+
+    // popupWin.document.write(`
+    //       <html>
+    //         <head>
+    //           <title>Reporte ${name} </title>
+    //           <meta name="viewport" content="width=10000, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    //           <link rel="stylesheet"
+    //           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    //           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    //           <style>
+    //             .salto_pagina_despues{
+    //               page-break-after:always;
+    //             }
+
+    //             .salto_pagina_anterior{
+    //               page-break-before:always;
+    //             }
+    //             .btn{
+    //               display:none
+    //             }
+    //             .noprint{
+    //               display:none
+    //             }
+
+    //           </style>
+    //         </head>
+    //         <body onload="window.print(); window.close();">
+    //             <div class="container">
+
+    //             <span> <b> Usuario: </b> ${name} </span>
+    //             <br>
+    //             <span> <b>Fecha:</b> ${day}-${month}-${year}</span>
+    //             <br>
+    //             <br>
+
+    //                   ${printContents}
+    //           </div>
+    //         </body>
+    //       </html>`);
+    // popupWin.document.close();
+  }
+
+  downloadFile2(data: Blob, fileName = 'qrReference') {
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
-    link.download = 'qrReference';
+    link.download = fileName;
     link.click();
   }
+
 
 
   showDetail(item) {
@@ -462,6 +468,21 @@ export class MyownersComponent implements OnInit {
         item.status = resp.data.item.status
         // item.status =  item.status == 'activo' ? 'inactivo' : 'activo'
         // this.getData();
+        if (resp.err) { functionsUtils.showErros(resp); return false; }
+      }, (err) => {
+        console.log(Object.keys(err));
+        console.log(err.err);
+      });
+  }
+
+  checked(inv, item) {
+
+    this.toastEvent.toast({ uid: 'toastRight2', delay: 2000 })
+
+    this._element.changueChecked({ invId: item.id, itemiId: inv.id })
+      .subscribe(resp => {
+        inv.quantities.checked = resp.data.item.checked
+        console.log(inv);
         if (resp.err) { functionsUtils.showErros(resp); return false; }
       }, (err) => {
         console.log(Object.keys(err));

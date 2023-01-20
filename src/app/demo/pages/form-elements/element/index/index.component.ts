@@ -9,7 +9,7 @@ import { Subject } from 'rxjs-compat';
 import { AngularNotificationService, NotifComponent } from 'angular-notification-alert';
 import { ToastService } from 'src/app/theme/shared/components/toast/toast.service';
 import { CrudService } from 'src/app/services/crud.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { ResponseContract } from 'src/app/core/class/ResponseContract';
 import Swal from 'sweetalert2';
@@ -33,6 +33,7 @@ export class IndexComponent implements OnInit {
     current: boolean = false;
     showelements: boolean = false;
     page = 1;
+    from = 1;
     total = null;
     params = {}
     filters = {
@@ -56,13 +57,19 @@ export class IndexComponent implements OnInit {
         private _element: elementService,
         public toastEvent: ToastService,
         private _crud: CrudService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) {
         this._crud.model = 'elements'
     }
 
     ngOnInit() {
+
+        this.route.queryParams
+            .subscribe((params: any) => this.page = params.page ?? 1)
+
         this.getData();
+
         this.filterUpdate.pipe(
             debounceTime(500),
             distinctUntilChanged())
@@ -80,6 +87,7 @@ export class IndexComponent implements OnInit {
         this.showelements = false
         this._element.index(this.filters)
             .subscribe(resp => {
+                this.from = resp.data.from
                 this.items = resp.data.data
                 this.total = resp.data.total
                 this.items.forEach(element => {
@@ -138,7 +146,10 @@ export class IndexComponent implements OnInit {
 
         this._element.changuestatus({ id: item.id })
             .subscribe(resp => {
-                item.status = (item.status == 'activo') ? 'inactivo' : 'activo'
+                item.status = resp.data.item.status
+                // item.status = (item.status == 'activo')
+                // item.status = (item.status == 'activo')
+                //  ? 'inactivo' : 'activo'
                 if (resp.err) { functionsUtils.showErros(resp); return false; }
             }, (err) => {
                 console.log(Object.keys(err));
@@ -147,8 +158,7 @@ export class IndexComponent implements OnInit {
     }
 
     goEdit(id) {
-        console.log(id);
-        this.router.navigate(['/dashboard/elements/resource-element/update'], { queryParams: { hash: id } });
+        this.router.navigate(['/dashboard/elements/resource-element/update'], { queryParams: { hash: id, page: this.page } });
     }
 
     clean() {
